@@ -1,32 +1,38 @@
 {
+    // ---------- ビルドレシピ ----------
     "latex-workshop.latex.recipes": [
         {
-            "name": "latexmk",
+            "name": "latexmk (lualatex)",
             "tools": [
-                "latexmk"
+                "latexmk-lua"
             ]
         }
     ],
     "latex-workshop.latex.tools": [
         {
-            "name": "latexmk",
+            "name": "latexmk-lua",
             "command": "latexmk",
             "args": [
+                "-lualatex",
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
-                "-pdf",
+                "-gg",
                 "-outdir=%OUTDIR%",
                 "%DOC%"
             ]
         }
     ],
+    // ---------- 出力ディレクトリ ----------
     "latex-workshop.latex.outDir": "%DIR%/build",
+    // ---------- ビューア ----------
     "latex-workshop.view.pdf.viewer": "tab",
+    // ---------- ビルド後の掃除 ----------
     "latex-workshop.latex.autoClean.run": "onBuilt",
     "latex-workshop.latex.clean.fileTypes": [
         "*.aux",
         "*.bbl",
+        "*.bcf",
         "*.blg",
         "*.idx",
         "*.ind",
@@ -45,12 +51,15 @@
         "*.fdb_latexmk",
         "*.snm",
         "*.nav",
-        "*.dvi"
+        "*.dvi",
+        "*.run.xml"
     ],
+    // ---------- ルートファイル検出 ----------
     "latex-workshop.latex.rootFile.useSubFile": true,
+    // ---------- エディタ設定 ----------
     "editor.formatOnSave": true,
     "[latex]": {
         "editor.defaultFormatter": "James-Yu.latex-workshop",
         "editor.wordWrap": "on"
     }
-} 
+}
