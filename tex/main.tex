@@ -1,27 +1,54 @@
-% main.tex - エントリポイント
+% main.tex  ─ エントリポイント（LuaLaTeX + BibLaTeX 版）
 \documentclass[a4paper,11pt]{article}
 
-% プリアンブル（パッケージなど）の読み込み
+% 既存の共通プリセット
 \input{preamble}
 
+% ---------- 言語・日本語設定 ----------
+\usepackage{luatexja}           % 日本語
+\usepackage{luatexja-fontspec}
+\usepackage{fontspec}           % OTF/TTF フォント
+\usepackage{polyglossia}        % 言語自動切替
+\setmainlanguage{english}
+\setotherlanguage{japanese}
+
+% ---------- フォント ----------
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Cascadia Code}
+\setmainjfont{IPAexMincho}
+\setsansjfont{IPAexGothic}
+
+% ---------- 数式・図・リンク ----------
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% ---------- 参考文献（BibLaTeX + biber） ----------
+\usepackage[
+  backend=biber,          % ← latexmk が自動で biber を呼び出します
+  style=numeric,          % 数字引用 / 著者年なら "authoryear"
+  sorting=none,           % 出現順
+  language=auto           % polyglossia と連携
+]{biblatex}
+\addbibresource{bib/refs.bib}
+
+% ---------- 本文開始 ----------
 \begin{document}
 
-% タイトル
 \title{タイトル}
 \author{著者名}
 \date{\today}
 \maketitle
 
-% 目次
 \tableofcontents
 \clearpage
 
-% 各章の読み込み
+% 各章を読み込む
 \input{sections/intro}
 \input{sections/conclusion}
 
-% 参考文献
-\bibliography{bib/refs}
-\bibliographystyle{plain}
+% ---------- 参考文献一覧 ----------
+\printbibliography
 
-\end{document} 
+\end{document}
