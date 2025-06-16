@@ -1,12 +1,12 @@
 % preamble.tex - パッケージ設定
 
-% 文字コードの設定
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+% LuaLaTeX 用日本語設定
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
 
-% 日本語設定
-\usepackage{CJKutf8}
-\usepackage{xeCJK}
+% 日本語フォント設定
+\setmainjfont[BoldFont=IPAPGothic]{IPAMincho}
+\setsansjfont{IPAPGothic}
 
 % 数式
 \usepackage{amsmath}
@@ -21,14 +21,12 @@
 \usepackage{booktabs}
 
 % 参考文献
-\usepackage{natbib}
 \usepackage{url}
 \usepackage{hyperref}
 
 % その他の便利なパッケージ
 \usepackage{enumitem}
 \usepackage{listings}
-\usepackage{color}
 \usepackage{xcolor}
 
 % コードのハイライト設定
