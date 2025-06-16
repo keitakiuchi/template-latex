@@ -1,0 +1,173 @@
+name: Claude Code
+
+on:
+  # ── 指示は Issue / コメント / PR レビュー経由 ──
+  issue_comment: {}
+  pull_request_review_comment: {}
+  issues: {}
+  pull_request_review:
+    types: [submitted]
+
+  # 手動トリガー
+  workflow_dispatch: {}
+
+# ── 全ジョブ共通の権限 ──
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write   # Bedrock / Vertex を使う場合に備え
+
+###############################################################################
+# 1) 通常ジョブ（デフォルト）  ── 3 分タイムアウト ────────────────────────────
+###############################################################################
+jobs:
+  claude:
+    # think オプションが **含まれない** ときだけ走らせる
+    if: |
+      (
+        github.event_name == 'issue_comment' &&
+        contains(github.event.comment.body, '@claude') &&
+        !contains(github.event.comment.body, 'think')
+      ) || (
+        github.event_name == 'pull_request_review_comment' &&
+        contains(github.event.comment.body, '@claude') &&
+        !contains(github.event.comment.body, 'think')
+      ) || (
+        github.event_name == 'pull_request_review' &&
+        contains(github.event.review.body, '@claude') &&
+        !contains(github.event.review.body, 'think')
+      ) || (
+        github.event_name == 'issues' &&
+        (
+          (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
+          !(contains(github.event.issue.body, 'think') || contains(github.event.issue.title, 'think'))
+        )
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 3        # ★ 標準 3 分
+    env:
+      FILE_OVERWRITE_POLICY: sequential
+      RESULTS_DIR: results
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # ---------- pip キャッシュ ----------
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt --progress-bar off
+
+      - name: Run Claude Code
+        id: claude
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token:      ${{ secrets.GITHUB_TOKEN }}
+          # ---- Bash 権限を明示的に許可 ----
+          allowed_tools: |
+            Bash(*:*)
+            Edit
+            mcp__github_file_ops__commit_files
+          # モデルは変更しない（Opus のまま）※timeout は Action 内にも伝えておく
+          timeout_minutes: 3
+
+      - name: Create pull request if repository changed
+        run: |
+          if ! git diff --quiet; then
+            branch="claude-update-${{ github.run_id }}"
+            git switch -c "$branch"
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+            git add -A
+            git commit -m "Automated update from Claude (fast job)"
+            git push origin "$branch"
+            gh pr create --fill --title "Automated update" --body "Automated update from Claude workflow (fast job)"
+          fi
+
+###############################################################################
+# 2) think オプション専用ジョブ ── 長考・タイムアウト解除（30 分） ───────
+###############################################################################
+  claude_think:
+    # コメントに "think" が含まれる場合はこちら
+    if: |
+      (
+        github.event_name == 'issue_comment' &&
+        contains(github.event.comment.body, '@claude') &&
+        contains(github.event.comment.body, 'think')
+      ) || (
+        github.event_name == 'pull_request_review_comment' &&
+        contains(github.event.comment.body, '@claude') &&
+        contains(github.event.comment.body, 'think')
+      ) || (
+        github.event_name == 'pull_request_review' &&
+        contains(github.event.review.body, '@claude') &&
+        contains(github.event.review.body, 'think')
+      ) || (
+        github.event_name == 'issues' &&
+        (
+          (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
+          (contains(github.event.issue.body, 'think') || contains(github.event.issue.title, 'think'))
+        )
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 15       # 長考ジョブは上限 30 分（お好みで調整）
+    env:
+      FILE_OVERWRITE_POLICY: sequential
+      RESULTS_DIR: results
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}-think
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt --progress-bar off
+
+      - name: Run Claude Code (think mode)
+        id: claude
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token:      ${{ secrets.GITHUB_TOKEN }}
+          config_file:       .claude/claude.yml
+          allowedTools: |
+            Bash(:)
+            Edit

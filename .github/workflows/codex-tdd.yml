@@ -1,0 +1,30 @@
+name: codex-tdd
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+jobs:
+  codex:
+    if: contains(github.event.issue.title, '@codex')
+    runs-on: ubuntu-latest
+    env:
+      FILE_OVERWRITE_POLICY: sequential
+      RESULTS_DIR: results
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run Codex in Full-Auto
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SPEC: ${{ github.event.issue.body }}
+        run: |
+          npm install -g @openai/codex
+          # --approval-mode full-auto は完全自動実行モード
+          # --quiet で対話 UI を抑制（CI向け）
+          codex --approval-mode full-auto --quiet "$SPEC"
