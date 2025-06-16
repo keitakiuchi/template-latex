@@ -1,0 +1,77 @@
+% preamble.tex - パッケージ設定
+
+% 文字コードの設定
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% 日本語設定
+\usepackage{CJKutf8}
+\usepackage{xeCJK}
+
+% 数式
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+% 図表
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{booktabs}
+
+% 参考文献
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{hyperref}
+
+% その他の便利なパッケージ
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+
+% コードのハイライト設定
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codepurple},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codegreen},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% ハイパーリンクの設定
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% ページ設定
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=30mm,
+    right=30mm,
+    top=30mm,
+    bottom=30mm,
+} 

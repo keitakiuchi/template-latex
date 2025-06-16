@@ -1,0 +1,55 @@
+# LaTeX 一時ファイル
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# ビルドディレクトリ
+build/
+
+# 生成されたPDF（必要に応じてコメントアウト）
+# *.pdf
+
+# bibtex/biblatex 関連
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# 索引関連
+*.idx
+*.ilg
+*.ind
+*.ist
+
+# glossaries 関連
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+
+# latexmk 関連
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# その他
+.DS_Store
+Thumbs.db 

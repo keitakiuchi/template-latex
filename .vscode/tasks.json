@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build LaTeX",
+            "type": "shell",
+            "command": "cd tex && latexmk -pdf main.tex",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean LaTeX",
+            "type": "shell",
+            "command": "cd tex && latexmk -C",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "View PDF",
+            "type": "shell",
+            "command": "xdg-open tex/main.pdf",
+            "windows": {
+                "command": "start tex\\main.pdf"
+            },
+            "osx": {
+                "command": "open tex/main.pdf"
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

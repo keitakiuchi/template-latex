@@ -1,0 +1,27 @@
+% main.tex - エントリポイント
+\documentclass[a4paper,11pt]{article}
+
+% プリアンブル（パッケージなど）の読み込み
+\input{preamble}
+
+\begin{document}
+
+% タイトル
+\title{タイトル}
+\author{著者名}
+\date{\today}
+\maketitle
+
+% 目次
+\tableofcontents
+\clearpage
+
+% 各章の読み込み
+\input{sections/intro}
+\input{sections/conclusion}
+
+% 参考文献
+\bibliography{bib/refs}
+\bibliographystyle{plain}
+
+\end{document} 
