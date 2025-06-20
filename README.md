@@ -32,7 +32,8 @@ latex-template/
 │   ├─ docx/             ← Word出力（予定）
 │   └─ aux/              ← 中間ファイル
 ├─ scripts/              ← スクリプト類
-│   └─ compile.sh        ← コンパイルスクリプト
+│   ├─ compile.sh        ← コンパイルスクリプト
+│   └─ tex2docx.sh       ← TeX→Word変換スクリプト
 ├─ figures/              ← 画像・図表
 ├─ latexmkrc             ← latexmk のカスタム設定
 ├─ .gitignore
@@ -45,6 +46,7 @@ latex-template/
 ### 前提条件
 
 - TeX Live または MacTeX のインストール（詳細は後述）
+- pandoc（TeX→Word変換用、詳細は後述）
 - VS Code + LaTeX Workshop 拡張機能（推奨）
 
 ### コンパイル方法
@@ -71,6 +73,16 @@ latexmk -r ../latexmkrc main.tex
 ```
 
 > **注意**: 生成されたPDFは `build/pdf/` に出力されます。
+
+#### TeX→Word変換
+
+```bash
+# TeXファイルをWordに変換
+./scripts/tex2docx.sh tex/main.tex
+```
+
+> **注意**: 生成されたWordファイルは `build/docx/` に出力されます。
+> 一部のLaTeXパッケージは変換時に警告が出る場合がありますが、基本的なテキスト変換は正常に動作します。
 
 ### カスタマイズ
 
