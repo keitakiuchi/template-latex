@@ -108,7 +108,7 @@ sudo apt autoremove --purge
 ```bash
 # 依存パッケージ
 sudo apt update
-sudo apt install -y perl wget xz-utils fontconfig
+sudo apt install -y perl wget xz-utils fontconfig pandoc
 
 # ネットインストーラを入手
 wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
