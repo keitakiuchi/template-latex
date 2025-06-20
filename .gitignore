@@ -1,3 +1,5 @@
+.bashrc
+
 # LaTeX 一時ファイル
 *.aux
 *.lof
@@ -13,7 +15,7 @@
 .*.lb
 
 # ビルドディレクトリ
-build/
+build/aux/
 
 # 生成されたPDF（必要に応じてコメントアウト）
 # *.pdf

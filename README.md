@@ -27,6 +27,12 @@ latex-template/
 │   │   └─ conclusion.tex
 │   └─ bib/              ← 参考文献
 │       └─ refs.bib
+├─ build/                ← 生成ファイル（自動生成）
+│   ├─ pdf/              ← PDF出力
+│   ├─ docx/             ← Word出力（予定）
+│   └─ aux/              ← 中間ファイル
+├─ scripts/              ← スクリプト類
+│   └─ compile.sh        ← コンパイルスクリプト
 ├─ figures/              ← 画像・図表
 ├─ latexmkrc             ← latexmk のカスタム設定
 ├─ .gitignore
@@ -54,9 +60,17 @@ latex-template/
 
 ```bash
 # リポジトリのルートディレクトリで
-cd tex
-latexmk -pdf main.tex
+./scripts/compile.sh
 ```
+
+または手動で：
+
+```bash
+cd tex
+latexmk -r ../latexmkrc main.tex
+```
+
+> **注意**: 生成されたPDFは `build/pdf/` に出力されます。
 
 ### カスタマイズ
 
@@ -82,7 +96,7 @@ MIT License
 
 sudo apt remove --purge 'texlive*' 'context*' 'biber'
 sudo apt autoremove --purge
-````
+```
 
 > この時点で `texinfo`, `texinfo-lib`, `tex-common` だけ残る場合があります。
 > それらも不要なら
@@ -133,7 +147,7 @@ latexmk -lualatex test.tex
 | 症状                             | 解決策                                                         |
 | ------------------------------ | ----------------------------------------------------------- |
 | `Please (re)run Biber...`      | `biber main` → `latexmk -lualatex main.tex`                 |
-| `Missing character (nullfont)` | 通常は無視可。PDF 内に “?” が残るならフォント設定を確認                            |
+| `Missing character (nullfont)` | 通常は無視可。PDF 内に "?" が残るならフォント設定を確認                            |
 | apt 版が復活する                     | `apt-mark hold texlive-base texlive-binaries` で再インストールをブロック |
 
 ---
@@ -161,21 +175,17 @@ latexmk -lualatex test.tex
 ### 1. 内蔵SSDへ *scheme-tiny* を導入（約 100 MB）
 
 ```bash
-sudo apt update
-wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-tar -xzf install-tl-unx.tar.gz
-cd install-tl-*/
-sudo perl install-tl -profile <<'EOF'
+sudo perl install-tl -profile - <<'EOF'
 selected_scheme scheme-tiny
 TEXDIR /usr/local/texlive/tiny
 TEXMFCONFIG ~/.texlive2025
-TEXMFVAR ~/.texlive2025
-TEXMFHOME ~/texmf
+TEXMFVAR   ~/.texlive2025
+TEXMFHOME  ~/texmf
 collection-langjapanese 0   # tiny には日本語フォントが含まれない
 option_doc 0
 option_src 0
 EOF
-````
+```
 
 ### 2. 外付けSSDへ *scheme-full* の TeX Live 2025 をインストール
 
