@@ -39,7 +39,7 @@ template-latex/
 ├─ latexmkrc             ← latexmk のカスタム設定
 ├─ .gitignore
 ├─ README.md
-└─ LICENSE               ← MIT など
+└─ LICENSE               ← GPL v3
 ```
 
 ## 使い方
@@ -111,9 +111,9 @@ latexmk -r ../latexmkrc main.tex
 
 ## ライセンス
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
-本ソフトウェアは **MIT License** の下で配布されています。  
+本ソフトウェアは **GNU General Public License v3.0 以降（GPL-3.0-or-later）** の下で配布されています。  
 詳細はリポジトリ同梱の [LICENSE](LICENSE) ファイルをご覧ください。
 
 ## TeX Live のインストール
