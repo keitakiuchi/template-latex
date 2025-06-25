@@ -1,0 +1,986 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A template for Wiley article submissions developed by 
+% Overleaf for the Overleaf-Wiley pilot which ran 
+% during 2017 and 2018.
+% 
+% This template is no longer supported, but is provided
+% for historical reference. Last updated January 2019.
+%
+% Please note that whilst this template provides a 
+% preview of the typeset manuscript for submission, it 
+% will not necessarily be the final publication layout.
+%
+% Document class options:
+% =======================
+% blind: Anonymise all author, affiliation, correspondence
+%        and funding information.
+%
+% lineno: Adds line numbers.
+%
+% serif: Sets the body font to be serif. 
+%
+% twocolumn: Sets the body text in two-column layout. 
+% 
+% num-refs: Uses numerical citation and references style 
+%           (Vancouver-authoryear).
+%
+% alpha-refs: Uses author-year citation and references style
+%             (rss).
+%
+% Using other bibliography styles:
+% =======================
+%
+% To specify a different bibiography style
+%
+% 1) Do not use either num-refs or alpha-refs in documentclass.
+% 2) Load natbib package with the options set as needed.
+% 3) Use the \bibliographystyle command to specify the style
+% 
+% Included NJD styles are: 
+%   WileyNJD-ACS
+%   WileyNJD-AMA
+%   WileyNJD-AMS
+%   WileyNJD-APA
+%   WileyNJD-Harvard
+%   WileyNJD-VANCOUVER
+%
+% or you may upload an alternative .bst file 
+% (if requested by the journal).
+%
+% Examples:
+% =======================
+%% Example: Using numerical, sort-by-authors citations.
+%\documentclass[num-refs]{wiley-article}
+\documentclass{wiley-article}
+
+%% Example: Using author-year citations and anonymising submission
+% \documentclass[blind,alpha-refs]{wiley-article}
+
+%% Example: Using unsrtnat for numerical, in-sequence citations
+% \documentclass{wiley-article}
+% \usepackage[numbers]{natbib}
+% \bibliographystyle{unsrtnat}
+
+%% Example: Using WileyNJD-AMA reference style and superscript
+%%          citations, two-column and serif fonts for AIChE
+% \documentclass[serif,twocolumn,lineno]{wiley-article}
+% \usepackage[super]{natbib}
+% \bibliographystyle{WileyNJD-AMA}
+% \makeatletter
+% \renewcommand{\@biblabel}[1]{#1.}
+% \makeatother
+
+% Add additional packages here if required
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{threeparttable}
+\usepackage{enumitem}
+\usepackage[round,authoryear]{natbib}
+
+% ② ここから通常のパッケージ読み込み（\@ を使わないもの）
+% --- 英語の場合 ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% % --- 日本語関連のみ抜粋 ---
+% \usepackage{luatexja}
+% \usepackage{luatexja-fontspec}
+
+% % 欧文フォント（Times 相当）
+% \setmainfont{Times New Roman}
+
+% % 和文フォント（例：IPAex 明朝／ゴシック）
+% \setmainjfont{IPAexMincho}
+% \setsansjfont{IPAexGothic}
+% % --- 日本語関連ここまで ---
+
+% \usepackage[round,authoryear]{natbib}
+\usepackage[natbibapa]{apacite}
+
+% \usepackage{geometry}
+\usepackage{footmisc}
+
+\usepackage{ltablex}
+\keepXColumns   
+\usepackage{array} 
+\usepackage{enumitem} % ← already loaded? keeps only one instance
+\setlist[itemize]{nosep,leftmargin=*}
+% \usepackage{pdfpages}
+% \usepackage{titling}
+
+% \geometry{paperheight=10in,paperwidth=6.5in,margin=2cm,headsep=.5cm,top=2.5cm,headheight=1cm}
+
+% ヘッダー・フッター、キャプション設定など
+% \linespread{1.13}
+% \captionsetup[figure]{labelfont=sc,skip=1.4pt,aboveskip=1pc}
+% \captionsetup[table]{labelfont=sc,skip=1.4pt,labelsep=newline}
+
+% \makeatletter
+%   % ① セクション = 1
+%   \setcounter{section}{1}
+%   % ② サブセクション = 0
+%   \setcounter{subsection}{0}
+%   % ③ 表示形式を「セクション.サブセクション」に戻す
+%   \renewcommand\thesubsection{\thesection.\arabic{subsection}}
+% 
+% % タイトルだけを再掲するマクロ（修正後）
+% \newcommand{\printtitle}{%
+%   % \maketitle の前半と同じ前余白
+%   \vskip 2em
+%   \begin{center}% 中央揃え開始
+%     {\LARGE \thetitle \par}% タイトル（\LARGE）のみ
+%   \end{center}% 中央揃え終了
+%   % \maketitle の後半と同じ下余白
+%   % \vskip 1.5em
+% }
+% 
+% \makeatother
+
+% Update article type if known
+\papertype{Original Article}
+% Include section in journal if known, otherwise delete
+\paperfield{Journal Section}
+
+\title{Evaluating AI Counseling in Japanese: \\
+Counselor, Client, and Evaluator Roles Assessed \\
+by Motivational Interviewing Criteria
+}
+
+% List abbreviations here, if any. Please note that it is preferred that abbreviations be defined at the first instance they appear in the text, rather than creating an abbreviations list.
+% \abbrevs{AI, artificial intelligence; LLM, large language model; MI, motivational interviewing; RAG, retrieval-augmented generation.}
+
+% Include full author names and degrees, when required by the journal.
+% Use the \authfn to add symbols for additional footnotes and present addresses, if any. Usually start with 1 for notes about author contributions; then continuing with 2 etc if any author has a different present address.
+\author[1]{Keita Kiuchi PhD}
+\author[2]{Yoshikazu Fujimoto\authfn{1}}
+\author[3]{Hideyuki Got\=o PhD\authfn{1}}
+\author[4]{Tomonori Hosokawa PhD\authfn{1}}
+\author[5]{Makoto Nishimura PhD\authfn{1}}
+\author[6]{Y\=osuke Sat\=o PhD\authfn{1}}
+\author[7]{Izumi Sezai PhD\authfn{1}}
+
+\contrib[\authfn{1}]{Equally contributing authors.}
+
+% Include full affiliation details for all authors
+\affil[1]{Japan National Institute of Occupational Safety and Health, Kanagawa, 214-8585, Japan}
+\affil[2]{Kaze to Taikyo, Tokyo, 160-0022, Japan}
+\affil[3]{Saga Occupational Health Association, Saga, 840-0857, Japan}
+\affil[4]{Department of Pharmacy, Zikei Hospital/Zikei Institute of Psychiatry, Okayama, 702-8026, Japan}
+\affil[5]{Department of Medical Welfare, Suzuka University of Medical Science, Mie, 510-0293, Japan}
+\affil[6]{Graduate School of Human Sciences, Ritsumeikan University, Osaka, 567-8570,Japan}
+\affil[7]{Faculty of Nursing, National Defense Medical College, Saitama, 359-8513, Japan}
+
+\corraddress{Dr. Keita Kiuchi, Japan National Institute of Occupational Safety and Health, Kanagawa, 214-8585, Japan}
+\corremail{kiuchi@h.jniosh.johas.go.jp}
+\fundinginfo{This work was supported by Practical Psychology Institute, LLC (Grant PPIRG202501).}
+
+% Include the name of the author that should appear in the running header
+\runningauthor{Kiuchi et al.}
+
+\begin{document}
+
+\begin{frontmatter}
+\maketitle
+
+\begin{abstract}
+This study provides the first evaluation of large language model (LLM) performance across three counseling roles in Japanese-language therapeutic contexts. We assessed counselor AI systems (GPT-4-turbo with zero-shot prompting or Structured Multi-step Dialogue Prompts [SMDP], Claude-3-Opus-SMDP), client AI simulations, and evaluation AI systems (o3, Claude-3.7-Sonnet, Gemini-2.5-pro). Human experts (\emph{n} = 15) evaluated AI-generated dialogues using the \emph{Motivational Interviewing Treatment Integrity (MITI) Coding Manual}~4.2.1.
+SMDP implementation significantly enhanced counselor AI performance across all MITI ratings compared with zero-shot prompting, with no differences between GPT-SMDP and Opus-SMDP. Evaluation AIs performed comparably to humans for \emph{Cultivating Change Talk} but overestimated \emph{Softening Sustain Talk} and overall quality metrics. Model-specific biases emerged: Gemini emphasized power-sharing, o3 focused on technical proficiency, and Sonnet prioritized emotional expression. Client AI simulations exhibited limited emotional range and unnaturally high compliance, requiring enhanced realism.
+These findings establish benchmarks for AI-assisted counseling in non-English contexts and identify critical areas for improvement through advanced prompt engineering, retrieval-augmented generation, and targeted fine-tuning, informing culturally sensitive AI mental health tools.
+
+% Please include a maximum of seven keywords
+\keywords{artificial intelligence, counseling, prompt engineering, evaluation bias, machine psychology}
+
+\end{abstract}
+\end{frontmatter}
+
+\section*{Data Availability Statement}
+Datasets and analysis scripts are available in OSF (\url{https://osf.io/p8c39/files/2e58c42f-a7ba-45f2-aa60-265e107e36db}) and will be made public upon publication.
+
+\section*{Conflict of Interest}
+The authors declare no conflicts of interest.
+
+\section*{Ethics Approval Statement}
+This study did not involve human participants, animals, or identifiable personal data and therefore did not require ethics committee review.
+
+\section*{Permission to Reproduce Material / Clinical Trial Registration}
+Not applicable.
+
+\section*{Author Contributions}
+KK contributed to Conceptualization, Methodology, Software, Formal Analysis, Data Curation, Writing \textendash{} Original Draft, Visualization, Project Administration, and Funding Acquisition. YF, HG, TH, MN, YS, and IS contributed to Validation, Investigation, and Writing \textendash{} Review \& Editing. All authors after the first are listed alphabetically.
+
+The field of artificial intelligence (AI) has undergone a profound transformation with the emergence of large language models (LLMs), marking a paradigm shift from rule-based systems to generative AI capable of producing human-like text \citep{keExploringFrontiersLLMs2024}. This evolution represents the culmination of decades of AI research, transitioning from early symbolic approaches to the current era of deep learning-based generative models with significant implications for psychological research and practice.
+
+\subsection*{From Symbolic AI to Generative AI}
+
+The history of AI formally began in 1956, though its conceptual foundations emerged earlier \citep{stricklandTurbulentUncertainFuture2021}. Initial developments featured rule-based dialogue systems such as \textit{ELIZA} \citep{rajaramanELIZAChatGPT2023} and expert systems that encoded human expertise through explicit rules \citep{tanApplicationExpertSystem2016}. These symbolic approaches, grounded in semantic networks and ontologies \citep{shu-hsienliaoExpertSystemMethodologies2005,sowa1992semantic}, represented early attempts to manually engineer intelligence into computational systems.
+
+The advent of machine learning and deep learning marked a fundamental shift from human-designed rules to data-driven optimization. This transformation reached a critical milestone with the Transformer architecture \citep{vaswaniAttentionAllYou2023}, which revolutionized natural language processing through self-attention mechanisms. Trained on massive text corpora \citep{gaoPile800GBDataset2020}, Transformer-based models evolved into large language models (LLMs) exemplified by OpenAI's GPT series, Anthropic's Claude \citep{enisLLMNMTAdvancing2024}, and Google's LaMDA \citep{thoppilanLaMDALanguageModels2022}.
+
+These LLMs constitute the foundation of modern generative AI, autonomously producing coherent and contextually appropriate natural language outputs. Their sophistication has sparked discussions about artificial general intelligence, positioning LLMs as central to contemporary AI discourse \citep{ferrarisArchitectureLanguageUnderstanding2025,xiRisePotentialLarge2023}. This technological breakthrough presents unprecedented opportunities for psychological research and mental health applications.
+
+\subsection*{LLMs in Psychological Research and Practice}
+
+The intersection of LLMs and psychology has generated multidisciplinary research streams. Researchers increasingly treat LLMs as subjects of psychological investigation \citep{abdurahmanPerilsOpportunitiesUsing2024}, examining their ethical reasoning patterns \citep{almeidaExploringPsychologyLLMs2024} and their influence on human decision-making processes \citep{eignerDeterminantsLLMassistedDecisionMaking2024}. The development of psychology-specific LLMs \citep{huPsycoLLMEnhancingLLM2025} and the emergence of Machine Psychology\textemdash{}a field dedicated to understanding AI behavior through psychological frameworks \citep{hagendorff2023machine}\textemdash{}highlight the bidirectional relationship between psychology and artificial intelligence.
+
+Mental healthcare represents a particularly promising application domain for LLM-based generative AI. Preliminary evidence suggests that AI counseling tools can enhance screening efficiency and alleviate professional workload \citep{stadeLargeLanguageModels2024}. Nevertheless, significant concerns persist regarding inappropriate responses, algorithmic opacity, and potential biases \citep{demszkyUsingLargeLanguage2023}. Beyond serving as counselors, LLMs show potential as training clients \citep{mauryaUsingAIBased2024} and performance evaluators \citep{qiuInteractiveAgentsSimulating2024}, offering comprehensive transformation possibilities for mental health education and practice.
+
+\subsection*{Cultural and Linguistic Considerations}
+
+Despite the global reach of LLMs, their performance varies substantially across languages and cultural contexts \citep{zhongCulturalValueDifferences2024}. Current research remains disproportionately English-centric, creating critical gaps in our understanding of LLM capabilities in non-English contexts. This limitation proves especially problematic for mental health applications, where cultural sensitivity and linguistic nuance are fundamental to therapeutic efficacy. The evaluation of these systems in Japanese remains notably underexplored, despite Japan's distinct cultural frameworks for mental health and counseling practices that may influence AI performance and acceptability.
+
+\subsection*{The Present Study}
+
+This research addresses these critical gaps by conducting the first comprehensive evaluation of LLM performance across three counseling roles in Japanese-language therapeutic contexts. Our investigation systematically examines the capabilities and limitations of state-of-the-art LLMs when deployed as counselors, clients, and evaluators in Japanese mental health scenarios.
+
+We employed cutting-edge models available at the time of data collection. Counselor AIs included OpenAI's GPT-4-turbo (implemented with either zero-shot prompting or Structured Multi-step Dialogue Prompts [SMDP]) and Anthropic's Claude-3-Opus (with SMDP). Claude-3-Opus served as the client AI, selected for its superior complex-dialogue capabilities despite computational costs \citep{berrezueta-guzmanExploringEfficacyRobotic2024}, configured with demographically specified work-related concern prompts. Evaluation AIs comprised the latest generation models: OpenAI's o3, Anthropic's Sonnet, and Google's Gemini.
+
+Our evaluation framework utilizes the \textit{Motivational Interviewing Treatment Integrity} (MITI) Coding Manual 4.2.1 \citep{moyers2014motivational}, consistent with established AI counseling research protocols \citep{cohenMotivationalInterviewingTranscripts2024,steenstraVirtualAgentsAlcohol2024,yangCAMICounselorAgent2025}. This standardized approach enables rigorous comparison between AI and human evaluators while maintaining ecological validity for real-world therapeutic applications.
+
+\subsubsection*{Research Questions and Hypotheses}
+
+Building on existing literature demonstrating the impact of prompting strategies on LLM counseling performance \citep{leeComparativeStudyPerformance2024,huangEmpowermentLargeLanguage2024}, the potential of LLMs as simulated clients \citep{potterEnhancingCommunicationClinical2024,grayIncreasingRealismVariety2024}, and the promise of automated evaluation systems \citep{rudolphAutomatedFeedbackGeneration2024,sharmaHumanAICollaboration2023}, we formulated the following hypotheses:
+
+\begin{description}
+  \item[H1:] Counselor AIs utilizing SMDP will receive higher human-expert ratings than those using zero-shot prompting.
+  \item[H2:] Claude-3-Opus with SMDP will outperform GPT-4-turbo with SMDP on human-expert evaluations.
+  \item[H3:] Evaluations by o3, Sonnet, and Gemini-based systems will differ significantly from human-expert ratings.
+\end{description}
+
+This study advances Machine Psychology by examining practical implementation challenges of AI in mental health services. Through our focus on Japanese-language interactions, we provide essential evidence regarding cross-cultural validity and identify critical developmental priorities for non-English therapeutic contexts. Our findings have implications for the global deployment of AI-assisted mental health interventions and the development of culturally sensitive therapeutic AI systems.
+
+
+% ─── Methods セクション ──────────────────────
+
+
+
+\section*{Method}
+
+\subsection*{Counseling Script Development}
+
+We evaluated dialogue scripts generated through AI counselor\textendash{}client interactions, subsequently assessed by human experts and AI evaluation systems.
+
+Three LLMs served as counselor AIs: (1) OpenAI's GPT\textendash{}4\textendash{}turbo with zero\textendash{}shot prompting (GPT-zero; system prompt: ``You are a supportive and encouraging counselor''); (2) GPT\textendash{}4\textendash{}turbo with Structured Multi-step Dialogue Prompts (GPT-SMDP); and (3) Anthropic's Claude\textendash{}3\textendash{}Opus\textendash{}2000 with SMDP (Claude-SMDP). The SMDP framework (Appendix~1) facilitates secure communication environments through structured dialogue progression: current challenges \textrightarrow{} desired future state \textrightarrow{} attempted solutions \textrightarrow{} available resources \textrightarrow{} next steps. It emphasizes reflective listening techniques (Listen\textendash{}Back 1 and 2) that paraphrase client statements while introducing new perspectives. Advisory statements were minimized and labeled as ``reference opinions'' to preserve client autonomy.
+
+Client AIs used Claude\textendash{}3\textendash{}Opus\textendash{}2000 with work\textendash{}related concern prompts (Appendix~2). The \texttt{\{client\_type\}} parameter specified six profiles: three age groups (20s, 40s, 60s) \texttimes{} two sexes. A custom program maintained dialogue history via respective APIs. All scripts were generated on April~12,~2024.
+
+\subsection*{Human Expert Evaluation}
+
+\subsubsection*{Evaluators}
+Fifteen counseling researchers evaluated the AI-generated scripts. Table~1 presents evaluator characteristics: 70\% had >10 years counseling experience; >50\% held Japanese clinical psychologist certification. The panel included career counselors, medical doctors, and other mental health professionals.
+
+\subsubsection*{Measures and Procedure}
+Evaluators assessed five indicators:
+\begin{itemize}
+    \item Four MITI coding system measures: Cultivating Change Talk (CCT), Softening Sustain Talk (SST), Partnership (PAR), and Empathy (EMP)
+    \item One custom metric: Overall evaluation (OVR)
+\end{itemize}
+
+Each evaluator received three blinded scripts (GPT-zero, GPT-SMDP, Opus-SMDP) from specific client AI profiles for simultaneous evaluation. Ratings used the MITI 9-point scale (1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5). Additionally, evaluators rated client naturalness (0\textendash{}10 scale: 0 = extremely unnatural, 10 = extremely natural) and provided qualitative feedback.
+
+\begin{center}
+\textbf{[Table 1 about here]}
+\end{center}
+
+\subsection*{AI Evaluation Systems}
+
+Three AI systems evaluated counseling quality: OpenAI's o3, Anthropic's Claude\textendash{}3.7\textendash{}Sonnet, and Google's Gemini\textendash{}2.5\textendash{}pro. These systems followed the human evaluation protocol, rating the five indicators on the same 9-point scale (see Appendix~3 for evaluation prompts).
+
+\subsection*{Statistical Analysis}
+
+\subsubsection*{Counselor AI Performance}
+
+Linear mixed-effects models examined human ratings of counselor AI responses:
+
+\begin{equation}
+\begin{aligned}
+\mathrm{Score}_{ij} =\;& 
+\beta_{0}
++ \beta_{1}\,\mathrm{Model}_{\text{one-shot},ij}
++ \beta_{2}\,\mathrm{Model}_{\text{gpt-smdp},ij} \\
+& + \beta_{3}\,\mathrm{AgeCat}_{40\text{s},ij}
++ \beta_{4}\,\mathrm{AgeCat}_{60\text{s},ij}
++ \beta_{5}\,\mathrm{Sex}_{\text{male},ij} \\
+& + u_{0j}
++ \varepsilon_{ij},
+\end{aligned}
+\end{equation}
+
+where $u_{0j}$ represents rater $j$'s random intercept. Each indicator was modeled separately with Opus\textendash{}SMDP/20s/female as reference. We conducted $t$-tests using Kenward\textendash{}Roger/Satterthwaite degrees of freedom and three Tukey\textendash{}Kramer adjusted pairwise comparisons.
+
+\subsubsection*{AI Evaluation System Performance}
+
+Linear mixed-effects models assessed evaluation differences between humans and AI systems, including counselor model \texttimes{} evaluator group interactions:
+
+\begin{equation}
+\begin{aligned}
+\mathrm{Score}_{ijk} =\;&
+\beta_{0}
++\beta_{1-2}\,\mathrm{Model}_{ij}
++\beta_{3-5}\,\mathrm{Group}_{ij}
++\beta_{6-11}\,(\mathrm{Model}\times\mathrm{Group})_{ij}\\
+&+\beta_{12-13}\,\mathrm{AgeCat}_{ij}
++\beta_{14}\,\mathrm{Sex}_{ij}
++u^{(\mathrm{human})}_{0j}
++v^{(\mathrm{AI})}_{0k}
++\varepsilon_{ijk},
+\end{aligned}
+\end{equation}
+
+Random intercepts $u^{(\mathrm{human})}_{0j}$ and $v^{(\mathrm{AI})}_{0k}$ represent human and AI evaluator clusters. ML estimation with Satterthwaite approximation was employed. Six Tukey\textendash{}Kramer adjusted comparisons examined main effects. Exploratory simple effects analyses used Cohen's $d$ standardized by residual SD.
+
+\subsubsection*{Inter-rater Reliability}
+
+ICC(2,1) and ICC(2,$k$) were calculated using \textsf{R} \texttt{psych} following Shrout and Fleiss's Model~2. Missing data were handled through pairwise deletion. Interpretation followed Koo \& Li (2016): <0.50 poor, 0.50\textendash{}0.75 moderate, 0.75\textendash{}0.90 good, >0.90 excellent.
+
+\subsubsection*{Sample Size and Pre-registration}
+
+Sample size calculations (\textsf{G*Power}~3.1) targeted 22 evaluations per comparison (medium effect = 0.5, power = 0.95, $\alpha$ = 0.025 with Tukey adjustment), requiring 198 total evaluations. The final dataset contained 162 evaluations from 15 evaluators. Post-hoc simulations confirmed adequate power (Appendix~5). 
+
+Analyses used \textsf{R}~v4.4.1 with packages \textsf{lme4}~v1.1.37, \textsf{emmeans}~v1.11.0, and \textsf{SIMR}~v1.0.7. The protocol was pre-registered at \url{https://doi.org/10.17605/OSF.IO/VU286}.
+
+\subsection*{Ethical Considerations}
+This study involved no human participants, animals, or identifiable data; ethics review was not required.
+
+
+% ─── Results セクション ──────────────────────
+
+
+\section*{Results}
+
+\subsection*{Descriptive Statistics}
+
+Table 2 presents descriptive statistics by evaluator group. Human experts completed 54 evaluations, while evaluation AIs completed 66 evaluations per model. Each evaluation included assessments of three counselor AI models. Client AI characteristics were balanced across age and gender. Human ratings of client AI naturalness averaged 4.72 ± 2.02 (10-point scale), indicating below-midpoint ratings with substantial variability. Human expert ratings ranged from 2.0 to 3.5 points across counselor AI models, whereas evaluation AIs provided consistently higher ratings with minimum scores around 2.5 points. Gemini produced the highest ratings, reaching 5.0 points on some measures.
+
+\begin{center}
+\textbf{[Table 2 about here]}
+\end{center}
+
+\subsection*{Human Evaluation of Counselor AIs}
+
+GPT-zero scored significantly lower than Opus-SMDP across all measures (Tables 3 and 4). Differences ranged from -0.90 to -1.04 points for CCT, PAR, EMP, and OVR, with a smaller difference for SST (-0.50 points). GPT-zero also scored significantly lower than GPT-SMDP on all indices, with differences of -0.84 to -1.23 points for CCT/PAR/EMP/OVR and -0.34 points for SST. Opus-SMDP and GPT-SMDP did not differ significantly. Client AI age and gender showed no significant effects. Inter-rater SDs (0.47-0.68 points) were consistently smaller than residual SDs (0.81-0.88 points) across all indices (Table 5).
+
+\begin{center}
+\textbf{[Table 3 about here]}\\
+\textbf{[Table 4 about here]}\\
+\textbf{[Table 5 about here]}
+\end{center}
+
+\subsection*{Counseling Evaluation AIs}
+
+Linear mixed-model analyses revealed that all evaluation AIs rated SST and OVR significantly higher than humans (Table 6). For PAR, only Sonnet and Gemini exceeded human ratings; for EMP, only Sonnet did. CCT showed no significant differences. Client characteristics affected some ratings: older clients received lower PAR and EMP scores, while male clients received higher scores on PAR, EMP, CCT, and OVR.
+
+Human rater SDs ranged from 0.49 to 0.68, highest for CCT and lowest for OVR (Table 7). All evaluation AI SDs equaled zero, indicating complete consistency at the intercept level. Residual SDs ranged from 0.66 to 0.77 points.
+
+Multiple comparisons showed that evaluation AIs rated OVR significantly higher than humans (Table 8). Gemini exceeded human ratings by approximately 2 points; o3 exceeded them by 1.52 points. For SST, Sonnet and Gemini rated higher than humans, while o3 did not differ from humans. Among evaluation AIs, Sonnet and Gemini did not differ on SST, PAR, and EMP but both exceeded o3. For OVR, all three AIs differed significantly (Sonnet > Gemini > o3). For CCT, only Gemini exceeded o3; Sonnet and o3 did not differ.
+
+Significant interactions between counselor AI model and evaluator group emerged for all indices, prompting simple effects analyses (Appendix 6). Humans provided more stringent evaluations than AIs, with effect sizes varying by index and counselor model. Among AIs, o3 was most conservative while Gemini and Sonnet were most lenient. For CCT, human-AI differences were non-significant, with Gemini providing higher ratings than Sonnet across counselor models. For PAR and EMP, select comparisons showed significant human-AI differences, with evaluation AIs emphasizing different counselor qualities. For SST and OVR, humans provided significantly lower ratings than Gemini and Sonnet across all counselor models.
+
+\begin{center}
+\textbf{[Table 6 about here]}\\
+\textbf{[Table 7 about here]}\\
+\textbf{[Table 8 about here]}
+\end{center}
+
+\subsection*{Inter-rater Reliability}
+
+Human and AI evaluators showed distinct reliability patterns (Table 9). For humans, ICC(2,1) values indicated good reliability for PAR (0.90) and SST (0.79), with lower values for other metrics. ICC(2,k) values exceeded 0.90 for all metrics except OVR (0.42) and CCT (0.75). AI evaluators showed variable reliability: some models had insufficient variance for calculation while others produced low values. High ICC(2,k) reliability emerged for Sonnet on CCT, SST, and OVR; for o3 on CCT, SST, EMP, and OVR; and for Gemini on PAR and EMP.
+
+\begin{center}
+\textbf{[Table 9 about here]}
+\end{center}
+
+\subsection*{Qualitative Evaluation}
+
+Qualitative findings are detailed in Appendix 7.
+
+\subsubsection*{Counselor AI Evaluation}
+
+Human experts identified four common limitations across AI counselors: excessive directiveness and advice-giving, insufficient emotional empathy and exploration of unexpressed content, inadequate deepening of change-oriented statements, and an evaluative stance hindering collaboration. Opus-SMDP effectively elicited client strengths but dominated sessions through excessive verbalization, resulting in ambiguous goal-setting and protracted closings. GPT-zero demonstrated rapid support but rushed toward problem identification and termination without adequate exploration, relying on generic encouragement. GPT-SMDP exhibited collaborative intent but employed monotonous, mechanical patterns that failed to explore client values or workplace challenges.
+
+AI evaluators identified superficial change talk, surface-level empathy, premature advice-giving, and absence of complex reflections, with power-sharing remaining moderate. However, each AI evaluator emphasized different aspects: o3 focused on verbalization quantity and technical proficiency, Sonnet prioritized client affirmation and self-efficacy, while Gemini emphasized client autonomy and empowerment.
+
+\subsubsection*{Client AI Evaluation}
+
+Human experts identified three primary limitations in client AI performance. First, dialogue patterns included unconditional acceptance of suggestions, mechanical repetition, flat interactions, translation artifacts, excessively formal expressions, and awkward endings with formulaic phrases. Second, emotional expression was characterized by passive compliance, minimal resistance or ambivalence, and absent negative emotions. Third, character development lacked specificity, with abstract problem descriptions, missing age-appropriate emotions, and insufficient workplace or family context. Recommendations for improvement include incorporating natural dialogue elements (backchanneling, silences, varied responses), enhancing emotional range and bidirectionality, and adding specific contextual details to increase realism.
+
+
+% ─── Discussion セクション ──────────────────────
+
+
+\section*{Discussion}
+
+This study provides the first comprehensive evaluation of LLM performance across three counseling roles\textemdash{}counselor, client, and evaluator\textemdash{}in Japanese-language therapeutic contexts. Our findings reveal both the promise and limitations of current AI systems for mental health applications.
+
+\subsection*{Hypothesis Testing Results}
+
+\subsubsection*{H1 (Structured prompting effects)}
+As predicted, counselor AIs using SMDP significantly outperformed zero-shot prompting across all human-rated metrics (increases of approximately 0.9–1.0 points). The structured dialogue cycle (\emph{Listen\textendash{}Back 1 \\rightarrow{} Listen\textendash{}Back 2 \\rightarrow{} Question}) enhanced reflective responding, client-aligned questioning, and appropriate pacing before advice-giving. This demonstrates that explicit procedural guidance substantially improves AI counseling quality beyond simple role instructions.
+
+\subsubsection*{H2 (Model differences)}
+GPT-4-turbo and Claude-3-Opus showed statistically equivalent performance when using SMDP (OVR difference = 0.06, \emph{p} = 0.624), indicating comparable Japanese conversational capabilities. However, our power analysis suggests 375+ evaluators would be needed to confirm true equivalence.
+
+\subsubsection*{H3 (Human-AI evaluator differences)}
+Evaluation AIs systematically overrated counselor performance on Overall Quality (OVR). For Session Structure and Time Management (SST), leniency was evident for Sonnet and Gemini, whereas o3 did not differ from human ratings. No significant differences were detected between AI and human ratings on PAR, EMP, or CCT. Exploratory analyses revealed model-specific biases: Gemini emphasized power-sharing, o3 focused on technical proficiency, and Sonnet prioritized emotional expression. These systematic differences highlight the challenge of automated counseling assessment.
+
+\subsection*{Enhancing Counselor AI Performance}
+
+Despite SMDP improvements, persistent limitations emerged: superficial reflection lacking emotional depth, rigid adherence to predetermined question flows, and premature or poorly-timed advice-giving. While SMDP respected client autonomy minimally, it failed to facilitate genuine emotional engagement or dialogue deepening.
+
+Strategic improvements should focus on enhancing reflective depth through multifaceted interpretation using Retrieval-Augmented Generation to capture implicit emotions and values \citep{arabiHabitCoachCustomising2024}. Dynamic flow management could be achieved through multi-agent architectures where specialized LLMs handle strategic decisions and response generation separately \citep{xuAutoCBTAutonomousMultiagent2025, kampmanMultiAgentDualDialogue2024}. Advice timing could be improved by integrating MI techniques such as Ask\textendash{}Offer\textendash{}Ask to ensure collaborative advice provision, while pacing control through strategic pauses and response length limits would allow adequate client reflection time.
+
+\subsection*{Developing Realistic Client AIs}
+
+Human evaluators identified critical deficits in client AI realism: flat affect, excessive compliance, and premature termination. These stem from insufficient persona depth, monotonous discourse patterns, and superficial scenario development \citep{mauryaQualitativeContentAnalysis2024, qiuInteractiveAgentsSimulating2024}.
+
+Effective solutions involve implementing dynamic emotion modeling with resistance parameters \citep{baoSFMSSServiceFlow2025} and incorporating variable response patterns of one to three sentences with natural hesitations and backchanneling. Challenge-oriented scenarios following realistic counseling trajectories \citep{duLLMsCanSimulate2024} combined with parameterized goals and fears reflected throughout conversations \citep{cookVirtualPatientsUsing2025} would substantially enhance realism.
+
+\subsection*{Improving Evaluation AI Systems}
+
+Evaluation AIs showed high consistency but systematic leniency compared to human experts. This bias manifested differently across models, with each emphasizing distinct counseling dimensions (power-sharing, technical skills, or emotional attunement).
+
+Two key factors explain these discrepancies. First, surface-level evaluation bias led AI evaluators to reward politeness and positive language while missing nuanced deficits like premature advice-giving or weak collaboration. This inflated OVR (and, for some models, SST) while failing to discriminate complex behaviors required for EMP and PAR. Second, MITI interpretation challenges arose when global rating criteria using phrases like "accepting/non-judgmental" were interpreted as achievable through surface behaviors, while higher-order requirements such as "recognizing unspoken emotions" were deemed unattainable through polite responses alone.
+
+Improvement strategies should include providing complete MITI manuals as context rather than just rating scales, developing LLM-optimized evaluation rubrics with explicit behavioral anchors, implementing chunk-based evaluation with subsequent integration, and fine-tuning on expert-rated exemplars using efficient methods such as LoRA \citep{zhangPLaDPreferencebasedLarge2024}.
+
+\subsection*{Reliability Considerations}
+
+Inter-rater reliability analyses revealed important patterns. Human evaluators showed high agreement for SST and PAR (ICC > 0.79) but substantial variability for CCT and OVR, requiring multiple raters for reliable assessment \citep{kooGuidelineSelectingReporting2016}. Evaluation AIs demonstrated insufficient variance, suggesting leniency bias limits their discriminative capacity.
+
+
+\subsection*{Limitations}
+
+This study provides the first comprehensive evaluation of AI performance across counselor, client, and evaluation roles in Japanese counseling contexts. Several limitations warrant consideration.
+
+First, our LLMs (GPT-4-turbo, Claude-3-Opus) became outdated between data collection and publication\textemdash{}a common challenge in AI research. While SMDP's demonstrated effectiveness likely generalizes to current models, verification is needed. Additionally, counselor AI excluded Google's Gemini due to performance limitations at the time, though current versions may prove effective.
+
+Second, we evaluated AI-to-AI dialogues rather than human-AI interactions. Whether counselor AI responds appropriately to human clients or client AI effectively trains human counselors remains unverified. Critically, AI performance with inputs deviating from prompt-specified flows\textemdash{}common in real counseling\textemdash{}was not examined. Ethical considerations including transparency, data security, and AI's supplementary (not replacement) role also require attention before implementation (Kiuchi et al., 2025).
+
+Third, our MITI-based evaluation captures only Motivational Interviewing approaches, not all counseling modalities. MITI's design for audio recordings raises validity concerns for text evaluation. Furthermore, our findings are specific to Japanese-language contexts; documented language-dependent variations in LLMs limit cross-cultural generalizability.
+
+
+% ─── Conclusion セクション ──────────────────────
+
+
+\section*{Conclusion}
+
+This study presents the first comprehensive evaluation of counselor AI (GPT-4-turbo with zero-shot prompting, GPT-4-turbo with SMDP, Claude-3-Opus with SMDP), client AI, and counseling evaluation AI (o3, Claude-3.7-Sonnet, Gemini-2.5-pro) in Japanese counseling dialogues. SMDP-enhanced counselor AI significantly outperformed zero-shot conditions on MITI global ratings. GPT-4-turbo and Claude-3-Opus demonstrated comparable Japanese counseling quality. Evaluation AI showed no significant differences from humans in CCT ratings but exhibited marked leniency in SST and OVR ratings, with model-specific biases: Gemini emphasized power-sharing, o3 focused on technical skills, and Claude prioritized emotional expression. Client AI produced flat responses lacking resistance and emotional expression.
+
+These findings suggest improvements through detailed persona settings with emotional parameters, model optimization via RAG and fine-tuning, and integrated advancement of prompt design, model selection, and evaluation frameworks. Our results inform research, development, and practical applications for Japanese counseling support and training. Future research should extend to human-AI interactions involving actual clients and counseling professionals.
+
+
+% ─── Additional セクション ──────────────────────
+
+\section*{acknowledgements}
+We would like to express our sincere gratitude to the following individuals for their valuable contributions as expert evaluators of our counseling scripts: Dr. Kaoru Shibayama, Mr. Kensuke Saito, Mr. Koji Kunita, Dr. Youhei Komatsu, Ms. Misumi Yamaguchi, Mr. Takahiro Maki, and Youichi Ohtsubo, MD.
+
+\section*{conflict of interest}
+The authors declare no conflicts of interest.
+
+\section*{Supporting Information}
+
+The file \texttt{Supplemental\_materials.pdf} contains the following items.
+
+\begin{itemize}
+  \item \textbf{Appendix 1. Structural Multi-Dialogue Prompt}: the complete counsellor prompt and question sequence.
+  \item \textbf{Appendix 2. Client AI Prompt}: a concise template used to generate the simulated client role.
+  \item \textbf{Appendix 3. LLM Evaluation Prompt}: scoring rubrics and response format for the five metrics (CCT, SST, PAR, EMP, and OVR).
+  \item \textbf{Appendix 4. Counseling Script Examples}: age-specific dialogue examples generated by GPT-4 turbo, Claude 3 Opus, and others.
+  \item \textbf{Appendix 5. Post-hoc Sample Size Design and Simulation}: power analysis and simulation results, including Appendix Table 1.
+  \item \textbf{Appendix 6. Simple-Effect Contrasts for the Model × Evaluator-Group Interaction}: tables of simple-effect comparisons for all metrics.
+  \item \textbf{Appendix 7. Qualitative Evaluation}: qualitative comments provided by both human and LLM raters.
+\end{itemize}
+
+% \printendnotes
+
+% Submissions are not required to reflect the precise reference formatting of the journal (use of italics, bold etc.), however it is important that all key elements of each reference are included.
+\bibliographystyle{WileyNJD-APA}
+\bibliography{bib/Reference_LLM_evaluation}
+% \bibliographystyle{./vancouver-authoryear}
+% \bibliography{./bib/sample}
+
+
+
+% ─── Tables セクション ──────────────────────
+\clearpage                
+% \includepdf[pages=-]{APHW_tables_3.pdf}
+
+\begin{table}[htbp]
+  \section*{TABLE 1 Characteristics of Human Raters}
+  \centering
+  \label{tab:human_rater_characteristics}
+  \begin{tabular}{l r}
+    \toprule
+    \textbf{Characteristic} & \textbf{Frequency (\%)}\\
+    \midrule
+    \multicolumn{2}{l}{\textbf{Counseling Experience}}\\
+    $3 \le \text{yrs} < 5$ & 7 (13)\\
+    $< 10$ yrs             & 9 (17)\\
+    10+ yrs                & 38 (70)\\
+    \addlinespace
+    \multicolumn{2}{l}{\textbf{Certificate}}\\
+    Clinical Psychologist      & 30 (56)\\
+    Medical Doctor             & 7 (13)\\
+    Nurse                      & 6 (11)\\
+    Occupational Therapist     & 7 (13)\\
+    Psychiatric Social Worker  & 8 (15)\\
+    Career Counselor           & 10 (19)\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \section*{TABLE 2 Client- and Counselor-AI Characteristics by Evaluator}
+  \centering
+  \begin{threeparttable}
+    \label{tab:evaluator_comparison}
+    \begin{tabular}{lrrrr}
+      \toprule
+      \textbf{Variable} & \textbf{Human (N=57)} & \textbf{Sonnet (N=66)} & \textbf{o3 (N=66)} & \textbf{Gemini (N=66)}\\
+      \midrule
+      \multicolumn{5}{l}{\textbf{Client AI}}\\
+      \addlinespace
+      \multicolumn{5}{l}{\textit{Age}}\\
+      \hspace{1em}20s & 19 (33\%) & 22 (33\%) & 22 (33\%) & 22 (33\%)\\
+      \hspace{1em}40s & 18 (32\%) & 22 (33\%) & 22 (33\%) & 22 (33\%)\\
+      \hspace{1em}60s & 20 (35\%) & 22 (33\%) & 22 (33\%) & 22 (33\%)\\
+      \addlinespace
+      \multicolumn{5}{l}{\textit{Sex}}\\
+      \hspace{1em}Female & 29 (51\%) & 33 (50\%) & 33 (50\%) & 33 (50\%)\\
+      \addlinespace
+      Naturalness & 4.72 $\pm$ 2.02 & -- & -- & --\\
+      \midrule
+      \multicolumn{5}{l}{\textbf{Counselor AI}}\\
+      \addlinespace
+      \multicolumn{5}{l}{\textit{Score for Opus-SMDP}}\\
+      CCT & 3.44 $\pm$ 0.87 & 3.57 $\pm$ 0.53 & 3.58 $\pm$ 0.44 & 4.30 $\pm$ 0.95\\
+      SST & 3.38 $\pm$ 0.85 & 4.96 $\pm$ 0.13 & 4.42 $\pm$ 0.29 & 4.85 $\pm$ 0.86\\
+      PAR & 2.99 $\pm$ 0.96 & 4.39 $\pm$ 0.21 & 3.72 $\pm$ 0.33 & 4.28 $\pm$ 0.94\\
+      EMP & 3.22 $\pm$ 0.96 & 4.40 $\pm$ 0.29 & 3.94 $\pm$ 0.16 & 4.02 $\pm$ 0.75\\
+      OVR & 3.28 $\pm$ 0.83 & 4.96 $\pm$ 0.13 & 4.83 $\pm$ 0.24 & 4.85 $\pm$ 0.86\\
+      \addlinespace
+      \multicolumn{5}{l}{\textit{Score for GPT-zero}}\\
+      CCT & 2.51 $\pm$ 0.95 & 2.55 $\pm$ 0.44 & 2.42 $\pm$ 0.33 & 3.21 $\pm$ 0.74\\
+      SST & 2.88 $\pm$ 0.85 & 5.00 $\pm$ 0.00 & 4.22 $\pm$ 0.25 & 4.97 $\pm$ 0.12\\
+      PAR & 2.08 $\pm$ 0.89 & 3.11 $\pm$ 0.64 & 2.71 $\pm$ 0.33 & 2.58 $\pm$ 0.63\\
+      EMP & 2.18 $\pm$ 0.76 & 3.94 $\pm$ 0.44 & 3.44 $\pm$ 0.48 & 3.95 $\pm$ 0.25\\
+      OVR & 2.38 $\pm$ 0.64 & 4.92 $\pm$ 0.26 & 4.64 $\pm$ 0.38 & 5.00 $\pm$ 0.00\\
+      \addlinespace
+      \multicolumn{5}{l}{\textit{Score for GPT-SMDP}}\\
+      CCT & 3.41 $\pm$ 0.74 & 3.46 $\pm$ 0.69 & 3.86 $\pm$ 0.26 & 3.92 $\pm$ 0.53\\
+      SST & 3.22 $\pm$ 0.85 & 4.71 $\pm$ 0.25 & 4.08 $\pm$ 0.26 & 4.88 $\pm$ 0.28\\
+      PAR & 3.20 $\pm$ 0.79 & 4.22 $\pm$ 0.31 & 4.08 $\pm$ 0.19 & 4.63 $\pm$ 0.42\\
+      EMP & 3.12 $\pm$ 0.91 & 3.67 $\pm$ 0.30 & 3.80 $\pm$ 0.25 & 4.00 $\pm$ 0.00\\
+      OVR & 3.22 $\pm$ 0.65 & 4.44 $\pm$ 0.16 & 3.98 $\pm$ 0.26 & 5.00 $\pm$ 0.00\\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+      \footnotesize
+      \item Note: The evaluator includes, for each case, evaluations of three different counselor AI models.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+
+\begin{table}[htbp] % その場固定
+  \section*{TABLE 3. Fixed-Effects Estimates for the Five MITI-Based Scores}
+  \centering
+  \footnotesize
+  \begin{threeparttable}
+    \label{tab:miti_fixed_effects}
+    \begin{tabular}{llrrrrr}
+      \toprule
+      \textbf{Score} & \textbf{Term} & \textbf{Estimate} & \textbf{Std.\ Error} & \textbf{df} & \textbf{$t$ value} & \textbf{$p$ value} \\
+      \midrule
+      \multicolumn{7}{l}{\textbf{CCT}}\\
+        & (Intercept)                       &  3.39 & 0.17 &  44.78 &  19.38 & $<\!0.001$ \\
+        & model: GPT-zero          & -0.93 & 0.12 & 158.18 &  -7.62 & $<\!0.001$ \\
+        & model: GPT-SMDP           & -0.03 & 0.12 & 158.18 &  -0.22 & 0.829 \\
+        & client age: 40s                   & -0.13 & 0.13 & 164.12 &  -1.02 & 0.311 \\
+        & client age: 60s                   &  0.12 & 0.12 & 161.03 &   0.95 & 0.341 \\
+        & client sex: male                  &  0.08 & 0.10 & 163.57 &   0.73 & 0.465 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{SST}}\\
+        & (Intercept)                       &  3.34 & 0.17 &  64.81 &  19.65 & $<\!0.001$ \\
+        & model: GPT-zero          & -0.50 & 0.14 & 158.73 &  -3.68 & $<\!0.001$ \\
+        & model: GPT-SMDP           & -0.16 & 0.14 & 158.73 &  -1.16 & 0.247 \\
+        & client age: 40s                   & -0.10 & 0.14 & 165.70 &  -0.70 & 0.486 \\
+        & client age: 60s                   &  0.04 & 0.14 & 162.26 &   0.27 & 0.787 \\
+        & client sex: male                  &  0.12 & 0.11 & 165.08 &   1.07 & 0.287 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{PAR}}\\
+        & (Intercept)                       &  2.98 & 0.18 &  57.95 &  16.61 & $<\!0.001$ \\
+        & model: GPT-zero          & -0.91 & 0.14 & 158.38 &  -6.57 & $<\!0.001$ \\
+        & model: GPT-SMDP           &  0.21 & 0.14 & 158.38 &   1.52 & 0.131 \\
+        & client age: 40s                   & -0.08 & 0.14 & 165.23 &  -0.58 & 0.562 \\
+        & client age: 60s                   & -0.11 & 0.14 & 161.79 &  -0.79 & 0.433 \\
+        & client sex: male                  &  0.22 & 0.12 & 164.61 &   1.88 & 0.062 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{EMP}}\\
+        & (Intercept)                       &  3.21 & 0.18 &  63.57 &  17.87 & $<\!0.001$ \\
+        & model: GPT-zero          & -1.04 & 0.15 & 157.53 &  -7.15 & $<\!0.001$ \\
+        & model: GPT-SMDP           & -0.10 & 0.15 & 157.53 &  -0.66 & 0.510 \\
+        & client age: 40s                   & -0.02 & 0.15 & 165.30 &  -0.12 & 0.905 \\
+        & client age: 60s                   &  0.01 & 0.15 & 161.48 &   0.07 & 0.943 \\
+        & client sex: male                  &  0.16 & 0.12 & 164.61 &   1.34 & 0.182 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{OVR}}\\
+        & (Intercept)                       &  3.30 & 0.14 &  95.81 &  23.80 & $<\!0.001$ \\
+        & model: GPT-zero          & -0.90 & 0.13 & 159.13 &  -7.22 & $<\!0.001$ \\
+        & model: GPT-SMDP           & -0.06 & 0.13 & 159.13 &  -0.49 & 0.624 \\
+        & client age: 40s                   & -0.08 & 0.13 & 166.66 &  -0.62 & 0.535 \\
+        & client age: 60s                   & -0.03 & 0.12 & 163.27 &  -0.25 & 0.805 \\
+        & client sex: male                  &  0.04 & 0.10 & 166.09 &   0.37 & 0.712 \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+      \scriptsize
+      \item Note: The intercept corresponds to the baseline condition (model = Opus-SMDP, client age = 20 s, client sex = female). GPT-zero and GPT-SMDP are the two comparison models.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+
+\begin{table}[htbp] % ← ページを分けたくない場合は [H]
+  \section*{TABLE 4. Tukey-Adjusted Pairwise Contrasts among Counselor Models}
+  \centering
+  \footnotesize
+  \begin{threeparttable}
+    \label{tab:tukey_contrasts}
+    \begin{tabular}{l l r r r r r}
+      \toprule
+      \textbf{Contrast} & \textbf{Score} & \textbf{Estimate} & \textbf{Std.\ Error} & \textbf{df} & \textbf{$t$ value} & \textbf{$p$ value} \\
+      \midrule
+      \multicolumn{7}{l}{\textbf{Opus-SMDP $-$ GPT-zero}}\\
+        & CCT &  0.93 & 0.12 & 161.44 &  7.50 & $<\!0.001$ \\
+        & SST &  0.50 & 0.14 & 161.75 &  3.62 & 0.001 \\
+        & PAR &  0.91 & 0.14 & 161.63 &  6.47 & $<\!0.001$ \\
+        & EMP &  1.04 & 0.15 & 161.68 &  7.04 & $<\!0.001$ \\
+        & OVR &  0.90 & 0.13 & 162.35 &  7.11 & $<\!0.001$ \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{Opus-SMDP $-$ GPT-SMDP}}\\
+        & CCT &  0.03 & 0.12 & 161.44 &  0.21 & 0.975 \\
+        & SST &  0.16 & 0.14 & 161.75 &  1.14 & 0.490 \\
+        & PAR & -0.21 & 0.14 & 161.63 & -1.49 & 0.297 \\
+        & EMP &  0.10 & 0.15 & 161.68 &  0.65 & 0.792 \\
+        & OVR &  0.06 & 0.13 & 162.35 &  0.48 & 0.879 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{GPT-zero $-$ GPT-SMDP}}\\
+        & CCT & -0.90 & 0.12 & 161.44 & -7.29 & $<\!0.001$ \\
+        & SST & -0.34 & 0.14 & 161.75 & -2.47 & 0.038 \\
+        & PAR & -1.12 & 0.14 & 161.63 & -7.96 & $<\!0.001$ \\
+        & EMP & -0.95 & 0.15 & 161.68 & -6.39 & $<\!0.001$ \\
+        & OVR & -0.84 & 0.13 & 162.35 & -6.62 & $<\!0.001$ \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+      \scriptsize
+      \item Note: Estimates are Tukey‐adjusted pairwise contrasts; positive values favor the first model in each contrast.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+
+
+\begin{table}[htbp] % その場固定
+  \section*{TABLE 5. Random-Effects Variance Components (Rater Intercepts \& Residuals)}
+  \centering
+  \footnotesize
+  \begin{threeparttable}
+    \label{tab:random_effects}
+    \begin{tabular}{lllr r}
+      \toprule
+      \textbf{Score} & \textbf{Group} & \textbf{Term} & \textbf{Variance} & \textbf{SD} \\
+      \midrule
+      CCT & Evaluator & Intercept   & 0.47 & 0.68 \\
+          & Residual  & Observation & 0.65 & 0.81 \\
+      \addlinespace
+      SST & Evaluator & Intercept   & 0.37 & 0.61 \\
+          & Residual  & Observation & 0.73 & 0.85 \\
+      \addlinespace
+      PAR & Evaluator & Intercept   & 0.42 & 0.65 \\
+          & Residual  & Observation & 0.74 & 0.86 \\
+      \addlinespace
+      EMP & Evaluator & Intercept   & 0.38 & 0.62 \\
+          & Residual  & Observation & 0.78 & 0.88 \\
+      \addlinespace
+      OVR & Evaluator & Intercept   & 0.22 & 0.47 \\
+          & Residual  & Observation & 0.67 & 0.82 \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+      \scriptsize
+      \item Note: \textit{Variance} is the random‐effects variance, and \textit{SD} is its square root. Rows labeled “Residual” represent within‐rater observation‐level error.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+
+
+% ---------------- タイトルは表の外 ----------------
+\section*{TABLE 6. Fixed-Effect Estimates From the Linear Mixed-Effects Models}
+
+{\scriptsize                % フォント小さく（\tiny に替えても可）
+\setlength{\tabcolsep}{4pt} % 列間を少し詰める（お好みで）
+
+\begin{longtable}{@{}l p{0.38\textwidth} rrrrrr@{}}%
+  \label{tab:lme_fixed} \\      % ← caption 直後に \label
+
+  % ========= ヘッダー =========
+  \toprule
+  \textbf{Score} & \textbf{Term} & \textbf{Estimate} &
+  \textbf{Std.\ Error} & \textbf{df} &
+  \textbf{$t$ value} & \textbf{$p$ value} \\
+  \midrule
+  \endfirsthead
+
+  \toprule
+  \textbf{Score} & \textbf{Term} & \textbf{Estimate} &
+  \textbf{Std.\ Error} & \textbf{df} &
+  \textbf{$t$ value} & \textbf{$p$ value} \\
+  \midrule
+  \endhead
+
+  \midrule \multicolumn{7}{r}{\scriptsize\itshape Continued on next page}\\
+  \endfoot
+  \bottomrule
+  \endlastfoot
+
+  % ========= ここからデータ行を貼る =========
+      \multicolumn{7}{l}{\textbf{CCT}}\\
+        & (Intercept)                                             &  3.28 & 0.15 &  30.75 &  22.06 & $<\!0.001$ \\
+        & model: GPT-zero                                         & -0.93 & 0.11 & 750.56 &  -8.45 & $<\!0.001$ \\
+        & model: GPT-SMDP                                         & -0.03 & 0.11 & 750.56 &  -0.24 & 0.811 \\
+        & evaluator group: Sonnet                                 &  0.14 & 0.48 &  13.93 &   0.30 & 0.770 \\
+        & evaluator group: o3                                     &  0.16 & 0.48 &  13.93 &   0.33 & 0.747 \\
+        & evaluator group: Gemini                                 &  0.87 & 0.48 &  13.93 &   1.80 & 0.093 \\
+        & client age: 40s                                         &  0.04 & 0.05 & 755.98 &   0.70 & 0.482 \\
+        & client age: 60s                                         &  0.10 & 0.05 & 753.22 &   1.96 & 0.050 \\
+        & client sex: male                                        &  0.19 & 0.04 & 755.58 &   4.46 & $<\!0.001$ \\
+        & model(GPT-zero) $\times$ evaluator group(Sonnet)        & -0.09 & 0.15 & 750.56 &  -0.57 & 0.570 \\
+        & model(GPT-SMDP) $\times$ evaluator group(Sonnet)        & -0.08 & 0.15 & 750.56 &  -0.53 & 0.596 \\
+        & model(GPT-zero) $\times$ evaluator group(o3)            & -0.23 & 0.15 & 750.56 &  -1.53 & 0.127 \\
+        & model(GPT-SMDP) $\times$ evaluator group(o3)            &  0.31 & 0.15 & 750.56 &   2.04 & 0.042 \\
+        & model(GPT-zero) $\times$ evaluator group(Gemini)        & -0.15 & 0.15 & 750.56 &  -1.02 & 0.307 \\
+        & model(GPT-SMDP) $\times$ evaluator group(Gemini)        & -0.35 & 0.15 & 750.56 &  -2.35 & 0.019 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{SST}}\\
+        & (Intercept)                                             &  3.38 & 0.12 &  27.70 &  27.85 & $<\!0.001$ \\
+        & model: GPT-zero                                         & -0.50 & 0.09 & 749.80 &  -5.84 & $<\!0.001$ \\
+        & model: GPT-SMDP                                         & -0.16 & 0.09 & 749.80 &  -1.85 & 0.065 \\
+        & evaluator group: Sonnet                                 &  1.59 & 0.40 &  13.59 &   3.94 & 0.002 \\
+        & evaluator group: o3                                     &  1.05 & 0.40 &  13.59 &   2.61 & 0.021 \\
+        & evaluator group: Gemini                                 &  1.48 & 0.40 &  13.59 &   3.66 & 0.003 \\
+        & client age: 40s                                         & -0.07 & 0.04 & 755.12 &  -1.83 & 0.067 \\
+        & client age: 60s                                         &  0.01 & 0.04 & 752.39 &   0.19 & 0.851 \\
+        & client sex: male                                        &  0.03 & 0.03 & 754.72 &   0.90 & 0.366 \\
+        & model(GPT-zero) $\times$ evaluator group(Sonnet)        &  0.54 & 0.12 & 749.80 &   4.60 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(Sonnet)        & -0.09 & 0.12 & 749.80 &  -0.79 & 0.431 \\
+        & model(GPT-zero) $\times$ evaluator group(o3)            &  0.30 & 0.12 & 749.80 &   2.53 & 0.012 \\
+        & model(GPT-SMDP) $\times$ evaluator group(o3)            & -0.18 & 0.12 & 749.80 &  -1.57 & 0.118 \\
+        & model(GPT-zero) $\times$ evaluator group(Gemini)        &  0.62 & 0.12 & 749.80 &   5.32 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(Gemini)        &  0.19 & 0.12 & 749.80 &   1.61 & 0.108 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{PAR}}\\
+        & (Intercept)                                             &  3.09 & 0.14 &  30.45 &  22.62 & $<\!0.001$ \\
+        & model: GPT-zero                                         & -0.91 & 0.10 & 750.30 &  -8.98 & $<\!0.001$ \\
+        & model: GPT-SMDP                                         &  0.21 & 0.10 & 750.30 &   2.07 & 0.039 \\
+        & evaluator group: Sonnet                                 &  1.36 & 0.44 &  13.63 &   3.07 & 0.009 \\
+        & evaluator group: o3                                     &  0.69 & 0.44 &  13.63 &   1.56 & 0.141 \\
+        & evaluator group: Gemini                                 &  1.25 & 0.44 &  13.63 &   2.83 & 0.014 \\
+        & client age: 40s                                         & -0.27 & 0.05 & 755.87 &  -5.59 & $<\!0.001$ \\
+        & client age: 60s                                         & -0.17 & 0.05 & 753.04 &  -3.51 & $<\!0.001$ \\
+        & client sex: male                                        &  0.17 & 0.04 & 755.45 &   4.41 & $<\!0.001$ \\
+        & model(GPT-zero) $\times$ evaluator group(Sonnet)        & -0.37 & 0.14 & 750.30 &  -2.65 & 0.008 \\
+        & model(GPT-SMDP) $\times$ evaluator group(Sonnet)        & -0.38 & 0.14 & 750.30 &  -2.72 & 0.007 \\
+        & model(GPT-zero) $\times$ evaluator group(o3)            & -0.10 & 0.14 & 750.30 &  -0.69 & 0.492 \\
+        & model(GPT-SMDP) $\times$ evaluator group(o3)            &  0.15 & 0.14 & 750.30 &   1.10 & 0.270 \\
+        & model(GPT-zero) $\times$ evaluator group(Gemini)        & -0.79 & 0.14 & 750.30 &  -5.71 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(Gemini)        &  0.14 & 0.14 & 750.30 &   0.99 & 0.320 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{EMP}}\\
+        & (Intercept)                                             &  3.30 & 0.13 &  26.42 &  25.62 & $<\!0.001$ \\
+        & model: GPT-zero                                         & -1.04 & 0.09 & 749.16 & -11.57 & $<\!0.001$ \\
+        & model: GPT-SMDP                                         & -0.10 & 0.09 & 749.16 &  -1.07 & 0.285 \\
+        & evaluator group: Sonnet                                 &  1.09 & 0.43 &  13.09 &   2.54 & 0.025 \\
+        & evaluator group: o3                                     &  0.63 & 0.43 &  13.09 &   1.46 & 0.167 \\
+        & evaluator group: Gemini                                 &  0.70 & 0.43 &  13.09 &   1.64 & 0.125 \\
+        & client age: 40s                                         & -0.11 & 0.04 & 754.64 &  -2.46 & 0.014 \\
+        & client age: 60s                                         & -0.13 & 0.04 & 751.83 &  -2.95 & 0.003 \\
+        & client sex: male                                        &  0.18 & 0.04 & 754.23 &   5.12 & $<\!0.001$ \\
+        & model(GPT-zero) $\times$ evaluator group(Sonnet)        &  0.58 & 0.12 & 749.16 &   4.72 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(Sonnet)        & -0.64 & 0.12 & 749.16 &  -5.18 & $<\!0.001$ \\
+        & model(GPT-zero) $\times$ evaluator group(o3)            &  0.54 & 0.12 & 749.16 &   4.42 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(o3)            & -0.04 & 0.12 & 749.16 &  -0.32 & 0.746 \\
+        & model(GPT-zero) $\times$ evaluator group(Gemini)        &  0.98 & 0.12 & 749.16 &   7.92 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(Gemini)        &  0.08 & 0.12 & 749.16 &   0.66 & 0.509 \\
+      \addlinespace
+      \multicolumn{7}{l}{\textbf{OVR}}\\
+        & (Intercept)                                             &  3.27 & 0.09 &  40.84 &  36.19 & $<\!0.001$ \\
+        & model: GPT-zero                                         & -0.90 & 0.08 & 750.38 & -11.17 & $<\!0.001$ \\
+        & model: GPT-SMDP                                         & -0.06 & 0.08 & 750.38 &  -0.76 & 0.448 \\
+        & evaluator group: Sonnet                                 &  1.67 & 0.26 &  11.74 &   6.45 & $<\!0.001$ \\
+        & evaluator group: o3                                     &  1.54 & 0.26 &  11.74 &   5.95 & $<\!0.001$ \\
+        & evaluator group: Gemini                                 &  1.56 & 0.26 &  11.74 &   6.01 & $<\!0.001$ \\
+        & client age: 40s                                         & -0.07 & 0.04 & 757.41 &  -1.71 & 0.088 \\
+        & client age: 60s                                         & -0.07 & 0.04 & 754.00 &  -1.85 & 0.064 \\
+        & client sex: male                                        &  0.13 & 0.03 & 756.89 &   4.19 & $<\!0.001$ \\
+        & model(GPT-zero) $\times$ evaluator group(Sonnet)        &  0.86 & 0.11 & 750.38 &   7.77 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(Sonnet)        & -0.46 & 0.11 & 750.38 &  -4.18 & $<\!0.001$ \\
+        & model(GPT-zero) $\times$ evaluator group(o3)            &  0.71 & 0.11 & 750.38 &   6.40 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(o3)            & -0.79 & 0.11 & 750.38 &  -7.13 & $<\!0.001$ \\
+        & model(GPT-zero) $\times$ evaluator group(Gemini)        &  1.06 & 0.11 & 750.38 &   9.56 & $<\!0.001$ \\
+        & model(GPT-SMDP) $\times$ evaluator group(Gemini)        &  0.21 & 0.11 & 750.38 &   1.93 & 0.054 \\
+\end{longtable}
+} % ----------- scriptsize グループ終わり -----------
+
+
+
+
+\begin{table}[htbp] % その場固定
+  \section*{TABLE 7. Variance Components (Random Effects) From the Linear Mixed-Effects Models}
+  \centering
+  \footnotesize         % 行数が少し多いので \scriptsize も可
+  \begin{threeparttable}
+    \label{tab:lme_variance}
+    \begin{tabular}{l l l r r}
+      \toprule
+      \textbf{Score} & \textbf{Group} & \textbf{Term} & \textbf{Variance} & \textbf{SD} \\
+      \midrule
+      CCT & evaluator: LLM   & (Intercept) & 0.00 & 0.00 \\
+          & evaluator: human & (Intercept) & 0.46 & 0.68 \\
+          & Residual         & Observation & 0.59 & 0.77 \\
+      \addlinespace
+      SST & evaluator: LLM   & (Intercept) & 0.00 & 0.00 \\
+          & evaluator: human & (Intercept) & 0.38 & 0.62 \\
+          & Residual         & Observation & 0.46 & 0.68 \\
+      \addlinespace
+      PAR & evaluator: LLM   & (Intercept) & 0.00 & 0.00 \\
+          & evaluator: human & (Intercept) & 0.42 & 0.65 \\
+          & Residual         & Observation & 0.54 & 0.74 \\
+      \addlinespace
+      EMP & evaluator: LLM   & (Intercept) & 0.00 & 0.00 \\
+          & evaluator: human & (Intercept) & 0.41 & 0.64 \\
+          & Residual         & Observation & 0.48 & 0.69 \\
+      \addlinespace
+      OVR & evaluator: LLM   & (Intercept) & 0.00 & 0.00 \\
+          & evaluator: human & (Intercept) & 0.24 & 0.49 \\
+          & Residual         & Observation & 0.43 & 0.66 \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+      \scriptsize
+      \item Note: \textit{Variance} is the estimated random-effects variance; \textit{SD} is its square root. “evaluator: LLM” denotes ratings produced by large-language-model evaluators, whereas “evaluator: human” denotes ratings produced by human experts. Rows labelled “Residual” represent observation-level (within-rater) error.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+
+
+
+\begin{table}[htbp]
+  \section*{TABLE 8. Tukey-Adjusted Pairwise Comparisons Among Evaluator Groups (Main Effect)}
+  \centering
+  \footnotesize                       % 必要なら \scriptsize へ
+  \setlength{\tabcolsep}{4pt}         % 列間余白の調整（任意）
+  \begin{threeparttable}
+    \label{tab:tukey_evaluator}
+    \begin{tabular}{l p{0.30\textwidth} r r r r r}
+      \toprule
+      \textbf{Score} & \textbf{Comparison} & \textbf{Estimate} &
+      \textbf{Std.\ Error} & \textbf{df} & \textbf{$t$ ratio} & \textbf{$p$ value} \\
+      \midrule
+      % -------- CCT --------
+      \multicolumn{7}{l}{\textbf{CCT}}\\
+      & human – Sonnet   & $-0.09$ & 0.51 & 14.45 & $-0.17$ & 0.998 \\
+      & human – o3       & $-0.19$ & 0.51 & 14.45 & $-0.36$ & 0.983 \\
+      & human – Gemini   & $-0.70$ & 0.51 & 14.45 & $-1.37$ & 0.539 \\
+      & Sonnet – o3      & $-0.10$ & 0.06 & 34.02 & $-1.58$ & 0.406 \\
+      & Sonnet – Gemini  & $-0.61$ & 0.06 & 34.02 & $-10.07$ & $<\!0.001$ \\
+      & o3 – Gemini      & $-0.52$ & 0.06 & 34.02 & $-8.50$ & $<\!0.001$ \\
+      \addlinespace
+      % -------- SST --------
+      \multicolumn{7}{l}{\textbf{SST}}\\
+      & human – Sonnet   & $-1.74$ & 0.43 & 14.83 & $-4.04$ & 0.005 \\
+      & human – o3       & $-1.09$ & 0.43 & 14.83 & $-2.53$ & 0.095 \\
+      & human – Gemini   & $-1.75$ & 0.43 & 14.83 & $-4.06$ & 0.005 \\
+      & Sonnet – o3      &  0.65   & 0.05 & 31.06 & 14.01   & $<\!0.001$ \\
+      & Sonnet – Gemini  & $-0.01$ & 0.05 & 31.06 & $-0.16$ & 0.998 \\
+      & o3 – Gemini      & $-0.66$ & 0.05 & 31.06 & $-14.17$& $<\!0.001$ \\
+      \addlinespace
+      % -------- PAR --------
+      \multicolumn{7}{l}{\textbf{PAR}}\\
+      & human – Sonnet   & $-1.11$ & 0.47 & 14.28 & $-2.36$ & 0.131 \\
+      & human – o3       & $-0.71$ & 0.47 & 14.28 & $-1.51$ & 0.457 \\
+      & human – Gemini   & $-1.03$ & 0.47 & 14.28 & $-2.20$ & 0.171 \\
+      & Sonnet – o3      &  0.40   & 0.05 & 31.07 &  7.26   & $<\!0.001$ \\
+      & Sonnet – Gemini  &  0.08   & 0.05 & 31.07 &  1.38   & 0.522 \\
+      & o3 – Gemini      & $-0.32$ & 0.05 & 31.07 & $-5.88$ & $<\!0.001$ \\
+      \addlinespace
+      % -------- EMP --------
+      \multicolumn{7}{l}{\textbf{EMP}}\\
+      & human – Sonnet   & $-1.07$ & 0.46 & 15.05 & $-2.34$ & 0.134 \\
+      & human – o3       & $-0.80$ & 0.46 & 15.05 & $-1.74$ & 0.341 \\
+      & human – Gemini   & $-1.06$ & 0.46 & 15.05 & $-2.30$ & 0.141 \\
+      & Sonnet – o3      &  0.28   & 0.05 & 31.06 &  5.64   & $<\!0.001$ \\
+      & Sonnet – Gemini  &  0.02   & 0.05 & 31.06 &  0.31   & 0.989 \\
+      & o3 – Gemini      & $-0.26$ & 0.05 & 31.06 & $-5.33$ & $<\!0.001$ \\
+      \addlinespace
+      % -------- OVR --------
+      \multicolumn{7}{l}{\textbf{OVR}}\\
+      & human – Sonnet   & $-1.80$ & 0.28 & 12.42 & $-6.56$ & $<\!0.001$ \\
+      & human – o3       & $-1.52$ & 0.28 & 12.42 & $-5.51$ & $<\!0.001$ \\
+      & human – Gemini   & $-1.98$ & 0.28 & 12.42 & $-7.20$ & $<\!0.001$ \\
+      & Sonnet – o3      &  0.29   & 0.04 & 31.06 &  6.58   & $<\!0.001$ \\
+      & Sonnet – Gemini  & $-0.18$ & 0.04 & 31.06 & $-4.04$ & 0.002 \\
+      & o3 – Gemini      & $-0.46$ & 0.04 & 31.06 & $-10.62$& $<\!0.001$ \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+      \scriptsize
+      \item Note: Estimates are Tukey‐adjusted mean differences (first group – second group). A positive estimate indicates the first evaluator group gave higher scores. $p$ values correspond to Tukey multiplicity‐adjusted tests.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+
+
+
+\begin{table}[htbp] % その場固定
+  \section*{TABLE 9. Inter-Rater Reliability (Intraclass Correlation Coefficients)}
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{threeparttable}
+    \label{tab:icc}
+    \begin{tabular}{l cccc cccc}
+      \toprule
+      & \multicolumn{4}{c}{\textbf{ICC (2,1)\tnote{a}}} &
+        \multicolumn{4}{c}{\textbf{ICC (2,k)\tnote{b}}} \\
+      \cmidrule(lr){2-5}\cmidrule(lr){6-9}
+      \textbf{Score} & Human & Sonnet & o3 & Gemini &
+                     Human & Sonnet & o3 & Gemini \\[2pt]
+      \midrule
+      CCT & 0.33 & 0.57 & 0.89 & 0.07 & 0.75 & 0.94 & 0.99 & 0.45 \\
+      SST & 0.79 & 0.51 & 0.76 & 0.28 & 0.98 & 0.92 & 0.97 & 0.70 \\
+      PAR & 0.90 & 0.01 & 0.25 & 0.80 & 0.99 & 0.10 & 0.67 & 0.98 \\
+      EMP & 0.50 & 0.31 & 0.85 & 0.80 & 0.92 & 0.73 & 0.98 & 0.98 \\
+      OVR & 0.11 & 0.87 & 0.59 & --   & 0.42 & 0.99 & 0.94 & --   \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+      \scriptsize
+      \item[a] Two‐way random, single‐measure consistency ICC.
+      \item[b] Two‐way random, average‐measure consistency ICC.
+      \item   “--” indicates that the statistic could not be estimated (zero numerator variance).
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+
+
+% ─── Appendix セクション ────────────────────
+% \clearpage                
+% \includepdf[pages=-]{APHW_Supplemental_1.pdf}
+
+\end{document}

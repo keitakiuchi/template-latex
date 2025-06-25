@@ -1,0 +1,107 @@
+{
+    // ---------- ビルドレシピ ----------
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk (local)",
+            "tools": [
+                "latexmk-local"
+            ]
+        },
+        {
+            "name": "latexmk (ssd)",
+            "tools": [
+                "latexmk-ssd"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "tools": [
+                "pdflatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk-local",
+            "command": "latexmk",
+            "args": [
+                "-pdf",
+                "-bibtex",
+                "-interaction=nonstopmode",
+                "-synctex=1",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "latexmk-ssd",
+            "command": "/mnt/d/texlive/2025/bin/x86_64-linux/latexmk",
+            "args": [
+                "-pdf",
+                "-bibtex",
+                "-interaction=nonstopmode",
+                "-synctex=1",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        }
+    ],
+    // ---------- 出力ディレクトリ ----------
+    "latex-workshop.latex.outDir": "%DIR%",
+    // ---------- ビューア ----------
+    "latex-workshop.view.pdf.viewer": "tab",
+    // ---------- ビルド後の掃除 ----------
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux",
+        "*.bbl",
+        "*.blg",
+        "*.idx",
+        "*.ind",
+        "*.lof",
+        "*.lot",
+        "*.out",
+        "*.toc",
+        "*.acn",
+        "*.acr",
+        "*.alg",
+        "*.glg",
+        "*.glo",
+        "*.gls",
+        "*.ist",
+        "*.fls",
+        "*.log",
+        "*.fdb_latexmk",
+        "*.snm",
+        "*.nav",
+        "*.dvi",
+        "*.synctex.gz"
+    ],
+    // ---------- ルートファイル検出 ----------
+    "latex-workshop.latex.rootFile.useSubFile": true,
+    // ---------- エディタ設定 ----------
+    "editor.formatOnSave": true,
+    "[latex]": {
+        "editor.defaultFormatter": "James-Yu.latex-workshop",
+        "editor.wordWrap": "on"
+    },
+    "latex-workshop.message.error.show": false,
+    "latex-workshop.message.warning.show": false,
+    "latex-workshop.latex.recipe.outputs": [
+        "%DIR%/%DOCFILE%.pdf"
+    ],
+    "latex-workshop.latex.build.clearLog.everyBuild.enabled": true,
+    "latex-workshop.latex.build.forceRecipeUsage": true
+}
