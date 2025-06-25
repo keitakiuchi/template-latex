@@ -15,8 +15,8 @@
 - The graphicspath is already configured in the preamble.
 
 ### Build Output
-- Build artifacts are generated in the `tex/build/` directory.
-- The final PDF will be at the root of the `tex/` directory.
+- Build artifacts are generated in the `build/` directory.
+- The final PDF will be in `build/pdf/` directory.
 
 ## LaTeX Compilation
 
@@ -29,8 +29,11 @@
 ### Using Command Line
 ```bash
 # From the repository root
+./scripts/compile.sh
+
+# Or manually
 cd tex
-latexmk -pdf main.tex
+latexmk -r ../latexmkrc main.tex
 ```
 
 ### Cleaning Build Files
@@ -52,8 +55,7 @@ latexmk -C
 2. Cite in the text using `\cite{reference_key}`.
 3. Ensure the bibliography is included in `tex/main.tex` with:
    ```latex
-   \bibliography{bib/refs}
-   \bibliographystyle{plain}
+   \printbibliography
    ```
 
 ### Adding Figures
@@ -103,8 +105,8 @@ latexmk -C
 ## Best Practices
 
 ### Japanese Language Support
-- Use the CJKutf8 and xeCJK packages for Japanese text (already included in preamble).
-- Compile with platex or xelatex for proper Japanese support.
+- Use LuaLaTeX with luatexja package for Japanese text (already included in preamble).
+- Compile with lualatex for proper Japanese support.
 
 ### File Naming
 - Use descriptive, lowercase names for section files.
@@ -119,5 +121,6 @@ latexmk -C
 
 ### Version Control
 - Commit frequently with descriptive messages.
-- Include the PDF in .gitignore if you don't want to track it (currently commented out).
+- Include the PDF in .gitignore if you don't want to track it.
 - Track changes to LaTeX source files, not generated files.
+- Temporary files are automatically cleaned up after compilation.

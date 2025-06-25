@@ -1,4 +1,4 @@
-name: codex-tdd
+name: Codex TDD
 
 on:
   issues:

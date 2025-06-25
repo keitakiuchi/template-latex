@@ -8,11 +8,12 @@
 - VS Code / Cursor での編集に最適化
 - GitHub Actions による自動ビルド
 - クリーンで整理された構造
+- 自動クリーンアップ機能付き
 
 ## ディレクトリ構造
 
 ```
-latex-template/
+template-latex/
 ├─ .vscode/              ← VS Code／Cursor 専用設定
 │   ├─ settings.json
 │   └─ tasks.json
@@ -20,17 +21,17 @@ latex-template/
 │   └─ workflows/        ← CI 用 GitHub Actions
 │       └─ latex.yml
 ├─ tex/                  ← LaTeX ソース一式
-│   ├─ JPR_LLM_evaluation.tex ← メインファイル（\input で各章を読み込む）
+│   ├─ main.tex          ← メインファイル（\input で各章を読み込む）
 │   ├─ preamble.tex      ← パッケージ類を集約
+│   ├─ title.tex         ← タイトルページ設定
 │   ├─ sections/
 │   │   ├─ intro.tex
 │   │   └─ conclusion.tex
 │   └─ bib/              ← 参考文献
-│       └─ Reference_LLM_evaluation.bib
+│       ├─ refs.bib
+│       └─ sample.bib
 ├─ build/                ← 生成ファイル（自動生成）
-│   ├─ pdf/              ← PDF出力
-│   ├─ docx/             ← Word出力（予定）
-│   └─ aux/              ← 中間ファイル
+│   └─ pdf/              ← PDF出力
 ├─ scripts/              ← スクリプト類
 │   ├─ compile.sh        ← コンパイルスクリプト
 │   └─ tex2docx.sh       ← TeX→Word変換スクリプト
@@ -45,10 +46,9 @@ latex-template/
 
 ### 前提条件
 
-- TeX Live または MacTeX のインストール（詳細は後述）
-- pandoc（TeX→Word変換用、詳細は後述）
+- TeX Live または MacTeX のインストール
+- pandoc（TeX→Word変換用、オプション）
 - VS Code + LaTeX Workshop 拡張機能（推奨）
-- **外付けSSDのTeX Liveを使用する場合**: `.bashrc`へのパス設定（詳細は「TeX Live を外付けSSDで運用する」セクションを参照）
 
 ### コンパイル方法
 
@@ -56,7 +56,7 @@ latex-template/
 
 1. このリポジトリをクローンまたはダウンロード
 2. VS Code / Cursor でフォルダを開く
-3. `tex/JPR_LLM_evaluation.tex` を開く
+3. `tex/main.tex` を開く
 4. LaTeX Workshop 拡張機能のビルドボタンをクリック、または `Ctrl+Alt+B` (`Cmd+Alt+B` on Mac) でビルド
 
 #### コマンドラインを使用する場合
@@ -71,218 +71,83 @@ latex-template/
 ```bash
 # プロジェクトルートから実行する場合
 cd tex
-latexmk -r ../latexmkrc JPR_LLM_evaluation.tex
-
-# または手動で BibTeX を含む完全なコンパイル
-./scripts/compile.sh
+latexmk -r ../latexmkrc main.tex
 ```
 
 > **注意**: 
 > - 生成されたPDFは `build/pdf/` に出力されます。
 > - `tex` ディレクトリ内で `-r ../latexmkrc` を指定せずに実行すると、デフォルトのコンパイラ（pdfTeX）が使用され、日本語処理でエラーが発生します。
 > - `latexmkrc` ファイルには LuaLaTeX の設定や出力先ディレクトリの指定が含まれています。
-> - **外付けSSDのTeX Liveを使用する場合**: 事前に`.bashrc`にパスを設定してください（詳細は「TeX Live を外付けSSDで運用する」セクションを参照）。
+> - コンパイル後は自動的に一時ファイルがクリーンアップされます。
 
-#### TeX→Word変換
+#### TeX→Word変換（オプション）
 
 ```bash
 # TeXファイルをWordに変換
-./scripts/tex2docx.sh tex/JPR_LLM_evaluation.tex
+./scripts/tex2docx.sh tex/main.tex
 ```
 
 > **注意**: 
 > - 生成されたWordファイルは `build/docx/` に出力されます。
 > - 変換には `pandoc` を使用しています。インストールされていない場合は `sudo apt install pandoc` でインストールしてください。
-> - 一部のLaTeXパッケージやコマンド（特に数式や特殊な書式）は変換時に警告が出る場合がありますが、基本的なテキスト内容と構造は保持されます。
-> - 変換中に表示される多数の警告メッセージは無視して問題ありません。
-> - 日本語を含む文書も変換可能ですが、フォントや一部の書式が完全に再現されない場合があります。
-> - 変換後のWordファイルは必要に応じて手動で調整することをお勧めします。
+> - 一部のLaTeXパッケージやコマンドは変換時に警告が出る場合がありますが、基本的なテキスト内容と構造は保持されます。
 
 ### カスタマイズ
 
 - `tex/preamble.tex`: パッケージや設定を追加・変更
-- `tex/JPR_LLM_evaluation.tex`: 文書のタイトル、著者名などを変更
+- `tex/main.tex`: 文書のタイトル、著者名などを変更
+- `tex/title.tex`: タイトルページのレイアウトを変更
 - `latexmkrc`: コンパイル設定を変更
+
+## 新規セクションの追加
+
+1. `tex/sections/` に新しい `.tex` ファイルを作成
+2. `tex/main.tex` に `\input{sections/新ファイル名}` を追加
+
+## 参考文献の追加
+
+1. `tex/bib/refs.bib` に BibTeX 形式で追加
+2. 本文中で `\cite{引用キー}` で引用
 
 ## ライセンス
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-本ソフトウェアは **GNU General Public License v3.0 以降（GPL-3.0-or-later）** の下で配布されています。  
+本ソフトウェアは **MIT License** の下で配布されています。  
 詳細はリポジトリ同梱の [LICENSE](LICENSE) ファイルをご覧ください。
 
+## TeX Live のインストール
 
-## TeX Live 2025 最新版のインストール手順（WSL Ubuntu）
-
-> **対象**: Windows + WSL2 環境で本リポジトリを使う人  
-> **所要時間**: フルインストールで 30 〜 60 分（ダウンロード速度次第）
-（重い部分を外付けSSDに入れる方法は後述）
-
-### 1 古い apt 版 TeX Live の削除（任意）
+### Ubuntu/Debian
 
 ```bash
-# 確認だけしたい場合は -s を付ける
-# sudo apt-get -s remove --purge 'texlive*' 'context*' 'biber'
-
-sudo apt remove --purge 'texlive*' 'context*' 'biber'
-sudo apt autoremove --purge
-```
-
-> この時点で `texinfo`, `texinfo-lib`, `tex-common` だけ残る場合があります。
-> それらも不要なら
-> `sudo apt remove --purge texinfo tex-common && sudo apt autoremove --purge`
-> で完全に消せます。
-
-### 2 公式インストーラの取得と実行
-
-```bash
-# 依存パッケージ
 sudo apt update
-sudo apt install -y perl wget xz-utils fontconfig pandoc
-
-# ネットインストーラを入手
-wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-tar -xzf install-tl-unx.tar.gz
-cd install-tl-*/
-
-# 対話インストーラを起動（推奨: scheme-full）
-sudo perl install-tl
+sudo apt install texlive-full texlive-lang-japanese
 ```
 
-1. 画面で `scheme-full` を選択 → `I` で開始
-2. ※容量を抑えたい場合は `scheme-small` でも OK（後から個別追加可）
-
-### 3 PATH を通す（恒久設定）
+### macOS
 
 ```bash
-echo 'export PATH=/usr/local/texlive/2025/bin/x86_64-linux:$PATH' >> ~/.profile
-source ~/.profile
+# Homebrew を使用
+brew install --cask mactex
+
+# または BasicTeX（軽量版）
+brew install --cask basictex
 ```
 
-### 4 動作確認
+### Windows
 
-```bash
-which latexmk    # /usr/local/texlive/2025/bin/latexmk
-latexmk -v       # Version 4.86a 以上
-biber --version  # 2.25 以上
+1. [TeX Live](https://www.tug.org/texlive/) からインストーラーをダウンロード
+2. インストーラーを実行し、scheme-full を選択
 
-# 最小テスト
-echo '\documentclass{article}\begin{document}Hello\end{document}' > test.tex
-latexmk -lualatex test.tex
-# test.pdf が出来れば成功
-```
-
-### 5 ビルドエラー時のチェックポイント
+## トラブルシューティング
 
 | 症状                             | 解決策                                                         |
 | ------------------------------ | ----------------------------------------------------------- |
-| `Please (re)run Biber...`      | `biber JPR_LLM_evaluation` → `latexmk -lualatex JPR_LLM_evaluation.tex` |
+| `Please (re)run Biber...`      | `biber main` → `latexmk -lualatex main.tex` |
 | `Missing character (nullfont)` | 通常は無視可。PDF 内に "?" が残るならフォント設定を確認                            |
-| apt 版が復活する                     | `apt-mark hold texlive-base texlive-binaries` で再インストールをブロック |
+| 日本語が表示されない                    | LuaLaTeX を使用していることを確認（`latexmkrc` の設定を確認） |
 
----
+## 貢献
 
-> **ヒント**: プロジェクト直下に `latexmkrc` を置き、
->
-> ```perl
-> $bibtex_use = 2;   # biber を優先
-> ```
->
-> と書いておくと、`latexmk -lualatex` だけで BibLaTeX + biber が確実に走ります。
-
-
-
-
-## TeX Live を外付けSSDで運用する（方式 B: tiny + full）
-
-> **重要**: 外付けSSDのTeX Liveを使用する場合は、必ず`.bashrc`にパスを設定してください。
-> 
-> ```bash
-> # ~/.bashrc に追加（外付けSSDのTeX Liveを使用する場合）
-> export PATH="/mnt/d/texlive/2025/bin/x86_64-linux:$PATH"
-> ```
-> 
-> 設定後は `source ~/.bashrc` で反映させてください。
-
-> - **目的**:  
->   - 内蔵ストレージをほぼ消費せずにフル機能の TeX Live 2025 を使う  
->   - 外付けSSDが無い状況でも「欧文だけならコンパイル可」にしておく  
-> - **前提**:  
->   - 外付けSSD が Windows で `D:` → WSL 上は `/mnt/d` にマウントされる  
->   - WSL ディストリ: Ubuntu 20.04 以降
-
-### 1. 外付けSSDのTeX Liveを使用する場合の設定
-
-外付けSSD（D:ドライブ）にTeX Liveがインストールされている場合：
-
-```bash
-# ~/.bashrc に以下を追加
-echo 'export PATH="/mnt/d/texlive/2025/bin/x86_64-linux:$PATH"' >> ~/.bashrc
-
-# 設定を反映
-source ~/.bashrc
-
-# 動作確認
-which latexmk    # /mnt/d/texlive/2025/bin/x86_64-linux/latexmk と表示される
-```
-
-### 2. 内蔵SSDへ *scheme-tiny* を導入（約 100 MB）
-
-```bash
-sudo perl install-tl -profile - <<'EOF'
-selected_scheme scheme-tiny
-TEXDIR /usr/local/texlive/tiny
-TEXMFCONFIG ~/.texlive2025
-TEXMFVAR   ~/.texlive2025
-TEXMFHOME  ~/texmf
-collection-langjapanese 0   # tiny には日本語フォントが含まれない
-option_doc 0
-option_src 0
-EOF
-```
-
-### 3. 外付けSSDへ *scheme-full* の TeX Live 2025 をインストール
-
-```bash
-# SSD 側に専用ディレクトリを作成
-sudo mkdir -p /mnt/e/texlive
-
-# ネットインストーラを同様に実行
-cd install-tl-*/
-sudo perl install-tl
-# インストーラ画面で
-#   T (installation directory) → /mnt/e/texlive/2025
-#   scheme-full を選択 → I で開始
-```
-
-所要ディスク: 約 6 GB（SSD に配置）
-
-### 4. 動作確認
-
-1. **SSD 挿入時**
-
-   ```bash
-   source ~/.bashrc
-   which latexmk        # /mnt/e/texlive/2025/bin/latexmk
-   latexmk -lualatex main.tex   # 日本語＋BibLaTeX まで通る
-   ```
-
-2. **SSD 取り外し時**
-
-   ```bash
-   source ~/.bashrc
-   which latexmk        # /usr/local/texlive/tiny/bin/latexmk
-   latexmk test.tex     # 欧文のみ OK、日本語はフォントエラー
-   ```
-
-### 5. よくある質問
-
-| Q                              | A                                                                               |
-| ------------------------------ | ------------------------------------------------------------------------------- |
-| **SSD を抜いたまま誤って日本語ビルドすると？**    | `\CJK@char` などのエラーで停止します。SSD を挿し直して再実行してください。                                   |
-| **tiny 版に不足パッケージを手動追加しても大丈夫？** | 可能ですが、容量が増えるほど *tiny* の意義が薄れます。Full 版がある前提なら追加不要です。                             |
-| **SSD のドライブレターが変わる場合**         | Windows の「ディスクの管理」で固定ドライブレターを設定するか、`/etc/wsl.conf` + `fstab` で UUID マウントを推奨します。 |
-
----
-
-これで **外付け有無に応じた自動切り替え** が実現できます。
+プルリクエストやイシューの報告を歓迎します。大きな変更を行う場合は、まずイシューで議論してください。

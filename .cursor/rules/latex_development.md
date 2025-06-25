@@ -7,10 +7,13 @@
 - Ensure all necessary LaTeX packages are installed before building documents:
   ```bash
   # Ubuntu/Debian
-  sudo apt install texlive-full
+  sudo apt install texlive-full texlive-lang-japanese
   
   # macOS (with Homebrew)
   brew install --cask mactex
+  
+  # Windows
+  # Download and install TeX Live from https://www.tug.org/texlive/
   ```
 
 ## File Creation and Output Rules
@@ -22,6 +25,7 @@
 ### File Organization
 - メインファイル: `tex/main.tex`
 - プリアンブル（パッケージ定義）: `tex/preamble.tex`
+- タイトルページ: `tex/title.tex`
 - セクション・章: `tex/sections/` ディレクトリ
 - 参考文献: `tex/bib/` ディレクトリ
 - 画像・図表: `figures/` ディレクトリ
@@ -33,12 +37,17 @@
 ### Build Process
 - ビルドには `latexmk` を使用:
   ```bash
-  cd tex && latexmk -pdf main.tex
+  # リポジトリルートから
+  ./scripts/compile.sh
+  
+  # または手動で
+  cd tex && latexmk -r ../latexmkrc main.tex
   ```
 - クリーンアップ:
   ```bash
   cd tex && latexmk -C
   ```
+- コンパイル後は自動的に一時ファイルがクリーンアップされる
 
 ### Examples
 - ✅ 新しいセクションの作成: `tex/sections/new_section.tex`

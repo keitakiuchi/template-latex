@@ -1,17 +1,13 @@
 #!/bin/bash
 
-# TeX Live のパスを設定
-export TL_SSD="/mnt/d"
-export PATH="$TL_SSD/texlive/2025/bin/x86_64-linux:$PATH"
-
 # カレントディレクトリを確認
 if [ -d "tex" ]; then
   cd tex
   echo "📁 texディレクトリに移動しました"
 fi
 
-# ファイル名を引数から取得（デフォルトはJPR_LLM_evaluation）
-TEX_FILE=${1:-JPR_LLM_evaluation}
+# ファイル名を引数から取得（デフォルトはmain）
+TEX_FILE=${1:-main}
 echo "🔄 コンパイル開始: ${TEX_FILE}.tex"
 
 # 必要なディレクトリを作成（プロジェクトルートのみ）
@@ -61,7 +57,7 @@ if [ -f "../build/pdf/${TEX_FILE}.pdf" ]; then
   
   # 一時ファイルのクリーンアップ
   echo "🧹 一時ファイルをクリーンアップ中..."
-  rm -f *.aux *.log *.blg *.synctex.gz *.bbl *.pdf 2>/dev/null
+  rm -f *.aux *.log *.blg *.synctex.gz *.bbl *.pdf *.bcf *.out *.run.xml *.toc 2>/dev/null
   echo "✨ クリーンアップ完了！"
 else
   echo "❌ コンパイル失敗"
