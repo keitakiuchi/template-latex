@@ -27,34 +27,9 @@ if [ "$2" = "--clean" ]; then
 fi
 
 # LaTeX + BibTeX コンパイル実行
-echo "📝 第1段階: LaTeX コンパイル（.auxファイル生成）"
-if ! lualatex -interaction=nonstopmode -output-directory=temp -include-directory=bib ${TEX_FILE}.tex; then
-  echo "❌ 第1段階のLaTeXコンパイルでエラーが発生しました"
-  exit 1
-fi
-
-echo "📚 BibTeX実行（参考文献処理）"
-cd temp
-# 参考文献ファイルをtempディレクトリにコピー
-cp ../bib/${TEX_FILE}.bib . 2>/dev/null || echo "⚠️  参考文献ファイルが見つかりません"
-# BibTeXを実行（BIBINPUTS環境変数で参考文献ディレクトリを指定）
-export BIBINPUTS="../bib:"
-if ! bibtex ${TEX_FILE}; then
-  echo "❌ BibTeX実行でエラーが発生しました"
-  cd ..
-  exit 1
-fi
-cd ..
-
-echo "📝 第2段階: LaTeX コンパイル（引用解決）"
-if ! lualatex -interaction=nonstopmode -output-directory=temp -include-directory=bib ${TEX_FILE}.tex; then
-  echo "❌ 第2段階のLaTeXコンパイルでエラーが発生しました"
-  exit 1
-fi
-
-echo "📝 第3段階: 最終LaTeX コンパイル（完全な引用解決）"
-if ! lualatex -interaction=nonstopmode -output-directory=temp -include-directory=bib ${TEX_FILE}.tex; then
-  echo "❌ 第3段階のLaTeXコンパイルでエラーが発生しました"
+echo "📝 LaTeX コンパイル（latexmk使用）"
+if ! latexmk -pdf -lualatex -interaction=nonstopmode -output-directory=temp ${TEX_FILE}.tex; then
+  echo "❌ LaTeX コンパイルでエラーが発生しました"
   exit 1
 fi
 
