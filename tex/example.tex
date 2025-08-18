@@ -53,6 +53,55 @@
 ここに引用を入れてみましょう \cite{example2024}。
 また、別の文献も引用できます \cite{examplebook2024}。
 
+% ---------- テーブル例（CSV抽出テスト用） ----------
+\section{テーブル例}
+
+% テーブル1: 基本的なテーブル
+\begin{table}[h]
+\centering
+\caption{基本的なテーブル例}
+\begin{tabular}{|l|c|r|}
+\hline
+項目 & 数値 & 単位 \\
+\hline
+長さ & 10.5 & cm \\
+幅 & 5.2 & cm \\
+高さ & 3.1 & cm \\
+\hline
+\end{tabular}
+\end{table}
+
+% テーブル2: 数式を含むテーブル
+\begin{table}[h]
+\centering
+\caption{数式を含むテーブル例}
+\begin{tabular}{|l|c|c|}
+\hline
+計算式 & 結果 & 備考 \\
+\hline
+$2 + 3$ & 5 & 基本演算 \\
+$10 \times 5$ & 50 & 乗算 \\
+$\sqrt{16}$ & 4 & 平方根 \\
+$3.14159 \pm 0.00001$ & 3.14 & 円周率 \\
+\hline
+\end{tabular}
+\end{table}
+
+% テーブル3: 日本語を含むテーブル
+\begin{table}[h]
+\centering
+\caption{日本語を含むテーブル例}
+\begin{tabular}{|l|c|r|}
+\hline
+\textbf{項目名} & \textit{値} & \emph{説明} \\
+\hline
+データ1 & 100 & 最初のデータ \\
+データ2 & 200 & 二番目のデータ \\
+データ3 & 300 & 三番目のデータ \\
+\hline
+\end{tabular}
+\end{table}
+
 \input{sections/conclusion}
 
 % ---------- 参考文献一覧 ----------

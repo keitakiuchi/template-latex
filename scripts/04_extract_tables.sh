@@ -19,7 +19,8 @@ fi
 TEXFILE="$1"
 BASENAME=$(basename "$TEXFILE" .tex)
 TEXDIR=$(dirname "$TEXFILE")
-CSVOUTDIR="../build/csv"
+CSVOUTDIR="$(cd "$TEXDIR" && cd .. && pwd)/build/csv"
+ORIGINAL_DIR=$(pwd)
 
 cd "$TEXDIR"
 mkdir -p "$CSVOUTDIR"
@@ -75,6 +76,7 @@ in_tabular && /\\multicolumn\{/ && after_toprule {
 in_tabular{
   if($0~/^%/)            {row_buf=""; next}
   if($0~/\\toprule/)     {after_toprule=1;next}
+  if($0~/\\hline/)       {after_toprule=1;next}  # \hlineも認識
   if($0~/\\midrule/)     {
     # longtableでは\midruleの後に\endfirstheadがある場合は継続
     if(!after_toprule || $0 !~ /\\midrule[[:space:]]*$/) after_toprule=0
@@ -156,12 +158,21 @@ function process_row(line,   raw,parts,cols,tmp,c,n,is_super,is_header){
   is_header = (!header_saved) &&
               ((after_toprule && cleanup(cols[1])!="") ||
                (tolower(cols[1])=="score" && (tolower(cols[2])=="human" || tolower(cols[2])=="term" || tolower(cols[2])=="comparison")))
+  
+  # デバッグ情報
+  if(current_table ~ /table_01/) {
+    printf "DEBUG: ヘッダー検出チェック: after_toprule=%d, cols[1]='%s', cleanup='%s', is_header=%d\n", 
+           after_toprule, cols[1], cleanup(cols[1]), is_header > "/dev/stderr"
+  }
+  
   if(is_header){
      header_cols=n; for(c=1;c<=n;c++){
         header_data[c]=cols[c]
         if(tolower(header_data[c])=="p value") pval_col=c
      }
-     header_saved=1; after_toprule=0; return
+     header_saved=1; after_toprule=0; 
+     printf "DEBUG: ヘッダー検出完了: 列数=%d\n", header_cols > "/dev/stderr"
+     return
   }
   if(!header_saved) return
 
@@ -193,6 +204,10 @@ function process_row(line,   raw,parts,cols,tmp,c,n,is_super,is_header){
 ############ CSV 出力 ############
 function output_csv(   f,i,j,line,cell){
   f=csv_dir"/"current_table".csv"
+  
+  # デバッグ情報
+  printf "DEBUG: CSV出力開始: %s (行数=%d, 列数=%d)\n", f, row_count, max_cols > "/dev/stderr"
+  printf "DEBUG: super_saved=%d, header_saved=%d\n", super_saved, header_saved > "/dev/stderr"
 
   if(super_saved){
     line=""; for(j=1;j<=super_cols;j++){
@@ -200,6 +215,7 @@ function output_csv(   f,i,j,line,cell){
       cell=super_data[j]; if(cell~/[,\n\r]/){gsub(/"/,"\"\"",cell);cell="\""cell"\""}
       line=line cell
     } print line>f
+    printf "DEBUG: スーパーヘッダー出力: %s\n", line > "/dev/stderr"
   }
   if(header_saved){
     line=""; for(j=1;j<=header_cols;j++){
@@ -207,6 +223,7 @@ function output_csv(   f,i,j,line,cell){
       cell=header_data[j]; if(cell~/[,\n\r]/){gsub(/"/,"\"\"",cell);cell="\""cell"\""}
       line=line cell
     } print line>f
+    printf "DEBUG: ヘッダー出力: %s\n", line > "/dev/stderr"
   }
 
   for(i=1;i<=row_count;i++){
@@ -218,6 +235,7 @@ function output_csv(   f,i,j,line,cell){
       if(cell~/[,\n\r]/){gsub(/"/,"\"\"",cell);cell="\""cell"\""}
       line=line cell
     } print line>f
+    printf "DEBUG: データ行出力: %s\n", line > "/dev/stderr"
   }
 
   if(note_text){
@@ -226,6 +244,8 @@ function output_csv(   f,i,j,line,cell){
     print "Note," nt >> f
   }
   close(f)
+  
+  printf "DEBUG: CSV出力完了: %s\n", f > "/dev/stderr"
 }
 
 ############ 初期化 / 片付け ############
@@ -238,6 +258,9 @@ function init_table(a){
   header_cols=super_cols=0
   split("",header_data); split("",super_data)
   row_buf=""; after_toprule=0; pval_col=0
+  
+  # デバッグ情報
+  printf "DEBUG: テーブル開始: %s (auto_table=%d)\n", current_table, a > "/dev/stderr"
 }
 function reset_table(){in_table=auto_table=0}
 
@@ -266,5 +289,76 @@ function cleanup(t){
 }
 AWK_SCRIPT
 
+echo "🔍 実行パラメータ:"
+echo "  - csv_dir: $CSVOUTDIR"
+echo "  - basename: $BASENAME"
+echo "  - 入力ファイル: $BASENAME.tex"
+echo "  - 一時awkファイル: $TEMP_AWK"
+
 gawk -v csv_dir="$CSVOUTDIR" -v basename="$BASENAME" -f "$TEMP_AWK" "$BASENAME.tex"
+
+echo "🔍 生成されたCSVファイル:"
+ls -la "$CSVOUTDIR"/*.csv 2>/dev/null || echo "  CSVファイルが見つかりません"
+
 echo "✅ CSV を ${CSVOUTDIR} に生成しました"
+
+# ---------- クリーンアップ ----------
+echo "🧹 中間生成ファイルをクリーンアップ中..."
+
+# 削除前のファイル一覧を表示
+echo "📋 削除対象ファイル:"
+if [ -d "$TEXDIR" ]; then
+  # LaTeX関連の一時ファイルを検索・表示
+  find "$TEXDIR" -maxdepth 1 \( -name "*.aux" -o -name "*.log" -o -name "*.bbl" -o -name "*.blg" -o -name "*.out" -o -name "*.toc" -o -name "*.pdf" -o -name "*.fls" -o -name "*.fdb_latexmk" -o -name "*.synctex.gz" \) 2>/dev/null | sed "s|^$TEXDIR/||" | head -10 || echo "  削除対象ファイルなし"
+
+  # LaTeX関連の一時ファイルを削除
+  find "$TEXDIR" -maxdepth 1 \( -name "*.aux" -o -name "*.log" -o -name "*.bbl" -o -name "*.blg" -o -name "*.out" -o -name "*.toc" -o -name "*.pdf" -o -name "*.fls" -o -name "*.fdb_latexmk" -o -name "*.synctex.gz" \) -delete 2>/dev/null
+  echo "✅ LaTeX中間ファイルをクリーンアップ完了"
+else
+  echo "⚠️ テキストディレクトリが見つかりません: $TEXDIR"
+fi
+
+# 一時ファイルのクリーンアップ確認
+echo "🧹 一時ファイルのクリーンアップ確認:"
+if [ -f "$TEMP_AWK" ]; then
+  echo "⚠️ 一時awkファイルが残っています: $TEMP_AWK"
+  rm -f "$TEMP_AWK"
+  echo "✅ 一時awkファイルを削除しました"
+else
+  echo "✅ 一時awkファイルは正常にクリーンアップされています"
+fi
+
+# デバッグログファイルのクリーンアップ
+echo "🧹 デバッグログファイルをクリーンアップ中..."
+if [ -f "/tmp/debug_table8.log" ]; then
+  rm -f "/tmp/debug_table8.log"
+  echo "✅ デバッグログファイルを削除しました"
+fi
+
+# 作業ディレクトリ内の一時ファイルも確認
+echo "🧹 作業ディレクトリ内の一時ファイルを確認中..."
+if [ -d "$TEXDIR" ]; then
+  # 一時ファイルのパターンを検索
+  temp_files=$(find "$TEXDIR" -maxdepth 1 -name "*~" -o -name "*.tmp" -o -name "*.temp" 2>/dev/null | head -5)
+  if [ -n "$temp_files" ]; then
+    echo "📋 発見された一時ファイル:"
+    echo "$temp_files" | sed "s|^$TEXDIR/||"
+    # 一時ファイルを削除
+    find "$TEXDIR" -maxdepth 1 \( -name "*~" -o -name "*.tmp" -o -name "*.temp" \) -delete 2>/dev/null
+    echo "✅ 一時ファイルをクリーンアップ完了"
+  else
+    echo "✅ 一時ファイルは見つかりませんでした"
+  fi
+fi
+
+# 元のディレクトリに戻る
+cd "$ORIGINAL_DIR"
+
+# 最終クリーンアップ確認
+echo "🧹 最終クリーンアップ確認:"
+echo "✅ スクリプト実行完了"
+echo "✅ 中間生成ファイルのクリーンアップ完了"
+echo "✅ 一時ファイルのクリーンアップ完了"
+echo ""
+echo "📁 生成されたCSVファイルの場所: $CSVOUTDIR"
+echo "📊 生成されたCSVファイル数: $(ls -1 "$CSVOUTDIR"/*.csv 2>/dev/null | wc -l)"

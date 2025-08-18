@@ -30,8 +30,32 @@ fi
 
 # BibTeX実行（.bblファイル生成）
 if [ -f "$BASENAME.aux" ]; then
-  if ! bibtex "$BASENAME" > /dev/null 2>&1; then
-    echo "⚠️ BibTeX実行に警告がありますが続行します"
+  # .bibファイルの場所を特定
+  BIB_CANDIDATES=$(grep -Eo '\\(bibliography|addbibresource)\{[^}]+\}' "$BASENAME.tex" 2>/dev/null \
+                     | sed -E 's/.*\{([^}]*)\}.*/\1/' \
+                     | tr ',' '\n' \
+                     | sed 's/\.bib$//' || true)
+  
+  BIBFILE=""
+  search_paths=( "" "bib/" "../" "../bib/" "../../bib/" )
+  
+  for bib in $BIB_CANDIDATES; do
+    for path in "${search_paths[@]}"; do
+      if [ -f "${path}${bib}.bib" ]; then
+        BIBFILE="${path}${bib}.bib"
+        echo "📚 BibTeX用.bibファイル: $BIBFILE"
+        break 2
+      fi
+    done
+  done
+  
+  # BibTeX実行
+  if [ -n "$BIBFILE" ]; then
+    if ! bibtex "$BASENAME" > /dev/null 2>&1; then
+      echo "⚠️ BibTeX実行に警告がありますが続行します"
+    fi
+  else
+    echo "⚠️ .bibファイルが見つからないため、BibTeXをスキップします"
   fi
 fi
 
@@ -48,8 +72,10 @@ if [ -f "$BASENAME.bbl" ]; then
   TEMP_TEX="${BASENAME}_temp.tex"
   
   # TeXファイルを処理して、\bibliography{}の前に.bblの内容を挿入
-  awk -v bbl="$BASENAME.bbl" '
+  echo "🔍 \bibliography{}行を検索中..."
+  if awk -v bbl="$BASENAME.bbl" '
     /\\bibliography\{/ {
+      print "Found bibliography line: " $0 > "/dev/stderr"
       # .bblファイルの内容を挿入
       while ((getline line < bbl) > 0) {
         print line
@@ -61,37 +87,30 @@ if [ -f "$BASENAME.bbl" ]; then
     }
     # それ以外の行はそのまま出力
     { print }
-  ' "$BASENAME.tex" > "$TEMP_TEX"
-  
-  # 変換対象を一時ファイルに変更
-  CONVERT_FILE="$TEMP_TEX"
+  ' "$BASENAME.tex" > "$TEMP_TEX"; then
+    echo "✅ 一時ファイル作成完了: $TEMP_TEX"
+    # 変換対象を一時ファイルに変更
+    CONVERT_FILE="$TEMP_TEX"
+  else
+    echo "⚠️ 一時ファイル作成に失敗しました"
+    CONVERT_FILE="$BASENAME.tex"
+  fi
 else
   echo "⚠️ .bblファイルが見つかりません"
   CONVERT_FILE="$BASENAME.tex"
 fi
 
 # ---------- Step 3: .bib検出（pandoc用） ----------
-BIB_CANDIDATES=$(grep -Eo '\\(bibliography|addbibresource)\{[^}]+\}' "$BASENAME.tex" 2>/dev/null \
-                   | sed -E 's/.*\{([^}]*)\}.*/\1/' \
-                   | tr ',' '\n' \
-                   | sed 's/\.bib$//' || true)
-
-BIBFILE=""
-search_paths=( "" "bib/" "../" "../bib/" "../../bib/" )
-
-for bib in $BIB_CANDIDATES; do
-  for path in "${search_paths[@]}"; do
-    if [ -f "${path}${bib}.bib" ]; then
-      BIBFILE="${path}${bib}.bib"
-      break 2
-    fi
-  done
-done
+# BIBFILEは既にStep 1で設定済み
+echo "🔍 変換対象ファイル: $CONVERT_FILE"
+echo "🔍 .bibファイル: $BIBFILE"
 
 # ---------- Step 4: CSLスタイル検出 ----------
+echo "🔍 参考文献スタイルを検索中..."
 BST=$(grep -Eo '\\bibliographystyle\{[^}]+\}' "$BASENAME.tex" 2>/dev/null \
         | head -n1 | sed -E 's/\\bibliographystyle\{([^}]+)\}/\1/' \
         | tr '[:upper:]' '[:lower:]' || echo "")
+echo "🔍 検出されたスタイル: $BST"
 
 declare -A CSL_MAP=(
   [ieeetr]="ieee.csl"
@@ -150,7 +169,14 @@ fi
 
 # ---------- クリーンアップ ----------
 echo "🧹 一時ファイルをクリーンアップ中..."
-rm -f "$TEMP_TEX" *.aux *.log *.bbl *.blg *.out *.toc pandoc.log 2>/dev/null
+
+# 削除前のファイル一覧を表示
+echo "📋 削除対象ファイル:"
+ls -la *.aux *.log *.bbl *.blg *.out *.toc *.pdf 2>/dev/null | grep -v "No such file" || echo "  削除対象ファイルなし"
+
+# LaTeX関連の一時ファイルを削除
+rm -f "$TEMP_TEX" *.aux *.log *.bbl *.blg *.out *.toc *.pdf pandoc.log 2>/dev/null
+echo "✅ LaTeX中間ファイルをクリーンアップ完了"
 
 # ---------- 結果確認 ----------
 if [ -f "$OUTFILE" ]; then
