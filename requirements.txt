@@ -1,0 +1,27 @@
+# AI駆動コーディング用の依存関係
+anthropic>=0.19.1
+requests>=2.31.0
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+
+# 開発・テスト用ツール
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+
+# 型ヒントとユーティリティ
+typing-extensions>=4.0.0
+pathlib2>=2.3.0
+
+# 非同期処理
+aiohttp>=3.8.0
+asyncio-mqtt>=0.11.0
+
+# データ処理
+pandas>=2.0.0
+numpy>=1.24.0
+
+# ログ・監視
+loguru>=0.7.0

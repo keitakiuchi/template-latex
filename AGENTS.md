@@ -1,4 +1,62 @@
-# LaTeX Template Guidelines
+# LaTeX Template Guidelines with AI-Driven Coding Support
+
+## AI駆動コーディング対応
+
+### 対応AIツール
+- **Claude Code CLI**: コード生成・改善・レビュー
+- **Claude Code GitHub Actions**: CI/CD統合  
+- **OpenAI Codex**: コード補完・生成
+- **Gemini CLI**: ウェブ検索・技術情報取得
+- **Cursor**: AI統合開発環境
+
+### 環境チェック（必須）
+**このプロジェクトでコードを実行する前に、必ず環境チェックスクリプトを実行してください：**
+
+```bash
+# 仮想環境のアクティベート
+conda activate py-latex  # または適切な環境名
+
+# 環境チェックスクリプトの実行
+python utility/check_env.py
+```
+
+このスクリプトは以下を確認します：
+- ✅ 適切な仮想環境がアクティブか
+- ✅ 必要な依存関係がインストールされているか
+- ✅ 設定ファイルが存在するか
+
+### クイックスタート機能
+「スタート」と入力すると、自動的に環境チェックを実行して処理環境を整えます：
+
+```bash
+# スタートスクリプトの実行
+python utility/start.py
+```
+
+### AIツールの使用方法
+
+#### Claude AI アシスタント
+- GitHub Issuesで@claudeをメンション
+- プルリクエストレビューで@claudeをメンション
+- 自動化されたコードレビューと改善提案
+
+#### Gemini CLI 検索
+```bash
+# 技術情報の検索
+gemini --prompt "WebSearch: Python async programming best practices 2024"
+
+# APIドキュメントの検索
+gemini --prompt "WebSearch: OpenAI API documentation"
+
+# ベストプラクティスの検索
+gemini --prompt "WebSearch: GitHub Actions best practices"
+```
+
+#### Cursor IDE
+- `.cursor/rules/` ディレクトリのルールファイルを参照
+- AI駆動開発のベストプラクティスに従った開発
+
+---
 
 ## Directory Structure
 

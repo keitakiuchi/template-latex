@@ -1,0 +1,20 @@
+{
+    "terminal": {
+        "autoApproveCommands": [
+            "cd",
+            "ls",
+            "find",
+            "./scripts/02_compile.sh",
+            "rm -rf",
+            "mkdir -p"
+        ]
+    },
+    "cursor.terminal.autoApproveCommands": [
+        "cd",
+        "ls",
+        "find",
+        "./scripts/02_compile.sh",
+        "rm -rf",
+        "mkdir -p"
+    ]
+}

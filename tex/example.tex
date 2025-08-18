@@ -1,0 +1,61 @@
+% example.tex - 汎用的なLaTeXテンプレート例
+% 日本語論文・レポート作成のための基本テンプレート
+% このファイルをコピーして、プロジェクトに合わせてカスタマイズしてください
+
+\documentclass[a4paper,11pt]{article}
+
+% 既存の共通プリセット
+\input{sections/preamble}
+
+% ---------- 言語・日本語設定 ----------
+\usepackage{luatexja}           % 日本語
+\usepackage{luatexja-fontspec}
+\usepackage{fontspec}           % OTF/TTF フォント
+\usepackage{polyglossia}        % 言語自動切替
+\setmainlanguage{english}
+\setotherlanguage{japanese}
+
+% 日本語フォントの設定を簡素化
+\defaultjfontfeatures{JFM=ujis}
+
+% ---------- フォント ----------
+% 基本的なフォント設定（フォールバック付き）
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+% 日本語フォントはデフォルト設定を使用
+
+% ---------- 数式・図・リンク ----------
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% ---------- 参考文献（BibTeX） ----------
+\usepackage{cite}        % 引用コマンド
+\bibliographystyle{plain} % 参考文献スタイル
+
+% ---------- 本文開始 ----------
+\begin{document}
+
+\title{論文タイトル / Paper Title}
+\author{著者名 / Author Name}
+\date{\today}
+\maketitle
+
+\tableofcontents
+\clearpage
+
+% 各章を読み込む
+\input{sections/intro}
+
+% 引用例（テスト用）
+\section{引用例}
+ここに引用を入れてみましょう \cite{example2024}。
+また、別の文献も引用できます \cite{examplebook2024}。
+
+\input{sections/conclusion}
+
+% ---------- 参考文献一覧 ----------
+\bibliography{example}
+
+\end{document}

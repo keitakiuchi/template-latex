@@ -61,5 +61,26 @@
     "[latex]": {
         "editor.defaultFormatter": "James-Yu.latex-workshop",
         "editor.wordWrap": "on"
-    }
+    },
+    "terminal.integrated.allowChords": true,
+    "terminal.integrated.autoApproveCommands": [
+        "cd",
+        "ls",
+        "find",
+        "./scripts/02_compile.sh",
+        "rm -rf",
+        "mkdir -p",
+        "git add",
+        "git commit"
+    ],
+    "cursor.terminal.autoApproveCommands": [
+        "cd",
+        "ls",
+        "find",
+        "./scripts/02_compile.sh",
+        "rm -rf",
+        "mkdir -p",
+        "git add",
+        "git commit"
+    ]
 }
