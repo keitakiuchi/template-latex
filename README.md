@@ -150,35 +150,42 @@ latex-template/
 │       ├─ ai_driven_coding.md
 │       └─ latex_development.md
 ├─ .claude/              ← Claude AI アシスタント設定
+│   ├─ claude.yml        ← Claude設定ファイル
+│   ├─ settings.local.json ← ローカル設定
 │   └─ commands/         ← AIコマンド
 │       └─ gemini-search.md
 ├─ .github/
 │   └─ workflows/        ← CI 用 GitHub Actions
-│       └─ latex.yml
+│       ├─ latex.yml     ← LaTeXビルド用
+│       ├─ claude.yml    ← Claude AI用
+│       └─ codex-tdd.yml ← OpenAI Codex用
 ├─ tex/                  ← LaTeX ソース一式
 │   ├─ example.tex       ← メインファイル例（\input で各章を読み込む）
-│   ├─ main.tex          ← 基本テンプレート（従来版）
-│   ├─ preamble.tex      ← パッケージ類を集約
-│   ├─ sections/
-│   │   ├─ intro.tex
-│   │   └─ conclusion.tex
+│   ├─ title.tex         ← タイトルページ設定
+│   ├─ sections/         ← 章ファイル
+│   │   ├─ preamble.tex  ← パッケージ類を集約
+│   │   ├─ intro.tex     ← 序論
+│   │   └─ conclusion.tex ← 結論
 │   ├─ bib/              ← 参考文献
 │   │   ├─ example.bib   ← 参考文献例
 │   │   ├─ refs.bib      ← 基本参考文献
 │   │   └─ *.bbl         ← コンパイル済み参考文献（自動生成）
+│   ├─ temp/             ← 一時ファイル（ビルド時）
 │   ├─ *.bst             ← 各出版社のスタイルファイル
+│   │   ├─ WileyNJD-APA.bst
+│   │   └─ vancouver-authoryear.bst
 │   └─ *.cls             ← 各出版社のクラスファイル
-├─ build/                ← 生成ファイル（自動生成）
+│       └─ wiley-article.cls
+├─ build/                ← ルートビルドディレクトリ（自動生成）
 │   ├─ pdf/              ← PDF出力（最終成果物）
-│   ├─ docx/             ← Word出力（予定）
-│   └─ aux/              ← 中間ファイル
+│   ├─ docx/             ← Word出力
+│   └─ csv/              ← テーブル抽出結果
 ├─ scripts/              ← スクリプト類
 │   ├─ 01_install_missing_packages.sh ← 不足パッケージ自動インストール
 │   ├─ 02_compile.sh     ← コンパイルスクリプト
 │   ├─ 03_tex2docx.sh    ← TeX→Word変換スクリプト
 │   ├─ 04_extract_tables.sh ← 表データ抽出スクリプト
-│   ├─ compile.sh         ← 従来のコンパイルスクリプト
-│   └─ tex2docx.sh       ← 従来のTeX→Word変換スクリプト
+│   └─ 05_cleanup.sh     ← ビルドファイルクリーンアップスクリプト
 ├─ utility/               ← Pythonユーティリティ
 │   ├─ check_env.py      ← 環境チェック
 │   ├─ start.py          ← 自動スタート
@@ -187,12 +194,13 @@ latex-template/
 ├─ latexmkrc             ← latexmk のカスタム設定
 ├─ requirements.txt       ← Python依存関係
 ├─ texlive-tiny.profile  ← TeX Live設定プロファイル
+├─ env.example           ← 環境変数設定例
 ├─ .gitignore
 ├─ README.md
 ├─ AGENTS.md             ← AIエージェント統合ガイド
 ├─ CLAUDE.md             ← Claude AI設定・活用ガイド
 ├─ ai-driven-coding.md   ← AI駆動コーディング総合テンプレート
-└─ LICENSE               ← MIT など
+└─ LICENSE               ← GNU GPL v3
 ```
 
 ## 使い方
@@ -203,6 +211,69 @@ latex-template/
 - pandoc（TeX→Word変換用）
 - VS Code + LaTeX Workshop 拡張機能（推奨）
 - Python環境（conda推奨）
+
+### 環境設定
+
+#### 1. 環境変数の設定
+
+プロジェクトルートで環境変数を設定します：
+
+```bash
+# 内蔵TeX Liveの場合
+export TEXLIVE_PATH="/usr/local/texlive/2025/bin/x86_64-linux"
+
+# 外付けSSD（Dドライブ）の場合
+export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"
+
+# 外付けSSD（Eドライブ）の場合
+export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"
+
+# 永続化する場合
+echo 'export TEXLIVE_PATH="/path/to/texlive/bin/x86_64-linux"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+#### 2. SSD上のTeX Liveへのアクセス方法
+
+##### 恒久設定（推奨）
+SSDをマウントした状態で恒久設定を行います：
+
+```bash
+# Eドライブの場合
+echo 'export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"' >> ~/.bashrc
+
+# Dドライブの場合
+echo 'export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"' >> ~/.bashrc
+
+# 設定を反映
+source ~/.bashrc
+
+# 確認
+which latexmk
+```
+
+##### 一時的な切り替え
+実行前だけ一時的に切り替える場合：
+
+```bash
+# Eドライブの場合
+export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"
+
+# Dドライブの場合
+export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"
+
+# コンパイル実行
+./scripts/02_compile.sh example
+```
+
+#### 3. 環境設定ファイルの使用
+
+`env.example`ファイルをコピーして`.env`にリネームし、必要に応じて編集してください：
+
+```bash
+cp env.example .env
+# .envファイルを編集
+```
 
 ### コンパイル方法
 
@@ -270,7 +341,7 @@ LaTeXコンパイル時に「パッケージが見つからない」エラーが
 - `tex/temp/example.log` - コンパイルログ
 - `tex/temp/example.bbl` - 一時的な参考文献ファイル
 
-**クリーンアップオプション:**
+#### クリーンアップオプション:**
 ```bash
 # 中間ファイルをクリーンアップしてからコンパイル
 ./scripts/02_compile.sh example --clean
@@ -281,6 +352,30 @@ LaTeXコンパイル時に「パッケージが見つからない」エラーが
 # 完全クリーンアップ（両方のオプション）
 ./scripts/02_compile.sh example --clean --clean-temp
 ```
+
+#### クリーンアップスクリプト
+
+ビルドファイルや一時ファイルを整理するための専用スクリプトも用意しています：
+
+```bash
+# すべてのビルドファイルをクリーンアップ
+./scripts/05_cleanup.sh --all
+
+# 一時ファイルのみクリーンアップ
+./scripts/05_cleanup.sh --temp
+
+# ビルド出力のみクリーンアップ
+./scripts/05_cleanup.sh --build
+
+# ヘルプ表示
+./scripts/05_cleanup.sh --help
+```
+
+**クリーンアップスクリプトの機能：**
+- `--all`: 一時ファイルとビルド出力の両方を削除
+- `--temp`: `tex/temp/`ディレクトリ内の一時ファイルのみ削除
+- `--build`: `build/`ディレクトリ内のビルド出力のみ削除
+- 安全な削除処理（重要なファイルは保持）
 
 #### TeX→Word変換
 
@@ -317,13 +412,82 @@ LaTeXコンパイル時に「パッケージが見つからない」エラーが
 
 ### カスタマイズ
 
-- `tex/preamble.tex`: パッケージや設定を追加・変更
+- `tex/sections/preamble.tex`: パッケージや設定を追加・変更
 - `tex/example.tex`: 文書のタイトル、著者名などを変更
+- `tex/title.tex`: タイトルページの設定を変更
 - `latexmkrc`: コンパイル設定を変更
+
+## トラブルシューティング
+
+### よくある問題と解決方法
+
+#### 1. TeX Liveのパスが見つからない
+
+```bash
+# エラー: TeX Liveのパスが自動検出できませんでした
+# 解決方法: 環境変数を設定
+export TEXLIVE_PATH="/usr/local/texlive/2025/bin/x86_64-linux"
+# または
+export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"
+```
+
+#### 2. SSD上のTeX Liveにアクセスできない
+
+```bash
+# エラー: 日本語フォントが見つからない、コンパイルエラー
+# 原因: SSDがマウントされていない、またはPATHが正しく設定されていない
+
+# 解決方法1: SSDのマウント確認
+ls /mnt/e/texlive/2025/bin/  # Eドライブの場合
+ls /mnt/d/texlive/2025/bin/  # Dドライブの場合
+
+# 解決方法2: 環境変数の設定
+export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"  # Eドライブ
+export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"  # Dドライブ
+
+# 解決方法3: 恒久設定
+echo 'export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+#### 3. 日本語フォントエラー
+
+```bash
+# エラー: Missing character (nullfont)
+# 解決方法: 日本語フォントパッケージをインストール
+sudo apt install fonts-ipafont fonts-ipafont-gothic fonts-ipafont-mincho
+```
+
+#### 4. ビルドディレクトリの権限エラー
+
+```bash
+# エラー: Permission denied
+# 解決方法: ディレクトリの権限を確認
+ls -la build/
+chmod 755 build/
+```
+
+#### 5. 依存パッケージの不足
+
+```bash
+# エラー: Package not found
+# 解決方法: 不足パッケージを自動インストール
+./scripts/01_install_missing_packages.sh
+```
+
+### ログファイルの確認
+
+コンパイルエラーが発生した場合は、以下のログファイルを確認してください：
+
+- `tex/temp/example.log` - 詳細なコンパイルログ
+- `tex/temp/example.aux` - 引用情報
+- `tex/temp/example.blg` - BibTeXログ
 
 ## ライセンス
 
-MIT License
+GNU General Public License v3.0
+
+このプロジェクトはGNU GPL v3ライセンスの下で公開されています。詳細は[LICENSE](LICENSE)ファイルを参照してください。
 
 ## TeX Live 2025 最新版のインストール手順（WSL Ubuntu）
 

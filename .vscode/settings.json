@@ -6,6 +6,12 @@
             "tools": [
                 "latexmk-lua"
             ]
+        },
+        {
+            "name": "latexmk (lualatex) - Clean",
+            "tools": [
+                "latexmk-lua-clean"
+            ]
         }
     ],
     "latex-workshop.latex.tools": [
@@ -18,13 +24,27 @@
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "-gg",
-                "-outdir=%OUTDIR%",
+                "-outdir=temp",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "latexmk-lua-clean",
+            "command": "latexmk",
+            "args": [
+                "-lualatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-gg",
+                "-outdir=temp",
+                "-C",
                 "%DOC%"
             ]
         }
     ],
     // ---------- 出力ディレクトリ ----------
-    "latex-workshop.latex.outDir": "%DIR%/build",
+    "latex-workshop.latex.outDir": "%DIR%/temp",
     // ---------- ビューア ----------
     "latex-workshop.view.pdf.viewer": "tab",
     // ---------- ビルド後の掃除 ----------

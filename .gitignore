@@ -52,6 +52,14 @@ tex/temp/
 *.synctex.gz(busy)
 *.pdfsync
 
+# ビルド出力ディレクトリ
+build/
+
+# ログファイル
+*.log
+table_extract*.log
+test_log.txt
+
 # その他
 .DS_Store
 Thumbs.db 

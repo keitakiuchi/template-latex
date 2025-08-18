@@ -1,8 +1,44 @@
 #!/bin/bash
 
-# TeX Live のパスを設定（Dドライブ版）
-export TL_SSD="/mnt/d"
-export PATH="$TL_SSD/texlive/2025/bin/x86_64-linux:$PATH"
+# =============================================================================
+# LaTeX Template - コンパイルスクリプト
+# =============================================================================
+# このスクリプトは、LaTeXファイルをコンパイルしてPDFを生成します。
+# 
+# 使用方法:
+#   ./scripts/02_compile.sh [ファイル名] [オプション]
+#   
+#   例:
+#   ./scripts/02_compile.sh example
+#   ./scripts/02_compile.sh example --clean
+#   ./scripts/02_compile.sh example --clean --clean-temp
+#
+# オプション:
+#   --clean      : 一時ファイルをクリーンアップしてからコンパイル
+#   --clean-temp : コンパイル後に一時ファイルをクリーンアップ
+# =============================================================================
+
+# TeX Live のパスを環境変数から設定（設定されていない場合はデフォルト）
+if [ -z "$TEXLIVE_PATH" ]; then
+    # 一般的なTeX Liveのパスを自動検出
+    if [ -d "/usr/local/texlive/2025/bin/x86_64-linux" ]; then
+        export TEXLIVE_PATH="/usr/local/texlive/2025/bin/x86_64-linux"
+    elif [ -d "/mnt/d/texlive/2025/bin/x86_64-linux" ]; then
+        export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"
+    elif [ -d "/mnt/e/texlive/2025/bin/x86_64-linux" ]; then
+        export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"
+    else
+        echo "⚠️  TeX Liveのパスが自動検出できませんでした"
+        echo "💡 環境変数TEXLIVE_PATHを設定してください:"
+        echo "   export TEXLIVE_PATH=\"/path/to/texlive/bin/x86_64-linux\""
+        echo "   または、スクリプト内のTEXLIVE_PATH変数を直接編集してください"
+        exit 1
+    fi
+fi
+
+# TeX Liveのパスを設定
+export PATH="$TEXLIVE_PATH:$PATH"
+echo "🔧 TeX Liveパス: $TEXLIVE_PATH"
 
 # カレントディレクトリを確認
 if [ -d "tex" ]; then
@@ -17,6 +53,8 @@ echo "🔄 コンパイル開始: ${TEX_FILE}.tex"
 # 必要なディレクトリを作成
 echo "📁 ディレクトリ構造を確認・作成中..."
 mkdir -p ../build/pdf
+mkdir -p ../build/docx
+mkdir -p ../build/csv
 mkdir -p bib
 mkdir -p temp
 
@@ -30,6 +68,7 @@ fi
 echo "📝 LaTeX コンパイル（latexmk使用）"
 if ! latexmk -pdf -lualatex -interaction=nonstopmode -output-directory=temp ${TEX_FILE}.tex; then
   echo "❌ LaTeX コンパイルでエラーが発生しました"
+  echo "📋 エラーログ: tex/temp/${TEX_FILE}.log"
   exit 1
 fi
 
