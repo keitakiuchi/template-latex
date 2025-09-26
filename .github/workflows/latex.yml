@@ -3,17 +3,14 @@ name: Build LaTeX document
 on:
   push:
     tags:
-      - 'v*'  # vで始まるタグがプッシュされたときのみ実行
-  workflow_dispatch:  # 手動実行用
+      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        run: |
-          git clone https://github.com/${{ github.repository }}.git .
-          git checkout ${{ github.sha }}
+      - uses: actions/checkout@v4
 
       - name: Install TeX Live and required packages
         run: |
@@ -28,32 +25,19 @@ jobs:
             texlive-fonts-recommended \
             texlive-fonts-extra \
             texlive-bibtex-extra \
-            biber \
             latexmk \
             fonts-ipafont \
             fonts-ipaexfont \
             fonts-dejavu
 
       - name: Compile LaTeX document
+        working-directory: tex
         run: |
-          cd tex
-          latexmk -lualatex -synctex=1 -interaction=nonstopmode -shell-escape main.tex
-          biber main
-          lualatex -synctex=1 -interaction=nonstopmode main.tex
-          lualatex -synctex=1 -interaction=nonstopmode main.tex
-          
-      - name: Upload PDF as artifact
-        run: |
-          mkdir -p /tmp/artifacts
-          cp tex/main.pdf /tmp/artifacts/
-          echo "PDF file has been generated and copied to /tmp/artifacts/"
-          echo "::notice::PDF was successfully built and is available as an artifact"
-          
-      # Note: GitHub release creation requires permissions that may be restricted
-      # You may need to set up a personal access token or use GitHub CLI if allowed
-      # The following step is commented out as it likely won't work with your restrictions
-      #- name: Create Release
-      #  if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      #  run: |
-      #    echo "Creating release..."
-      #    # Add release creation logic here if allowed 
+          latexmk -lualatex -synctex=1 -interaction=nonstopmode main.tex
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-pdf
+          path: build/pdf/main.pdf
+          if-no-files-found: error

@@ -50,6 +50,16 @@ template-latex/
 └── README.md                   # プロジェクト説明
 ```
 
+## ✅ 2025-02 プロジェクト固有アップデート
+
+- `tex/main.tex` をエントリポイントとし、`tex/preamble.tex` で LuaLaTeX 用の共有設定を管理します。`tex/title.tex` はタイトル・著者メタデータとフロントマター宣言を提供します。
+- 参考文献は `tex/bib/refs.bib` に統合しました。`\cite{...}` を追加した場合は `latexmk` が自動で `bibtex` を実行します。
+- すべてのビルドは `python utility/start.py` の成功後に `cd tex && latexmk -lualatex -synctex=1 -interaction=nonstopmode main.tex` を実行してください。`luaotfload-tool --update` や `texlive-lang-japanese`/`fonts-ipafont` の導入で IPA フォントを有効化できます。
+- GitHub Actions (`.github/workflows/latex.yml`) は `latexmk` 単体で PDF を生成し、`build/pdf/main.pdf` をアーティファクトとして公開します。出力先はローカル開発でも同じです。
+- 生成物、途中成果、AI ルールの反映状況はそれぞれ `results/`、`workbench/`、`sharing/ai-driven-coding.py` から参照できます。
+
+
+
 ## 🚀 スタート機能
 
 このテンプレートには、環境セットアップを自動化する機能が含まれています：

@@ -1,34 +1,50 @@
-% preamble.tex - パッケージ設定
+% preamble.tex - 共通のパッケージ設定
 
-% LuaLaTeX 用日本語設定
+% ---------- 言語・フォント設定 ----------
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{english}
+\setotherlanguage{japanese}
+\setmainfont{TeX Gyre Termes}
+
 \usepackage{luatexja}
-\usepackage{luatexja-fontspec}
+\usepackage[ipa]{luatexja-preset}
 
-% 日本語フォント設定（最小限の設定）
-\defaultjfontfeatures{JFM=ujis}
+% ---------- レイアウトと装飾 ----------
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=30mm,
+    right=30mm,
+    top=30mm,
+    bottom=30mm,
+}
+\usepackage{setspace}
+\setstretch{1.25}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{\baselineskip}{0.5\baselineskip}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
 
-% 数式
+% ---------- 著者と所属 ----------
+\usepackage{authblk}
+\usepackage{xcolor}
+\newcommand{\orcidicon}[1]{\href{https://orcid.org/#1}{ORCID}}
+
+% ---------- 数式・図表 ----------
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathtools}
-
-% 図表
 \usepackage{graphicx}
 \graphicspath{{../figures/}}
 \usepackage{float}
 \usepackage{subcaption}
 \usepackage{booktabs}
-
-% 参考文献
-\usepackage{url}
-\usepackage{hyperref}
-
-% その他の便利なパッケージ
 \usepackage{enumitem}
-\usepackage{listings}
-\usepackage{xcolor}
 
-% コードのハイライト設定
+% ---------- コード表示 ----------
+\usepackage{listings}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -52,23 +68,14 @@
     showtabs=false,
     tabsize=2
 }
-
 \lstset{style=mystyle}
 
-% ハイパーリンクの設定
+% ---------- 参考文献・リンク ----------
+\usepackage{url}
+\usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,
     urlcolor=cyan,
 }
-
-% ページ設定
-\usepackage{geometry}
-\geometry{
-    a4paper,
-    left=30mm,
-    right=30mm,
-    top=30mm,
-    bottom=30mm,
-} 

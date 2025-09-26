@@ -1,0 +1,22 @@
+% main.tex - エントリーポイント
+
+\documentclass[a4paper,11pt]{article}
+
+\input{preamble}
+\input{title}
+
+\begin{document}
+\maketitle
+
+\frontmattersections
+
+\tableofcontents
+\clearpage
+
+\input{sections/intro}
+\input{sections/conclusion}
+
+\bibliographystyle{plain}
+\bibliography{bib/refs}
+
+\end{document}
