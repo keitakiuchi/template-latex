@@ -1,0 +1,27 @@
+# Codex CLI configuration for the template-latex repository.
+# Adjusts approval flow and sandbox behaviour to match local development.
+
+model = "gpt-5"
+model_reasoning_effort = "high"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[codex]
+response_language = "ja"
+welcome_message = "template-latex リポジトリ用 Codex セッションです。作業前に python utility/start.py を実行して環境を確認してください。"
+repo_root = "${workspace_root}"
+
+[sandbox_workspace_write]
+network_access = false
+
+[profiles.web_search]
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+network_access = false
+
+[paths]
+plan_dir = "plan"
+results_dir = "results"
+workbench_dir = "workbench"
+figures_dir = "figures"
+tex_dir = "tex"

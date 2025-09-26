@@ -1,27 +1,119 @@
 # AI-Driven Coding Rules Template
 
-このファイルは、jpr-llm-evaluationリポジトリで使用するAI駆動コーディングのルールテンプレートです。
-template-vibe-codingリポジトリから自動生成され、jpr-llm-evaluationプロジェクト用にカスタマイズされました。
+このファイルは、template-latexリポジトリで使用するAI駆動コーディングのルールテンプレートです。
+template-vibe-codingリポジトリから自動生成されました。
 
 ## 生成日時
-2025-07-02 14:46:17
+2025-09-26 10:18:51
 
 ## 概要
 このファイルには、様々なAIツール向けのルールファイルが含まれています：
 - Claude Code CLI
 - Claude Code GitHub Actions  
 - OpenAI Codex
+- Codex CLI/IDE
 - Gemini CLI
 - Cursor
 
+## 📁 推奨ディレクトリ構造
+
+```
+template-latex/
+├── .claude/                    # Claude Code CLI設定
+│   ├── commands/
+│   │   └── gemini-search.md    # Gemini検索コマンド設定
+│   └── claude.yml              # Claude AIアシスタント設定
+├── .codex/                     # Codex CLI/IDE 設定
+│   └── config.toml             # Codex IDE基本設定
+├── .cursor/                    # Cursor設定
+│   └── rules/
+│       └── cursorrules.md      # Cursor開発ルール
+├── .github/                    # GitHub Actions設定
+│   └── workflows/
+│       ├── claude.yml          # Claude CI/CD設定
+│       └── codex-tdd.yml       # TDDワークフロー設定
+├── utility/                    # ユーティリティツール
+│   ├── check_env.py            # 環境チェックスクリプト
+│   ├── start.py                # 自動セットアップスクリプト（Python）
+│   └── start.sh                # 自動セットアップスクリプト（Bash）
+├── sharing/                    # 共有ツール
+│   └── ai-driven-coding.py     # ルールファイル集約スクリプト
+├── workbench/                  # 実験用ワークスペース
+├── plan/                       # プロジェクト計画
+├── results/                    # 実行結果
+├── CLAUDE.md                   # Claude使用ガイド
+├── GEMINI.md                   # Gemini使用ガイド
+├── AGENTS.md                   # AIエージェント使用ガイド
+├── ai-driven-coding.md         # このルールファイルテンプレート
+├── environment.yml             # conda環境設定
+├── requirements.txt            # Python依存関係（Claude Code GitHub Actions専用）
+└── README.md                   # プロジェクト説明
+```
+
+## 🚀 スタート機能
+
+このテンプレートには、環境セットアップを自動化する機能が含まれています：
+
+### 自動セットアップスクリプト
+
+#### `utility/start.py` (Python)
+- **機能**: conda環境の確認・作成・更新、環境チェックを自動実行
+- **特徴**: クロスプラットフォーム対応、詳細なエラーハンドリング
+- **使用方法**: `python utility/start.py`
+
+#### `utility/start.sh` (Bash)
+- **機能**: 同上の機能をbashスクリプトで実装
+- **特徴**: 色付き出力、段階的なセットアッププロセス
+- **使用方法**: `./utility/start.sh` (実行権限が必要)
+
+#### セットアップ内容
+1. **condaの確認**: インストール状況の確認
+2. **environment.ymlの確認**: 環境設定ファイルの存在確認
+3. **環境の作成・更新**: `environment.yml`から環境を作成または更新
+4. **環境のアクティベート**: 自動的に環境をアクティブ化
+5. **環境チェック**: `utility/check_env.py`を実行して最終確認
+
+### 環境チェックスクリプト
+
+#### `utility/check_env.py`
+- **機能**: プロジェクト実行環境の適切性をチェック
+- **確認項目**:
+  - 適切な仮想環境がアクティブか
+  - 必要な依存関係がインストールされているか
+  - 設定ファイルが存在するか
+- **使用方法**: `python utility/check_env.py`
+
+## 📋 ルールファイルとAIツールの対応
+
+### Claude Code CLI用
+- `.claude/commands/gemini-search.md` - Gemini検索コマンド設定
+- `.claude/claude.yml` - Claude AIアシスタント設定
+- `CLAUDE.md` - Claude使用ガイドライン
+
+### Claude Code GitHub Actions用
+- `.github/workflows/claude.yml` - GitHub Actions CI/CD設定
+
+### OpenAI Codex用
+- `.github/workflows/codex-tdd.yml` - TDDワークフロー設定
+- `AGENTS.md` - AIエージェント使用ガイドライン
+
+### Codex CLI/IDE 用
+- `.codex/config.toml` - Codex CLI/IDE の基本設定（モデル・承認ポリシー・サンドボックスなど）
+
+### Gemini CLI用
+- `GEMINI.md` - Gemini使用ガイドライン
+
+### Cursor用
+- `.cursor/rules/cursorrules.md` - Cursor開発ルール
+
 ## ⚠️ 重要な注意事項
 
-### プロジェクト固有の設定
-このテンプレートは、jpr-llm-evaluationプロジェクト用に以下の設定でカスタマイズされています：
+### プロジェクト固有の設定の変更
+このテンプレートを使用する前に、以下の設定をプロジェクトに合わせて変更してください：
 
-1. **環境名**: `conda activate py-latex`
-2. **パス**: `python utility/check_env.py`
-3. **プロジェクト名**: `jpr-llm-evaluation`
+1. **環境名の変更**: `conda activate template-latex` を適切な環境名に変更
+2. **パスの変更**: `python utility/check_env.py` を適切なパスに変更
+3. **プロジェクト名の変更**: `template-latex` を実際のプロジェクト名に変更
 
 ### 使用方法
 1. このファイルをプロジェクトのルートディレクトリに配置
@@ -31,6 +123,23 @@ template-vibe-codingリポジトリから自動生成され、jpr-llm-evaluation
 
 ### 必要なファイル・ディレクトリの作成
 このテンプレートで参照されているファイルが存在しない場合は、以下の内容で作成してください：
+
+#### environment.yml
+```yaml
+name: template-latex
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - requests>=2.31.0
+    - python-dateutil>=2.8.2
+    - python-dotenv>=1.0.0
+    - typing-extensions>=4.7.1
+    - pyyaml>=6.0.1
+```
 
 #### utility/check_env.py
 ```python
@@ -52,15 +161,15 @@ def check_environment():
         print("⚠️ Virtual environment is not active")
     
     # Check Python version
-    print(f"✅ Python version: {sys.version}")
+    print("✅ Python version: sys.version")
     
     # Check required directories
     required_dirs = ['.claude', '.cursor', '.github']
     for dir_name in required_dirs:
         if os.path.exists(dir_name):
-            print(f"✅ {dir_name}/ directory exists")
+            print("✅ dir_name/ directory exists")
         else:
-            print(f"⚠️ {dir_name}/ directory does not exist")
+            print("⚠️ dir_name/ directory does not exist")
     
     print("✅ Environment check completed")
 
@@ -68,18 +177,116 @@ if __name__ == "__main__":
     check_environment()
 ```
 
-#### ディレクトリ構造
+#### utility/start.py
+```python
+#!/usr/bin/env python3
+# Project startup script
+# Automatically set up the project execution environment.
+
+import os
+import sys
+import subprocess
+import platform
+from pathlib import Path
+
+def main():
+    print("🚀 Project startup script")
+    print("=" * 50)
+    
+    env_name = "template-latex"  # Change to your environment name
+    env_file = "environment.yml"
+    
+    # Check conda installation
+    print("📋 Step 1: Check conda")
+    if not check_conda_installed():
+        print("❌ Error: conda is not installed")
+        sys.exit(1)
+    
+    # Check environment.yml
+    print("📋 Step 2: Check environment.yml")
+    if not Path("environment.yml").exists():
+        print("❌ Error: environment.yml not found")
+        sys.exit(1)
+    
+    # Create/update environment
+    print("📋 Step 3: Environment setup")
+    if not check_env_exists(env_name):
+        create_conda_env_from_yml("environment.yml")
+    else:
+        update_conda_env_from_yml("environment.yml")
+    
+    print("📋 Step 4: Activate environment")
+    print("Please run: conda activate template-latex")
+    
+    # Environment check
+    print("📋 Step 5: Environment check")
+    if Path("utility/check_env.py").exists():
+        run_environment_check()
+    
+    print("🎉 Setup completed!")
+
+if __name__ == "__main__":
+    main()
 ```
-jpr-llm-evaluation/
-├── .claude/          # Claude Code CLI設定
-│   └── commands/     # AIコマンド
-├── .cursor/          # Cursor設定
-│   └── rules/        # AI駆動開発ルール
-├── .github/          # GitHub Actions設定
-├── utility/          # ユーティリティツール
-├── tex/              # LaTeXソースファイル
-└── ai-driven-coding.md  # このテンプレートファイル
+
+#### utility/start.sh
+```bash
+#!/bin/bash
+# Project startup script (Bash version)
+
+set -e
+
+ENV_NAME="template-latex"  # Change to your environment name
+ENV_FILE="environment.yml"
+
+echo "🚀 Project startup script"
+echo "============================================================"
+
+# Check conda
+echo "📋 Step 1: Check conda"
+if ! command -v conda &> /dev/null; then
+    echo "❌ Error: conda is not installed"
+    exit 1
+fi
+
+# Check environment.yml
+echo "📋 Step 2: Check environment.yml"
+if [[ ! -f "environment.yml" ]]; then
+    echo "❌ Error: environment.yml not found"
+    exit 1
+fi
+
+# Environment setup
+echo "📋 Step 3: Environment setup"
+if ! conda env list | grep -q "^template-latex "; then
+    conda env create -f "environment.yml"
+else
+    conda env update -f "environment.yml"
+fi
+
+# Activate environment
+echo "📋 Step 4: Activate environment"
+echo "Please run: conda activate template-latex"
+
+# Environment check
+echo "📋 Step 5: Environment check"
+if [[ -f "utility/check_env.py" ]]; then
+    python utility/check_env.py
+fi
+
+echo "🎉 Setup completed!"
 ```
+
+---
+
+# README.md (エージェント利用関連セクション)
+
+## ⚠️ 重要な注意事項
+
+## 📋 ルールファイル構成
+
+## 🛠️ 各AIツールの設定
+
 
 ---
 
@@ -94,6 +301,9 @@ jpr-llm-evaluation/
 このファイルは、Claude AI アシスタントで Gemini CLI ツールを使用したウェブ検索機能の設定を定義しています。
 最新の技術情報やドキュメントを効率的に検索するためのガイドラインです。
 
+> **📖 ルールファイルについて詳しく知りたい場合は、[README.md](../../README.md)を参照してください。**
+> このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
+
 ---
 
 ## ⚠️ 重要な注意事項
@@ -103,10 +313,10 @@ jpr-llm-evaluation/
 
 ```bash
 # 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate py-review  # または適切な環境名
 
 # 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 ```
 
 このスクリプトは以下を確認します：
@@ -115,7 +325,7 @@ python <your-utility-path>/check_env.py  # プロジェクトに適したパス�
 - ✅ 設定ファイルが存在するか
 
 ### 仮想環境の管理
-- **Pythonプロジェクト**: `conda activate env-example  # プロジェクトに適した環境名に変更してください` または適切な仮想環境
+- **Pythonプロジェクト**: `conda activate py-review` または適切な仮想環境
 - **Node.jsプロジェクト**: `npm install` で依存関係をインストール
 - **環境変数**: APIキーは `.env` ファイルで管理
 
@@ -276,10 +486,10 @@ gemini --prompt "WebSearch: Docker permission denied error solutions"
 
 ```bash
 # 1. 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate py-review  # または適切な環境名
 
 # 2. 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 
 # 3. 依存関係のインストール（必要に応じて）
 pip install -r requirements.txt
@@ -451,7 +661,7 @@ Gemini CLI ツールは、AI駆動コーディングプロジェクトにおい�
 適切な環境チェックとベストプラクティスに従うことで、効率的な開発と高品質なコードの実現が可能になります。
 
 **重要なポイント:**
-1. **環境チェックの徹底**: コード実行前に必ず `python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください` を実行
+1. **環境チェックの徹底**: コード実行前に必ず `python utility/check_env.py  # プロジェクトに適したパスに変更してください` を実行
 2. **具体的な検索クエリ**: 詳細で具体的なクエリでより良い結果を得る
 3. **最新情報の活用**: 年号を含めて最新の情報を取得
 4. **セキュリティの確保**: API キーと機密情報の適切な管理
@@ -466,6 +676,9 @@ Gemini CLI ツールは、AI駆動コーディングプロジェクトにおい�
 #   - AI駆動コーディングプロジェクトの汎用的なClaude設定
 #   - 様々なプロジェクトタイプに対応した開発支援
 #   - コード品質とベストプラクティスの実装
+# 
+# 📖 ルールファイルについて詳しく知りたい場合は、[README.md](../README.md)を参照してください。
+# このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
 # ------------------------------------------------------------
 
 system_prompt: |
@@ -480,8 +693,8 @@ system_prompt: |
   
   # 環境チェック（重要）
   2. **コード実行前の環境チェック** を必ず実行する。
-     - 仮想環境の確認: `conda activate env-example  # プロジェクトに適した環境名に変更してください` または適切な環境
-     - 環境チェックスクリプトの実行: `python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください`
+     - 仮想環境の確認: `conda activate py-review` または適切な環境
+     - 環境チェックスクリプトの実行: `python utility/check_env.py  # プロジェクトに適したパスに変更してください`
      - 依存関係の確認: `pip install -r requirements.txt`
      - 環境変数の設定: APIキーは `.env` ファイルで管理
   
@@ -571,6 +784,9 @@ concurrency:
 本ドキュメントは、AI駆動コーディングプロジェクトにおける Claude AI アシスタントの設定・活用方法を整理したものです。
 GitHub Actions による CI/CD と Claude AI アシスタントを組み合わせることで、効率的な開発とコード品質の向上を図ります。
 
+> **📖 ルールファイルについて詳しく知りたい場合は、[README.md](README.md)を参照してください。**
+> このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
+
 ---
 
 ## ⚠️ 重要な注意事項
@@ -580,10 +796,10 @@ GitHub Actions による CI/CD と Claude AI アシスタントを組み合わ�
 
 ```bash
 # 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate py-review  # または適切な環境名
 
 # 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 ```
 
 このスクリプトは以下を確認します：
@@ -592,7 +808,7 @@ python <your-utility-path>/check_env.py  # プロジェクトに適したパス�
 - ✅ 設定ファイルが存在するか
 
 ### 仮想環境の管理
-- **Pythonプロジェクト**: `conda activate env-example  # プロジェクトに適した環境名に変更してください` または適切な仮想環境
+- **Pythonプロジェクト**: `conda activate py-review` または適切な仮想環境
 - **Node.jsプロジェクト**: `npm install` で依存関係をインストール
 - **環境変数**: APIキーは `.env` ファイルで管理
 
@@ -659,6 +875,23 @@ python <your-utility-path>/check_env.py  # プロジェクトに適したパス�
 - 環境変数: `.env`（機密情報用）
 - Docker設定: `Dockerfile`, `docker-compose.yml`
 
+### 📂 分析・実験・結果ディレクトリ
+
+#### 🔬 **workbench/** - 実験用ワークスペース
+- **用途**: 一時的な処理、実験的なコード、テスト用スクリプト
+- **内容**: 試行錯誤のコード、一時的な結果ファイル、デバッグ用スクリプト
+- **特徴**: コミット対象外（.gitignoreに含める）、定期的にクリーンアップ
+
+#### 📊 **analysis_steps/** - 分析プロセス
+- **用途**: データ分析の手順、分析スクリプト、分析プロセスの記録
+- **内容**: 分析手順書、分析用スクリプト、データ処理パイプライン
+- **特徴**: 再現可能な分析プロセス、段階的な分析手順の記録
+
+#### 📈 **results/** - 実行結果
+- **用途**: 最終的な成果物、レポート、分析結果
+- **内容**: 分析レポート、グラフ・チャート、最終的なデータファイル
+- **特徴**: 重要な成果物、バージョン管理対象、成果物の保存場所
+
 ---
 
 ## 開発プロセスガイドライン
@@ -667,10 +900,10 @@ python <your-utility-path>/check_env.py  # プロジェクトに適したパス�
 
 ```bash
 # 1. 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate py-review  # または適切な環境名
 
 # 2. 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 
 # 3. 依存関係のインストール（必要に応じて）
 pip install -r requirements.txt
@@ -780,11 +1013,11 @@ class Calculator:
 
 ---
 
-## Gemini Search の使用方法
+## Gemini Search の使用方法（Codex 例外あり）
 
 ### 概要
 
-`gemini` は Google Gemini CLI ツールで、ウェブ検索機能を提供します。**ウェブ検索が必要な場合、組み込みの `Web_Search` ツールの代わりにこのコマンドを使用する必要があります。**
+`gemini` は Google Gemini CLI ツールで、ウェブ検索機能を提供します。通常はこのコマンドを使用しますが、Codex CLI/IDE セッションでは Codex 内蔵の Web 検索ツールを使用しても構いません（結果には出典URLを併記）。
 
 ### 使用方法
 
@@ -815,10 +1048,11 @@ gemini --prompt "WebSearch: AI-driven coding templates"
 
 ### 重要な注意事項
 
-- **常に `gemini --prompt` を使用し、組み込みのWeb_Searchツールは使用しない**
-- **クエリの前に "WebSearch: " を付ける**
-- **Task Toolを使用してコマンドを実行する**
-- **具体的で詳細な検索クエリを提供してより良い結果を得る**
+- **通常は `gemini --prompt` を使用**（Claude/Cursor 等）
+- **Codex セッションでは Codex 内蔵 Web 検索の使用可**（出典URLを併記）
+- **クエリの前に "WebSearch: " を付ける**（Gemini 利用時）
+- **Task Toolを使用してコマンドを実行**
+- **具体的で詳細な検索クエリを提供**
 
 ### 開発ワークフローとの統合
 
@@ -834,6 +1068,9 @@ gemini --prompt "WebSearch: AI-driven coding templates"
 ## Claude Code GitHub Actions
 
 # .github/workflows/claude.yml
+
+# 📖 ルールファイルについて詳しく知りたい場合は、README.mdを参照してください。
+# このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
 
 name: Claude AI Assistant CI/CD
 
@@ -874,16 +1111,41 @@ jobs:
         echo "✅ 依存関係の確認..."
         python -c "import sys; print('✅ Python パス:', sys.path)"
     
-    - name: Run tests
+    - name: Run tests (if present)
       run: |
         echo "🧪 テストを実行中..."
-        python -m pytest tests/ --cov=src --cov-report=xml
+        if [ -d "code/tests" ]; then
+          TEST_DIR="code/tests"
+        elif [ -d "tests" ]; then
+          TEST_DIR="tests"
+        else
+          echo "⚠️ tests/ ディレクトリがないためスキップ" && exit 0
+        fi
+        if [ -d "code/src" ]; then
+          COV_DIR="code/src"
+        elif [ -d "src" ]; then
+          COV_DIR="src"
+        else
+          COV_DIR=""
+        fi
+        if [ -n "$COV_DIR" ]; then
+          python -m pytest "$TEST_DIR" --cov="$COV_DIR" --cov-report=xml
+        else
+          python -m pytest "$TEST_DIR"
+        fi
     
-    - name: Run linting
+    - name: Run linting (if src exists)
       run: |
         echo "🔍 コード品質チェックを実行中..."
-        flake8 src/ --max-line-length=88 --count --select=E9,F63,F7,F82 --show-source --statistics
-        black --check src/ --diff
+        if [ -d "code/src" ]; then
+          SRC_DIR="code/src"
+        elif [ -d "src" ]; then
+          SRC_DIR="src"
+        else
+          echo "⚠️ src/ ディレクトリがないためスキップ" && exit 0
+        fi
+        flake8 "$SRC_DIR" --max-line-length=88 --count --select=E9,F63,F7,F82 --show-source --statistics || true
+        black --check "$SRC_DIR" --diff || true
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -965,6 +1227,9 @@ jobs:
 
 # .github/workflows/codex-tdd.yml
 
+# 📖 ルールファイルについて詳しく知りたい場合は、README.mdを参照してください。
+# このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
+
 name: Codex TDD Workflow
 
 on:
@@ -1024,21 +1289,41 @@ jobs:
     - name: Run tests after TDD
       run: |
         echo "🧪 TDD 後のテストを実行中..."
-        if [ -d "tests" ]; then
-          python -m pytest tests/ -v --cov=src --cov-report=xml
+        if [ -d "code/tests" ]; then
+          TEST_DIR="code/tests"
+        elif [ -d "tests" ]; then
+          TEST_DIR="tests"
         else
-          echo "⚠️ テストディレクトリが見つかりません"
+          echo "⚠️ テストディレクトリが見つかりません" && exit 0
+        fi
+
+        if [ -d "code/src" ]; then
+          COV_DIR="code/src"
+        elif [ -d "src" ]; then
+          COV_DIR="src"
+        else
+          COV_DIR=""
+        fi
+
+        if [ -n "$COV_DIR" ]; then
+          python -m pytest "$TEST_DIR" -v --cov="$COV_DIR" --cov-report=xml
+        else
+          echo "ℹ️ src ディレクトリが無いためカバレッジ無しで実行"
+          python -m pytest "$TEST_DIR" -v
         fi
     
     - name: Code quality check
       run: |
         echo "🔍 コード品質チェックを実行中..."
-        if [ -d "src" ]; then
-          flake8 src/ --max-line-length=88 --count --select=E9,F63,F7,F82 --show-source --statistics || true
-          black --check src/ --diff || true
+        if [ -d "code/src" ]; then
+          SRC_DIR="code/src"
+        elif [ -d "src" ]; then
+          SRC_DIR="src"
         else
-          echo "⚠️ ソースディレクトリが見つかりません"
+          echo "⚠️ ソースディレクトリが見つかりません" && exit 0
         fi
+        flake8 "$SRC_DIR" --max-line-length=88 --count --select=E9,F63,F7,F82 --show-source --statistics || true
+        black --check "$SRC_DIR" --diff || true
     
     - name: Create pull request if changes
       if: success()
@@ -1052,6 +1337,15 @@ jobs:
 # AGENTS.md
 
 # OpenAI エージェント設定
+
+> **📖 ルールファイルについて詳しく知りたい場合は、[README.md](README.md)を参照してください。**
+> このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
+
+## Codex 応答言語ポリシー
+
+- ⚠️ Codex IDE は常に日本語で応答してください。英語やその他の言語での返信は禁止です。
+- 🔁 念押し: Codex IDE は必ず日本語で回答してください。どんな状況でも日本語以外は使用しないでください。
+- ✅ 再確認: Codex IDE の標準応答言語は日本語のみです。日本語での回答を徹底してください。
 
 ## ディレクトリ構成
 
@@ -1087,6 +1381,23 @@ jobs:
   * 環境チェックスクリプト: `utility/check_env.py`
   * ヘルパースクリプト: `utility/` ディレクトリ
 
+### 📂 分析・実験・結果ディレクトリ
+
+#### 🔬 **workbench/** - 実験用ワークスペース
+* **用途**: 一時的な処理、実験的なコード、テスト用スクリプト
+* **内容**: 試行錯誤のコード、一時的な結果ファイル、デバッグ用スクリプト
+* **特徴**: コミット対象外（.gitignoreに含める）、定期的にクリーンアップ
+
+#### 📊 **analysis_steps/** - 分析プロセス
+* **用途**: データ分析の手順、分析スクリプト、分析プロセスの記録
+* **内容**: 分析手順書、分析用スクリプト、データ処理パイプライン
+* **特徴**: 再現可能な分析プロセス、段階的な分析手順の記録
+
+#### 📈 **results/** - 実行結果
+* **用途**: 最終的な成果物、レポート、分析結果
+* **内容**: 分析レポート、グラフ・チャート、最終的なデータファイル
+* **特徴**: 重要な成果物、バージョン管理対象、成果物の保存場所
+
 ## 開発プロセス
 
 ### 環境チェック
@@ -1095,10 +1406,10 @@ jobs:
 
 ```bash
 # 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate template-latex  # プロジェクトに適した環境名に変更してください  # または適切な環境名
 
 # 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 ```
 
 このスクリプトは以下を確認します：
@@ -1248,11 +1559,11 @@ python -m pytest tests/ --cov=src --cov-report=html
 * ワークフロー定義: `.github/workflows/codex-tdd.yml`
 * 品質チェック付き自動コード生成
 
-## Gemini Search 連携
+## Gemini Search 連携（Codex 例外あり）
 
 ### 概要
 
-`gemini` は Google Gemini CLI で、ウェブ検索を提供します。**組み込みの Web\_Search ツールではなく、必ず本コマンドを使用してください。**
+`gemini` は Google Gemini CLI で、ウェブ検索を提供します。基本はこのコマンドを使用しますが、Codex CLI/IDE セッション時に限り Codex 内蔵の Web 検索ツールを使用しても構いません（出典URLの併記を推奨）。
 
 ### 使い方
 
@@ -1277,8 +1588,9 @@ gemini --prompt "WebSearch: OpenAI API documentation"
 
 ### 重要事項
 
-* **必ず `gemini --prompt` を使用**
-* **クエリは `WebSearch: ` で始める**
+* **通常は `gemini --prompt` を使用**（Claude/Cursor等）
+* **Codex セッションでは Codex 内蔵 Web 検索の使用可**（結果に出典URLを併記）
+* **クエリは `WebSearch: ` で始める**（Gemini 利用時）
 * **Task Tool で実行**
 * **具体的で詳細なクエリを提供**
 
@@ -1306,14 +1618,29 @@ gemini --prompt "WebSearch: OpenAI API documentation"
 
 ### `.claude/claude.yml`
 
-* プロジェクト構造理解のためのシステムプロンプト
-* 使用ツールと実行パラメータを定義
-* コンテキストに応じた支援を実現
+- プロジェクト構造理解のためのシステムプロンプト
+- 使用ツールと実行パラメータを定義
+- コンテキストに応じた支援を実現
 
 ### `.cursor/rules/cursorrules.md`
 
-* AI ツールを用いた開発ガイドライン
-* ファイル構成ルールとベストプラクティスを定義
+- AI ツールを用いた開発ガイドライン
+- ファイル構成ルールとベストプラクティスを定義
+
+### 設定ファイルの役割と変更タイミング（Claude 連携）
+
+- `.github/workflows/claude.yml`（CI ワークフロー）:
+  - 目的: テスト自動化、依存の検証、Claude 連携、コード品質チェック
+  - 変更タイミング: 依存更新・新機能追加・テスト条件/トリガー変更・品質基準更新
+- `.claude/claude.yml`（Claude アシスタント設定）:
+  - 目的: system_prompt によるルール定義、構造理解支援、許可ツール制御、品質/性能チューニング
+  - 変更タイミング: ディレクトリ構造変更、使用ツール更新、挙動チューニング、ベストプラクティス追加
+
+### Claude アシスタントの支援範囲（例）
+
+- 機能実装/改修、エラーハンドリング、パフォーマンス最適化
+- 設定管理（設定ファイル・環境変数・依存関係）
+- ベストプラクティス提案（スタイル、設計、アルゴリズム）
 
 ## ベストプラクティス
 
@@ -1388,6 +1715,58 @@ gemini --prompt "WebSearch: OpenAI API documentation"
 * ロールバック手順を用意
 * 環境別設定を管理
 
+
+---
+
+## Codex CLI/IDE
+
+# .codex/config.toml
+
+# ~/.codex/config.toml
+# ⚠️ Codex IDE は常に日本語で応答してください。絶対に英語での応答は禁止です。
+# 🔁 念押し: Codex IDE は日本語以外で回答してはなりません。常に日本語で応答してください。
+model = "gpt-5"
+model_reasoning_effort = "high"   # low | medium | high
+
+# 既定のルール（安全寄り）
+# 承認頻度を下げるため、"on-failure" に設定
+# - "untrusted" : 毎回確認（頻度高）
+# - "on-request": 要求があった時に確認（中）
+# - "on-failure": 失敗/危険操作時のみ確認（低）← 推奨
+# - "never"     : 確認なし（非推奨）
+approval_policy = "on-failure"
+
+# 作業ディレクトリ内の編集・実行を許可
+# - "read-only"           : 読み取りのみ
+# - "workspace-write"     : プロジェクト配下の編集・実行を許可 ← 推奨
+# - "danger-full-access"  : フルアクセス（非推奨）
+sandbox_mode    = "workspace-write"
+
+[codex]
+# 🚨 Codex IDE への指示: 応答言語は必ず日本語 (ja)。このルールを破ってはいけません。
+# 🔁 再確認: Codex IDE は常に日本語で回答すること。英語その他の言語は使用禁止。
+response_language = "ja"
+
+## workspace-write 時のネットワーク許可（wget/pip 等の承認頻度を下げる）
+[sandbox_workspace_write]
+network_access = true
+
+## Web検索ポリシー
+[profiles.web_search]
+approval_policy = "on-failure"   # 失敗/危険時のみ承認
+sandbox_mode    = "workspace-write"
+network_access  = true
+
+## よく使うプリセット（必要なら有効化して切替運用）
+# [profiles.full_auto]
+# approval_policy = "on-failure"
+# sandbox_mode    = "workspace-write"
+
+# [profiles.readonly_quiet]
+# approval_policy = "never"
+# sandbox_mode    = "read-only"
+
+
 ---
 
 ## Gemini CLI
@@ -1397,6 +1776,9 @@ gemini --prompt "WebSearch: OpenAI API documentation"
 # Gemini ワークスペース設定
 
 このファイルは、AI 主導のコーディング プロジェクトにおけるプロジェクト構造と規約を Gemini が理解できるようにするものです。
+
+> **📖 ルールファイルについて詳しく知りたい場合は、[README.md](README.md)を参照してください。**
+> このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
 
 ## プロジェクト概要
 
@@ -1411,6 +1793,23 @@ gemini --prompt "WebSearch: OpenAI API documentation"
 * `scripts/`：ユーティリティスクリプト・自動化ツール
 * `workbench/`：実験用コードおよび調査用フォルダ
 * `plan/`：プロジェクト計画・ロードマップ文書
+
+### 📂 分析・実験・結果ディレクトリ
+
+#### 🔬 **workbench/** - 実験用ワークスペース
+* **用途**: 一時的な処理、実験的なコード、テスト用スクリプト
+* **内容**: 試行錯誤のコード、一時的な結果ファイル、デバッグ用スクリプト
+* **特徴**: コミット対象外（.gitignoreに含める）、定期的にクリーンアップ
+
+#### 📊 **analysis_steps/** - 分析プロセス
+* **用途**: データ分析の手順、分析スクリプト、分析プロセスの記録
+* **内容**: 分析手順書、分析用スクリプト、データ処理パイプライン
+* **特徴**: 再現可能な分析プロセス、段階的な分析手順の記録
+
+#### 📈 **results/** - 実行結果
+* **用途**: 最終的な成果物、レポート、分析結果
+* **内容**: 分析レポート、グラフ・チャート、最終的なデータファイル
+* **特徴**: 重要な成果物、バージョン管理対象、成果物の保存場所
 
 ## 規約
 
@@ -1722,10 +2121,10 @@ if __name__ == "__main__":
 
 ```bash
 # 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate py-review  # または適切な環境名
 
 # 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 ```
 
 このスクリプトは以下を確認します：
@@ -1734,7 +2133,7 @@ python <your-utility-path>/check_env.py  # プロジェクトに適したパス�
 - ✅ 設定ファイルが存在するか
 
 ### 仮想環境の管理
-- **Pythonプロジェクト**: `conda activate env-example  # プロジェクトに適した環境名に変更してください` または適切な仮想環境
+- **Pythonプロジェクト**: `conda activate py-review` または適切な仮想環境
 - **Node.jsプロジェクト**: `npm install` で依存関係をインストール
 - **環境変数**: APIキーは `.env` ファイルで管理
 
@@ -1885,10 +2284,10 @@ gemini --prompt "WebSearch: Docker permission denied error solutions"
 
 ```bash
 # 1. 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate py-review  # または適切な環境名
 
 # 2. 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 
 # 3. 依存関係のインストール（必要に応じて）
 pip install -r requirements.txt
@@ -2050,7 +2449,7 @@ Gemini CLI ツールは、AI駆動コーディングプロジェクトにおい�
 適切な環境チェックとベストプラクティスに従うことで、効率的な開発と高品質なコードの実現が可能になります。
 
 **重要なポイント:**
-1. **環境チェックの徹底**: コード実行前に必ず `python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください` を実行
+1. **環境チェックの徹底**: コード実行前に必ず `python utility/check_env.py  # プロジェクトに適したパスに変更してください` を実行
 2. **具体的な検索クエリ**: 詳細で具体的なクエリでより良い結果を得る
 3. **最新情報の活用**: 年号を含めて最新の情報を取得
 4. **セキュリティの確保**: API キーと機密情報の適切な管理
@@ -2064,10 +2463,15 @@ Gemini CLI ツールは、AI駆動コーディングプロジェクトにおい�
 
 # Cursor Rules for AI-Driven Coding
 
+注記: Auto運用を安全に行うため、軽量補助ルール `.cursor/rules/cursorrules_v5-lite.mdc` を常時併用します。破壊的/横断的/ネットワークを伴う操作は事前承認が必須です。
+
 ## 概要
 
 このファイルは、Cursor IDE での AI駆動コーディングプロジェクトの開発ルールとベストプラクティスを定義しています。
 効率的で高品質なコード開発を支援するためのガイドラインです。
+
+> **📖 ルールファイルについて詳しく知りたい場合は、[README.md](../README.md)を参照してください。**
+> このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
 
 ---
 
@@ -2078,10 +2482,10 @@ Gemini CLI ツールは、AI駆動コーディングプロジェクトにおい�
 
 ```bash
 # 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate template-latex  # プロジェクトに適した環境名に変更してください  # または適切な環境名
 
 # 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 ```
 
 このスクリプトは以下を確認します：
@@ -2090,7 +2494,7 @@ python <your-utility-path>/check_env.py  # プロジェクトに適したパス�
 - ✅ 設定ファイルが存在するか
 
 ### 仮想環境の管理
-- **Pythonプロジェクト**: `conda activate env-example  # プロジェクトに適した環境名に変更してください` または適切な仮想環境
+- **Pythonプロジェクト**: `conda activate template-latex  # プロジェクトに適した環境名に変更してください` または適切な仮想環境
 - **Node.jsプロジェクト**: `npm install` で依存関係をインストール
 - **環境変数**: APIキーは `.env` ファイルで管理
 
@@ -2119,10 +2523,30 @@ project/
 ├── scripts/               # スクリプトファイル
 ├── utility/               # ユーティリティツール
 │   └── check_env.py       # 環境チェックスクリプト
+├── workbench/             # 実験用ワークスペース（一時的な処理・コード・結果）
+├── analysis_steps/        # 分析プロセス（分析手順・スクリプト）
+├── results/               # 実行結果（最終的な成果物・レポート）
 ├── requirements.txt       # Python依存関係
 ├── package.json           # Node.js依存関係
 └── README.md              # プロジェクト説明
 ```
+
+### 📂 ディレクトリの用途
+
+#### 🔬 **workbench/** - 実験用ワークスペース
+- **用途**: 一時的な処理、実験的なコード、テスト用スクリプト
+- **内容**: 試行錯誤のコード、一時的な結果ファイル、デバッグ用スクリプト
+- **特徴**: コミット対象外（.gitignoreに含める）、定期的にクリーンアップ
+
+#### 📊 **analysis_steps/** - 分析プロセス
+- **用途**: データ分析の手順、分析スクリプト、分析プロセスの記録
+- **内容**: 分析手順書、分析用スクリプト、データ処理パイプライン
+- **特徴**: 再現可能な分析プロセス、段階的な分析手順の記録
+
+#### 📈 **results/** - 実行結果
+- **用途**: 最終的な成果物、レポート、分析結果
+- **内容**: 分析レポート、グラフ・チャート、最終的なデータファイル
+- **特徴**: 重要な成果物、バージョン管理対象、成果物の保存場所
 
 ### ファイル命名規則
 
@@ -2139,10 +2563,10 @@ project/
 
 ```bash
 # 1. 仮想環境のアクティベート
-conda activate env-example  # プロジェクトに適した環境名に変更してください  # または適切な環境名
+conda activate template-latex  # プロジェクトに適した環境名に変更してください  # または適切な環境名
 
 # 2. 環境チェックスクリプトの実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 
 # 3. 依存関係のインストール（必要に応じて）
 pip install -r requirements.txt
@@ -2653,7 +3077,7 @@ jobs:
 ## ベストプラクティスまとめ
 
 ### 開発効率化
-1. **環境チェックの徹底**: コード実行前に必ず `python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください` を実行
+1. **環境チェックの徹底**: コード実行前に必ず `python utility/check_env.py  # プロジェクトに適したパスに変更してください` を実行
 2. **TDDサイクルの実践**: Red-Green-Refactor
 3. **継続的リファクタリング**: 小さな変更を頻繁に
 4. **適切なテスト戦略**: 単体・統合テストの実装
@@ -2685,11 +3109,11 @@ jobs:
 #### 1. 環境の問題
 ```bash
 # 環境チェックスクリプトを実行
-python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください
+python utility/check_env.py  # プロジェクトに適したパスに変更してください
 
 # 仮想環境を再作成
 conda create -n py-review python=3.9
-conda activate env-example  # プロジェクトに適した環境名に変更してください
+conda activate py-review
 pip install -r requirements.txt
 ```
 
@@ -2718,7 +3142,7 @@ pip cache purge
 このルールセットに従うことで、効率的で高品質なAI駆動コーディングが実現できます。
 重要なポイントは以下の通りです：
 
-1. **環境チェックの徹底**: コード実行前に必ず `python <your-utility-path>/check_env.py  # プロジェクトに適したパスに変更してください` を実行
+1. **環境チェックの徹底**: コード実行前に必ず `python utility/check_env.py  # プロジェクトに適したパスに変更してください` を実行
 2. **TDDサイクルの実践**: テスト駆動開発の徹底
 3. **継続的リファクタリング**: コード品質の維持
 4. **セキュリティの確保**: 適切なセキュリティ対策
@@ -2727,5 +3151,16 @@ pip cache purge
 
 これらのガイドラインを守ることで、チーム全体の開発効率とコード品質が向上します。 
 
+
 ---
 
+## ✅ カスタマイズチェックリスト
+
+- プロジェクト名や環境名などのプレースホルダーを置き換える
+- プロジェクトに不要なセクションがあれば整理する
+- 追加のAIツール設定やチームルールがあれば追記する
+- 生成したテンプレートをドキュメントやCI/CDで共有する
+
+## 📌 補足
+
+このテンプレートは参考実装です。各プロジェクトのポリシーと運用フローに合わせて適宜調整してください。

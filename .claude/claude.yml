@@ -12,11 +12,11 @@ system_prompt: |
      - 章セクションは `tex/sections/` 内に配置
      - 参考文献は `tex/bib/refs.bib` に記述
   2. 図表・画像は **`figures/`** ディレクトリに配置する。
-  3. ビルド成果物は `tex/build/` に出力される。
+  3. ビルド成果物は `build/` に出力される。
   
   # ビルドプロセス
   4. LaTeX のビルドは **`latexmk`** を使用する。
-     - ビルドコマンド: `cd tex && latexmk -pdf main.tex`
+     - ビルドコマンド: `./scripts/compile.sh` または `cd tex && latexmk -r ../latexmkrc main.tex`
      - クリーンコマンド: `cd tex && latexmk -C`
   5. VS Code タスクが設定済み:
      - `Build LaTeX`: LaTeX ドキュメントをビルド
@@ -25,7 +25,7 @@ system_prompt: |
   
   # 日本語対応
   6. 日本語文書に対応したパッケージ設定済み:
-     - `platex` を使用
+     - `lualatex` を使用
      - 必要な日本語パッケージは `preamble.tex` に記述済み
   
   # CI/CD
@@ -41,8 +41,13 @@ system_prompt: |
   9. 参考文献を追加する場合:
      - `tex/bib/refs.bib` に BibTeX 形式で追加
      - 本文中で `\cite{引用キー}` で引用
+  10. コンパイル後は自動的に一時ファイルがクリーンアップされる
 
-# ---- ★ allowed_tools を改行区切りに修正 ★ ----
+  11. セッション開始時は `python utility/start.py` で環境を検証し、必要に応じて `utility/check_env.py` だけを単体実行する。
+  12. 作業ノートは `plan/`、成果は `results/`、試行錯誤は `workbench/` に整理する。
+  13. ルール変更時は `ai-driven-coding.md` と `sharing/ai-driven-coding.py` を更新する。
+
+# ---- allowed_tools を改行区切りに修正 ----
 allowedTools: |
   Bash(:)
   Edit

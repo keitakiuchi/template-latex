@@ -63,6 +63,16 @@ gemini --prompt "WebSearch: GitHub Actions best practices"
 
 ---
 
+## Claude ワークフローでの共通ステップ
+
+1. `python utility/start.py` で環境チェックを実行し、LaTeX ツールチェーンが整っていることを確認する。
+2. 作業の目的と入力ファイルを `plan/` にメモとして残す。
+3. Claude への依頼内容には対象ファイルパスと期待するアウトプットを明記し、完了後は `results/` にログを保存する。
+4. `sharing/ai-driven-coding.py` を実行してルール類の所在が揃っているか確認し、不足があれば本ドキュメントを更新する。
+5. 生成物を受け取ったら `./scripts/compile.sh` で LaTeX を再ビルドし、PDF をレビューする。
+
+---
+
 ## 設定ファイルの役割と責務
 
 ### .github/workflows/latex.yml：GitHub Actions の設定

@@ -58,6 +58,15 @@ gemini --prompt "WebSearch: GitHub Actions best practices"
 
 ---
 
+## AI Agent Integration Overview
+
+- 作業開始前に `utility/start.py` を実行し、環境整合性を確認する。
+- タスクの意図や制約は `plan/` に整理し、エージェントへのプロンプトにも同じ情報を渡す。
+- 生成されたアウトプットやビルドログは `results/` に保存する。
+- ルールやベストプラクティスは `ai-driven-coding.md` を参照の上、必要に応じて更新する。
+- 作業途中のメモや検証は `workbench/` で行い、完成したら適切なディレクトリへ移動する。
+
+
 ## Directory Structure
 
 ### LaTeX Source Files

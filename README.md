@@ -141,56 +141,54 @@ gemini --prompt "WebSearch: OpenAI API documentation"
 ## ディレクトリ構造
 
 ```
-latex-template/
-├─ .vscode/              ← VS Code／Cursor 専用設定
+template-latex/
+├─ .claude/               ← Claude 設定
+│   ├─ claude.yml
+│   └─ commands/
+│       └─ gemini-search.md
+├─ .cursor/               ← Cursor ルール
+│   └─ rules/
+│       ├─ latex_development.md
+│       └─ cursorrules.md
+├─ .github/
+│   └─ workflows/        ← CI / AI ワークフロー
+│       ├─ claude.yml
+│       ├─ codex-tdd.yml
+│       └─ latex.yml
+├─ .vscode/              ← VS Code／Cursor 設定
 │   ├─ settings.json
 │   └─ tasks.json
-├─ .cursor/              ← Cursor IDE 専用設定
-│   └─ rules/            ← AI駆動開発ルール
-│       ├─ ai_driven_coding.md
-│       └─ latex_development.md
-├─ .claude/              ← Claude AI アシスタント設定
-│   ├─ claude.yml        ← Claude設定ファイル
-│   ├─ settings.local.json ← ローカル設定
-│   └─ commands/         ← AIコマンド
-│       └─ gemini-search.md
-├─ .github/
-│   └─ workflows/        ← CI 用 GitHub Actions
-│       ├─ latex.yml     ← LaTeXビルド用
-│       ├─ claude.yml    ← Claude AI用
-│       └─ codex-tdd.yml ← OpenAI Codex用
+├─ build/                ← 生成ファイル（自動生成）
+│   └─ pdf/              ← PDF 出力
+├─ figures/              ← 図表（TeX からは ../figures/ を参照）
+│   └─ .gitkeep
+├─ plan/                 ← タスク計画メモ
+│   └─ .gitkeep
+├─ results/              ← 実行結果・ログ
+│   └─ .gitkeep
+├─ sharing/              ← 共有ユーティリティ
+│   └─ ai-driven-coding.py
+├─ scripts/              ← ビルド / 変換スクリプト
+│   ├─ compile.sh
+│   └─ tex2docx.sh
 ├─ tex/                  ← LaTeX ソース一式
 │   ├─ example.tex       ← メインファイル例（\input で各章を読み込む）
 │   ├─ title.tex         ← タイトルページ設定
-│   ├─ sections/         ← 章ファイル
-│   │   ├─ preamble.tex  ← パッケージ類を集約
-│   │   ├─ intro.tex     ← 序論
-│   │   └─ conclusion.tex ← 結論
-│   ├─ bib/              ← 参考文献
-│   │   ├─ example.bib   ← 参考文献例
-│   │   ├─ refs.bib      ← 基本参考文献
-│   │   └─ *.bbl         ← コンパイル済み参考文献（自動生成）
-│   ├─ temp/             ← 一時ファイル（ビルド時）
-│   ├─ *.bst             ← 各出版社のスタイルファイル
-│   │   ├─ WileyNJD-APA.bst
-│   │   └─ vancouver-authoryear.bst
-│   └─ *.cls             ← 各出版社のクラスファイル
-│       └─ wiley-article.cls
-├─ build/                ← ルートビルドディレクトリ（自動生成）
-│   ├─ pdf/              ← PDF出力（最終成果物）
-│   ├─ docx/             ← Word出力
-│   └─ csv/              ← テーブル抽出結果
-├─ scripts/              ← スクリプト類
-│   ├─ 01_install_missing_packages.sh ← 不足パッケージ自動インストール
-│   ├─ 02_compile.sh     ← コンパイルスクリプト
-│   ├─ 03_tex2docx.sh    ← TeX→Word変換スクリプト
-│   ├─ 04_extract_tables.sh ← 表データ抽出スクリプト
-│   └─ 05_cleanup.sh     ← ビルドファイルクリーンアップスクリプト
-├─ utility/               ← Pythonユーティリティ
-│   ├─ check_env.py      ← 環境チェック
-│   ├─ start.py          ← 自動スタート
-│   └─ start.sh          ← シェル版スタート
-├─ figures/               ← 画像・図表
+│   ├─ sections/
+│   │   ├─ intro.tex
+│   │   └─ conclusion.tex
+│   └─ bib/              ← 参考文献
+│       ├─ refs.bib
+│       └─ sample.bib
+├─ utility/              ← 環境チェック / セットアップ
+│   ├─ check_env.py
+│   ├─ start.py
+│   └─ start.sh
+├─ workbench/            ← 実験スペース
+│   └─ .gitkeep
+├─ ai-driven-coding.md  ← AI プレイブック
+├─ environment.yml
+├─ requirements.txt
 ├─ latexmkrc             ← latexmk のカスタム設定
 ├─ requirements.txt       ← Python依存関係
 ├─ texlive-tiny.profile  ← TeX Live設定プロファイル
@@ -210,70 +208,17 @@ latex-template/
 - TeX Live 2025（scheme-medium以上）のインストール済み
 - pandoc（TeX→Word変換用）
 - VS Code + LaTeX Workshop 拡張機能（推奨）
-- Python環境（conda推奨）
 
-### 環境設定
-
-#### 1. 環境変数の設定
-
-プロジェクトルートで環境変数を設定します：
+### 初期セットアップ
 
 ```bash
-# 内蔵TeX Liveの場合
-export TEXLIVE_PATH="/usr/local/texlive/2025/bin/x86_64-linux"
-
-# 外付けSSD（Dドライブ）の場合
-export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"
-
-# 外付けSSD（Eドライブ）の場合
-export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"
-
-# 永続化する場合
-echo 'export TEXLIVE_PATH="/path/to/texlive/bin/x86_64-linux"' >> ~/.bashrc
-source ~/.bashrc
+python utility/start.py --install
+# もしくは
+INSTALL_DEPS=true ./utility/start.sh
 ```
 
-#### 2. SSD上のTeX Liveへのアクセス方法
-
-##### 恒久設定（推奨）
-SSDをマウントした状態で恒久設定を行います：
-
-```bash
-# Eドライブの場合
-echo 'export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"' >> ~/.bashrc
-
-# Dドライブの場合
-echo 'export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"' >> ~/.bashrc
-
-# 設定を反映
-source ~/.bashrc
-
-# 確認
-which latexmk
-```
-
-##### 一時的な切り替え
-実行前だけ一時的に切り替える場合：
-
-```bash
-# Eドライブの場合
-export TEXLIVE_PATH="/mnt/e/texlive/2025/bin/x86_64-linux"
-
-# Dドライブの場合
-export TEXLIVE_PATH="/mnt/d/texlive/2025/bin/x86_64-linux"
-
-# コンパイル実行
-./scripts/02_compile.sh example
-```
-
-#### 3. 環境設定ファイルの使用
-
-`env.example`ファイルをコピーして`.env`にリネームし、必要に応じて編集してください：
-
-```bash
-cp env.example .env
-# .envファイルを編集
-```
+- `utility/check_env.py` がすべて `[OK]` を返すことを確認します。
+- 失敗した場合はログを `results/` に保存し、Issue で共有してください。
 
 ### コンパイル方法
 

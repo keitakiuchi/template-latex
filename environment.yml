@@ -1,0 +1,11 @@
+name: template-latex
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - anthropic>=0.19.1
+      - pyyaml>=6.0.1
+      - python-dotenv>=1.0.0
+      - requests>=2.31.0
