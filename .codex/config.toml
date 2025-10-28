@@ -1,9 +1,10 @@
-# Codex CLI configuration for the template-latex repository.
-# Adjusts approval flow and sandbox behaviour to match local development.
+# Codex CLI/IDE configuration for the template-latex project.
+#  - Keeps default interactions in Japanese to match the repository docs.
+#  - Mirrors the local harness defaults (workspace-write sandbox with network access).
 
 model = "gpt-5"
 model_reasoning_effort = "high"
-approval_policy = "on-request"
+approval_policy = "on-failure"
 sandbox_mode = "workspace-write"
 
 [codex]
@@ -12,12 +13,12 @@ welcome_message = "template-latex リポジトリ用 Codex セッションです
 repo_root = "${workspace_root}"
 
 [sandbox_workspace_write]
-network_access = false
+network_access = true
 
 [profiles.web_search]
-approval_policy = "on-request"
+approval_policy = "on-failure"
 sandbox_mode = "workspace-write"
-network_access = false
+network_access = true
 
 [paths]
 plan_dir = "plan"
@@ -25,3 +26,8 @@ results_dir = "results"
 workbench_dir = "workbench"
 figures_dir = "figures"
 tex_dir = "tex"
+
+# Example profile for temporarily locking the workspace.
+#[profiles.readonly]
+#approval_policy = "never"
+#sandbox_mode = "read-only"

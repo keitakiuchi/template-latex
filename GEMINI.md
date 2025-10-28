@@ -2,50 +2,69 @@
 
 ## 概要
 
-Gemini CLI / API をこのリポジトリで活用する際のルールをまとめたガイドです。Claude や Codex と並行して利用し、情報収集や指示生成を補助します。運用方針は `ai-driven-coding.md` をベースにしています。
+このドキュメントは、LaTeX テンプレートリポジトリで Gemini CLI を活用するためのガイドです。  
+WebSearch を活用して、LaTeX のパッケージ、ドキュメント作成のベストプラクティス、CI/CD の改善点を調べる際の手順をまとめています。
 
 ---
 
-## 初期セットアップ
+## 事前チェック
 
-1. `python utility/start.py` または `INSTALL_DEPS=true ./utility/start.sh` を実行し、LaTeX と Python 環境を確認する。
-2. `plan/` に Gemini を使う目的を書き留める（例: 用語調査、図の説明作成など）。
-3. 参照が必要なファイルがあれば相対パス付きでメモしておく。
-
----
-
-## 推奨ワークフロー
-
-1. Gemini で検索が必要な場合は `.claude/commands/gemini-search.md` のテンプレートを参考にプロンプトを組み立てる。
-2. 取得した情報は Issue / PR コメント、もしくは `results/` 配下の Markdown に整理する。
-3. 生成された下書き（セクション文・図説明など）は `tex/` へ反映する前にローカルで内容を確認し、`./scripts/compile.sh` を実行して PDF をチェックする。
-4. 倫理的に疑わしい、もしくは正確性が明確でない情報は Gemini の出力段階で除外し、一次情報のリンクだけを残す。
+1. `utility/start.sh` または `utility/start.py` を実行し、必須ディレクトリと環境を整備する  
+2. `utility/check_env.py` で `latexmk` と `lualatex` が利用可能か確認する  
+3. Gemini API キーを `export GEMINI_API_KEY=...` などの環境変数で設定する  
+4. `.gitignore` により API キーや一時ファイルがコミットされないことを確認する
 
 ---
 
-## ログの扱い
+## 典型的な検索パターン
 
-- 調査ログや要約は `results/` に日付付きファイル名で保存することを推奨。
-- 試行錯誤的なプロンプトやメモは `workbench/` に置き、成果につながった内容のみを `plan/` や Issue に昇格させる。
+```bash
+# LuaLaTeX の設定例
+gemini --prompt "WebSearch: LuaLaTeX japanese typesetting best practices 2024"
+
+# BibLaTeX を使った参考文献管理
+gemini --prompt "WebSearch: biblatex bibliography styles overview"
+
+# latexmkrc のチューニング
+gemini --prompt "WebSearch: latexmk rc file examples for continuous integration"
+
+# GitHub Actions での LaTeX 自動ビルド
+gemini --prompt "WebSearch: github actions latexmk workflow example"
+```
+
+### 検索結果の扱い
+
+- 新しいパッケージや設定は `tex/preamble.tex` や `latexmkrc` に反映する前に `workbench/` で検証する  
+- 有益な記事は `plan/current-sprint.md` などにメモし、再現手順を共有する  
+- コード片を採用する場合はフォーマットとコメントスタイルを既存ファイルに合わせる
 
 ---
 
-## ベストプラクティス
+## よくあるトピック
 
-- LaTeX の図表説明を生成する際は `figures/` の画像を確認し、正しいキャプションかをチェックする。
-- `ai-driven-coding.md` の品質チェックリストに従い、Gemini の出力を採用する前に最低限 1 回は LaTeX ビルドを走らせる。
-- Gemini で得た情報に出典がある場合は BibTeX エントリを `tex/bib/refs.bib` に追加し、本文に `\cite{}` を記述する。
+| トピック | 推奨クエリ | 備考 |
+| --- | --- | --- |
+| LuaLaTeX のフォント設定 | `WebSearch: LuaLaTeX fontspec examples` | 日本語フォント利用時はフォント名まで指定する |
+| TikZ 図のテンプレート | `WebSearch: TikZ diagram gallery` | 取得したコードは `figures/` の素材と合わせて整理する |
+| TeX Live の最小構成 | `WebSearch: minimal texlive install luaLaTeX` | CI/CD でのパッケージ不足回避に役立つ |
+| latexmk のエラー解決 | `WebSearch: latexmk error explanation` | エラー文と一緒にクエリすると精度が上がる |
 
 ---
 
 ## トラブルシューティング
 
-| 症状 | 対応 |
-|------|------|
-| API キーが認識されない | 環境変数の設定と CLI のログを確認する。必要なら `results/` にログを保存し共有。 |
-| 出力が長すぎて Issue に貼りづらい | `results/` に Markdown として保存し、要約だけを Issue / PR に貼り付ける。 |
-| LaTeX で誤った書式を生成した | `utility/check_env.py` で環境を確認した上で手動で修正し、修正内容を `plan/` に記録する。 |
+- **API キーエラー**: `GEMINI_API_KEY` が設定されているか、レート制限に達していないか確認する  
+- **結果が古い**: クエリに年号や「latest」を付ける  
+- **期待と違う結果**: 目的・出力形式（例: *「LaTeX longtable example」*）を明記する  
+- **ネットワーク失敗**: プロキシ設定や VPN の状態を確認する
 
 ---
 
-Gemini の利用状況や追加ルールが必要になった場合はこのファイルを更新し、`sharing/ai-driven-coding.py` で所在を確認してください。
+## 次のアクション
+
+1. 取得した情報を `workbench/scripts/` でスクリプト化して再現性を確保  
+2. `utility/check_env.py` を再度実行し、設定変更が整合しているか確認  
+3. 問題が解決したらドキュメント（README やセクションファイル）に反映し、チームと共有する  
+4. 共有ルールを更新する場合は `python sharing/ai-driven-coding.py` を実行し、`sharing/ai-driven-coding.md` を再生成する
+
+Gemini CLI を活用して最新情報を収集し、LaTeX ドキュメント作成の品質と速度を向上させましょう。

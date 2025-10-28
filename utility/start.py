@@ -1,71 +1,116 @@
 #!/usr/bin/env python3
-"""Bootstrap helper for the template-latex repository.
-
-The script performs three tasks:
-  1. validates the working directory,
-  2. optionally installs Python dependencies, and
-  3. runs the environment checks.
-
-Usage examples:
-  python utility/start.py              # run checks only
-  python utility/start.py --install    # install requirements then run checks
-"""
+"""Bootstrap helper for the LaTeX template project."""
 
 from __future__ import annotations
 
-import argparse
-import pathlib
+import shutil
 import subprocess
 import sys
-
-REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
-
-
-def run_command(command: list[str]) -> int:
-    print(f"$ {' '.join(command)}")
-    return subprocess.call(command)
+from pathlib import Path
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Set up template-latex tooling.")
-    parser.add_argument(
-        "--install",
-        action="store_true",
-        help="Install Python dependencies with pip before running checks.",
-    )
-    parser.add_argument(
-        "--python",
-        default=sys.executable,
-        help="Python executable to use (defaults to the current interpreter).",
-    )
-    return parser.parse_args()
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DIRECTORIES_TO_CREATE = [
+    PROJECT_ROOT / "figures",
+    PROJECT_ROOT / "workbench" / "results",
+    PROJECT_ROOT / "results",
+]
+ENV_FILE = PROJECT_ROOT / "environment.yml"
+ENV_NAME = "latex-template"
+
+
+def header(title: str) -> None:
+    print("=" * 70, flush=True)
+    print(title, flush=True)
+    print("=" * 70, flush=True)
+
+
+def create_directories() -> None:
+    for path in DIRECTORIES_TO_CREATE:
+        created = False
+        if not path.exists():
+            path.mkdir(parents=True, exist_ok=True)
+            created = True
+        status = "CREATED" if created else "OK"
+        print(f"[{status}] {path.relative_to(PROJECT_ROOT)}", flush=True)
+
+
+def report_environment_manifest() -> None:
+    if ENV_FILE.exists():
+        print(f"[OK] Found environment file: {ENV_FILE.relative_to(PROJECT_ROOT)}", flush=True)
+    else:
+        print("[WARN] environment.yml is missing; create it to manage the Python toolchain.", flush=True)
+
+
+def report_conda_status() -> None:
+    conda_path = shutil.which("conda")
+    if not conda_path:
+        print("[WARN] conda executable not found; skipping environment sync guidance.", flush=True)
+        return
+
+    if not ENV_FILE.exists():
+        print("[WARN] environment.yml not present; run `conda env export` after creating one.", flush=True)
+        return
+
+    try:
+        result = subprocess.run(
+            [conda_path, "env", "list"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError as error:
+        print(f"[WARN] Unable to list conda environments ({error.returncode}); consult conda logs.", flush=True)
+        return
+
+    exists = any(line.split()[0] == ENV_NAME for line in result.stdout.splitlines() if line.strip())
+    if exists:
+        print(
+            f"[INFO] Conda environment '{ENV_NAME}' detected. "
+            f"Update with: conda env update --file environment.yml --name {ENV_NAME}",
+            flush=True,
+        )
+    else:
+        print(
+            f"[INFO] Conda environment '{ENV_NAME}' not found. "
+            f"Create with: conda env create --file environment.yml --name {ENV_NAME}",
+            flush=True,
+        )
+    print(f"[INFO] Activate with: conda activate {ENV_NAME}", flush=True)
+
+
+def run_environment_check() -> None:
+    check_env_path = PROJECT_ROOT / "utility" / "check_env.py"
+    if not check_env_path.exists():
+        print("[WARN] utility/check_env.py not found; skipping environment check.", flush=True)
+        return
+
+    print("[INFO] Running utility/check_env.py", flush=True)
+    try:
+        subprocess.run(
+            [sys.executable, str(check_env_path)],
+            cwd=PROJECT_ROOT,
+            check=True,
+        )
+    except subprocess.CalledProcessError as error:
+        print(f"[WARN] Environment check exited with {error.returncode}. See output above.", flush=True)
+    except FileNotFoundError:
+        print("[WARN] Python executable not found; skipping environment check.", flush=True)
 
 
 def main() -> None:
-    args = parse_args()
-
-    if pathlib.Path.cwd() != REPO_ROOT:
-        print("[WARN] Run this script from the repository root for consistent paths.")
-        print(f"        Detected: {pathlib.Path.cwd()}")
-        print(f"        Expected: {REPO_ROOT}")
-
-    if args.install:
-        requirements = REPO_ROOT / "requirements.txt"
-        if requirements.exists():
-            rc = run_command([args.python, "-m", "pip", "install", "-r", str(requirements)])
-            if rc != 0:
-                print("[ERROR] pip install failed. Resolve the issue before continuing.")
-                sys.exit(rc)
-        else:
-            print("[WARN] requirements.txt not found; skipping dependency installation.")
-
-    rc = run_command([args.python, str(REPO_ROOT / "utility" / "check_env.py")])
-    if rc != 0:
-        sys.exit(rc)
-
-    print()
-    print("Setup complete. Refer to ai-driven-coding.md for the next steps.")
+    header("LaTeX Project Bootstrap")
+    create_directories()
+    report_environment_manifest()
+    report_conda_status()
+    run_environment_check()
+    print("=" * 70, flush=True)
+    print("Next steps:", flush=True)
+    print("  - Install TeX Live or MacTeX with latexmk and lualatex.", flush=True)
+    print("  - Build via ./scripts/compile.sh or VS Code LaTeX Workshop.", flush=True)
+    print("  - Keep environment.yml in sync and rerun utility/check_env.py after changes.", flush=True)
+    print("=" * 70, flush=True)
 
 
-if __name__ == "__main__":  # pragma: no cover
-    main()
+if __name__ == "__main__":
+    sys.exit(main())

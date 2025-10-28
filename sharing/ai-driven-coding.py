@@ -1,40 +1,35 @@
 #!/usr/bin/env python3
-"""Utility helpers for AI-driven coding policies.
-
-Running this script prints the locations of the rule documents so team members
-can audit them quickly. Future enhancements can aggregate or validate content.
-"""
+"""Replicate the root ai-driven-coding template with project-specific values."""
 
 from __future__ import annotations
 
-import pathlib
+import sys
+from pathlib import Path
 
-REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 
-RULE_FILES = {
-    "Claude": REPO_ROOT / "CLAUDE.md",
-    "Gemini": REPO_ROOT / "GEMINI.md",
-    "OpenAI Codex Playbook": REPO_ROOT / "AGENTS.md",
-    "Codex CLI/IDE": REPO_ROOT / ".codex" / "config.toml",
-    "Repository Playbook": REPO_ROOT / "ai-driven-coding.md",
-    "Cursor Rules": REPO_ROOT / ".cursor" / "rules" / "cursorrules.md",
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SOURCE = PROJECT_ROOT / "ai-driven-coding.md"
+TARGET = PROJECT_ROOT / "sharing" / "ai-driven-coding.md"
+
+REPLACEMENTS = {
+    "<your-project-name>": "template-latex",
+    "conda activate env-example": "conda activate latex-template",
 }
 
 
-def main() -> None:
-    print("AI-driven coding rule files:")
-    for name, path in RULE_FILES.items():
-        status = "found" if path.exists() else "missing"
-        print(f"- {name:<18} : {path.relative_to(REPO_ROOT)} ({status})")
+def main() -> int:
+    if not SOURCE.exists():
+        print(f"[ERROR] Source template not found: {SOURCE}")
+        return 1
 
-    plan_dir = REPO_ROOT / "plan"
-    results_dir = REPO_ROOT / "results"
-    print()
-    print("Shared directories:")
-    print(f"- plan      : {plan_dir.relative_to(REPO_ROOT)}")
-    print(f"- results   : {results_dir.relative_to(REPO_ROOT)}")
-    print(f"- workbench : {(REPO_ROOT / 'workbench').relative_to(REPO_ROOT)}")
+    text = SOURCE.read_text(encoding="utf-8")
+    for placeholder, value in REPLACEMENTS.items():
+        text = text.replace(placeholder, value)
+
+    TARGET.write_text(text, encoding="utf-8")
+    print(f"[INFO] Updated {TARGET.relative_to(PROJECT_ROOT)} using {SOURCE.name}")
+    return 0
 
 
-if __name__ == "__main__":  # pragma: no cover
-    main()
+if __name__ == "__main__":
+    sys.exit(main())

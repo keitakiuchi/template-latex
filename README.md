@@ -65,7 +65,7 @@
 
 ```bash
 # 仮想環境のアクティベート
-conda activate py-latex  # または適切な環境名
+conda activate latex-template  # または適切な環境名
 
 # 環境チェックスクリプトの実行
 python utility/check_env.py
@@ -79,7 +79,7 @@ python utility/check_env.py
 ```bash
 # AIアシスタントに「スタート」と入力するだけ
 # 自動的に以下が実行されます：
-# 1. py-latex環境の自動アクティベート
+# 1. latex-template 環境の自動アクティベート
 # 2. 環境チェックの実行
 python utility/start.py
 ```
@@ -146,6 +146,8 @@ template-latex/
 │   ├─ claude.yml
 │   └─ commands/
 │       └─ gemini-search.md
+├─ .codex/                ← Codex CLI/IDE 設定
+│   └─ config.toml
 ├─ .cursor/               ← Cursor ルール
 │   └─ rules/
 │       ├─ latex_development.md
@@ -167,7 +169,8 @@ template-latex/
 ├─ results/              ← 実行結果・ログ
 │   └─ .gitkeep
 ├─ sharing/              ← 共有ユーティリティ
-│   └─ ai-driven-coding.py
+│   ├─ ai-driven-coding.py
+│   └─ ai-driven-coding.md
 ├─ scripts/              ← ビルド / 変換スクリプト
 │   ├─ compile.sh
 │   └─ tex2docx.sh
@@ -186,11 +189,10 @@ template-latex/
 │   └─ start.sh
 ├─ workbench/            ← 実験スペース
 │   └─ .gitkeep
-├─ ai-driven-coding.md  ← AI プレイブック
-├─ environment.yml
-├─ requirements.txt
+├─ ai-driven-coding.md   ← AI プレイブック
+├─ environment.yml       ← conda 補助環境定義 (latex-template)
 ├─ latexmkrc             ← latexmk のカスタム設定
-├─ requirements.txt       ← Python依存関係
+├─ requirements.txt      ← Python依存関係
 ├─ texlive-tiny.profile  ← TeX Live設定プロファイル
 ├─ env.example           ← 環境変数設定例
 ├─ .gitignore
@@ -604,9 +606,6 @@ fi
 ---
 
 これで **外付け有無に応じた自動切り替え** が実現できます。
-
-
-
 
 
 

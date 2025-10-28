@@ -163,9 +163,23 @@ latexmk -C
 - Defines allowed tools and execution parameters.
 - Helps Claude provide context-aware assistance for LaTeX documents.
 
+### `.codex/config.toml`
+- Stores Codex CLI/IDE defaults (model, sandbox policy, response language).
+- Forces Japanese responses to keep documentation consistent.
+
 ### `.cursor/rules/latex_development.md`
 - Contains development guidelines for working with this LaTeX template.
 - Defines file organization rules and best practices.
+
+## AI Support Utilities
+
+- `utility/check_env.py` validates that `latexmk`, `lualatex`, and required directories (such as `tex/`, `figures/`, `build/pdf/`) exist.
+- `utility/start.py` / `utility/start.sh` create missing directories, report conda status, and run the environment checks.
+- Experimental scripts belong in `workbench/scripts/`, with outputs saved under `workbench/results/` to keep them separate from production assets.
+- Gemini search guidance lives in `.claude/commands/gemini-search.md`; review it before issuing web queries.
+- Codex CLI reads `.codex/config.toml`, which enforces Japanese responses and the sandbox configuration.
+- Run `python sharing/ai-driven-coding.py` to regenerate `sharing/ai-driven-coding.md` with the latest project name and environment settings.
+- Create or update the helper Python environment via `conda env create --file environment.yml --name latex-template` (or `conda env update` for subsequent refreshes).
 
 ## Best Practices
 
