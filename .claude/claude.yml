@@ -1,46 +1,20 @@
 # ------------------------------------------------------------
-# 目的:
-#   - LaTeX テンプレートプロジェクトの構成に合わせた Claude 設定
-#   - LaTeX ビルドプロセスの自動化と効率化
+# 位置づけ:
+#   - このファイルは既存リポジトリ互換のために保持
+#   - Claude Code の公式プロジェクト設定は `CLAUDE.md` と
+#     `.claude/settings.json` を優先
 # ------------------------------------------------------------
 
 system_prompt: |
-  # LaTeX プロジェクト構造
-  1. LaTeX ソースは **`tex/`** 配下に配置する。
-     - エントリーポイント: `tex/main.tex`
-     - プリアンブル: `tex/preamble.tex`
-     - セクション: `tex/sections/`
-     - 参考文献: `tex/bib/refs.bib`
-  2. 図表・画像は **`figures/`** に保存し、TeX から `../figures/` で参照する。
-  3. ビルド成果物は `build/pdf/` に出力し、中間生成物は自動的にクリーンアップされる。
+  このファイルは互換用の最小設定です。
 
-  # ユーティリティと環境チェック
-  4. 作業前に `python utility/check_env.py` を実行して `latexmk` と `lualatex` の有無、必須ディレクトリ、主要ファイルを確認する。
-  5. 新しい開発用マシンでは `utility/start.py` または `utility/start.sh` でディレクトリ初期化と環境確認を行う。
-  6. `environment.yml` を維持し、`conda env create/update --file environment.yml --name latex-template` で補助的な Python 環境を整備する。
-  7. `sharing/ai-driven-coding.py` を実行して配布用テンプレート (`sharing/ai-driven-coding.md`) を最新化する。
-  8. 実験的な検証は `workbench/scripts/` で行い、結果は `workbench/results/` へ保存する。
-
-  # ビルドプロセス
-  9. LaTeX のビルドは `./scripts/compile.sh` または `cd tex && latexmk -r ../latexmkrc main.tex` を使用する。
- 10. クリーンアップは `cd tex && latexmk -C` を推奨し、VS Code LaTeX Workshop のタスク (`Build LaTeX` / `Clean LaTeX` / `View PDF`) も利用できる。
-
-  # 日本語対応
- 11. 日本語文書は `lualatex` を利用し、必要パッケージは `preamble.tex` で管理する。
-
-  # CI/CD
- 12. `.github/workflows/latex.yml` で GitHub Actions ビルドを定義し、PDF をアーティファクトとして保存する。
-
-  # ファイル編集ガイドライン
- 13. 新規セクションを追加する場合は `tex/sections/` に `.tex` ファイルを作成し、`tex/main.tex` に `\input{sections/<name>}` を追加する。
- 14. 参考文献は `tex/bib/refs.bib` に BibTeX 形式で追記し、本文では `\cite{...}` を使用する。
- 15. AI ツールで得た知見は `plan/current-sprint.md` に記録し、定着した手順は `README.md` や `CLAUDE.md` を更新する。
-
-# ---- allowed_tools を改行区切りに修正 ----
-allowedTools: |
-  Bash(:)
-  Edit
-  mcp__github_file_ops__commit_files
+  - ユーザー向けの回答は日本語で行う
+  - プロジェクトコード実行前に `python utility/check_env.py` を実行する
+  - ローカル開発の依存関係の正本は `environment.yml`
+  - `requirements.txt` は主に CI / 互換用途
+  - このリポジトリはテンプレート本体なので、`src/` や `tests/` が未作成でも不整合ではない
+  - Claude Code の正本設定は `CLAUDE.md` と `.claude/settings.json`
+  - ツール権限と hook は `.claude/settings.json` を正本とする
 
 timeout_minutes: 30
 concurrency:

@@ -18,6 +18,18 @@
 #   --clean-temp : コンパイル後に一時ファイルをクリーンアップ
 # =============================================================================
 
+show_help() {
+  cat <<'EOF'
+使用方法:
+  ./scripts/02_compile.sh [ファイル名] [--clean] [--clean-temp]
+
+オプション:
+  --clean       コンパイル前に temp/ を空にする
+  --clean-temp  コンパイル後に temp/ の中間ファイルを削除する
+  --help        このヘルプを表示する
+EOF
+}
+
 # TeX Live のパスを環境変数から設定（設定されていない場合はデフォルト）
 if [ -z "$TEXLIVE_PATH" ]; then
     # 一般的なTeX Liveのパスを自動検出
@@ -46,8 +58,42 @@ if [ -d "tex" ]; then
   echo "📁 texディレクトリに移動しました"
 fi
 
-# ファイル名を引数から取得（デフォルトはexample）
-TEX_FILE=${1:-example}
+# 引数を解析
+TEX_FILE="example"
+CLEAN_BEFORE=false
+CLEAN_AFTER=false
+TEX_FILE_SET=false
+
+for arg in "$@"; do
+  case "$arg" in
+    --clean)
+      CLEAN_BEFORE=true
+      ;;
+    --clean-temp)
+      CLEAN_AFTER=true
+      ;;
+    --help|-h)
+      show_help
+      exit 0
+      ;;
+    --*)
+      echo "❌ 不明なオプション: $arg"
+      show_help
+      exit 1
+      ;;
+    *)
+      if [ "$TEX_FILE_SET" = false ]; then
+        TEX_FILE="$arg"
+        TEX_FILE_SET=true
+      else
+        echo "❌ ファイル名は1つだけ指定してください: $arg"
+        show_help
+        exit 1
+      fi
+      ;;
+  esac
+done
+
 echo "🔄 コンパイル開始: ${TEX_FILE}.tex"
 
 # 必要なディレクトリを作成
@@ -59,14 +105,14 @@ mkdir -p bib
 mkdir -p temp
 
 # 既存のtempディレクトリをクリーンアップ（オプション）
-if [ "$2" = "--clean" ]; then
+if [ "$CLEAN_BEFORE" = true ]; then
   echo "🧹 tempディレクトリをクリーンアップ中..."
   rm -rf temp/*
 fi
 
 # LaTeX + BibTeX コンパイル実行
 echo "📝 LaTeX コンパイル（latexmk使用）"
-if ! latexmk -pdf -lualatex -interaction=nonstopmode -output-directory=temp ${TEX_FILE}.tex; then
+if ! latexmk -pdf -lualatex -interaction=nonstopmode -output-directory=temp "${TEX_FILE}.tex"; then
   echo "❌ LaTeX コンパイルでエラーが発生しました"
   echo "📋 エラーログ: tex/temp/${TEX_FILE}.log"
   exit 1
@@ -93,11 +139,9 @@ else
 fi
 
 # tempディレクトリのクリーンアップ（オプション）
-if [ "$2" = "--clean" ] || [ "$3" = "--clean-temp" ]; then
+if [ "$CLEAN_AFTER" = true ]; then
   echo "🧹 tempディレクトリをクリーンアップ中..."
-  # 重要なファイルは保持し、一時的なファイルのみ削除
-  rm -f temp/${TEX_FILE}.bib
-  rm -f temp/${TEX_FILE}.blg
+  find temp -mindepth 1 -delete
   echo "✅ 一時ファイルをクリーンアップしました"
 fi
 
@@ -127,10 +171,14 @@ if [ -f "../build/pdf/${TEX_FILE}.pdf" ]; then
   echo "   - PDF: build/pdf/${TEX_FILE}.pdf"
   echo "   - .bbl: tex/bib/${TEX_FILE}.bbl"
   echo ""
-  echo "🧹 中間ファイルはtempディレクトリに保持されています"
-  echo "📁 ログファイル: tex/temp/${TEX_FILE}.log"
-  echo "📁 .auxファイル: tex/temp/${TEX_FILE}.aux"
-  echo "📁 .bblファイル: tex/temp/${TEX_FILE}.bbl"
+  if [ "$CLEAN_AFTER" = true ]; then
+    echo "🧹 中間ファイルはクリーンアップ済みです"
+  else
+    echo "🧹 中間ファイルはtempディレクトリに保持されています"
+    echo "📁 ログファイル: tex/temp/${TEX_FILE}.log"
+    echo "📁 .auxファイル: tex/temp/${TEX_FILE}.aux"
+    echo "📁 .bblファイル: tex/temp/${TEX_FILE}.bbl"
+  fi
   echo ""
   echo "✨ コンパイル完了！"
 else

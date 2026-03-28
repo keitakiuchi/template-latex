@@ -1,204 +1,46 @@
-# LaTeX Template Guidelines with AI-Driven Coding Support
+# AGENTS.md
 
-## AI駆動コーディング対応
+このファイルは、Codex を含む AGENTS.md 対応エージェント向けのプロジェクト共有指示です。
+長い一般論ではなく、このリポジトリ固有で毎回読む価値がある内容だけを書きます。
 
-### 対応AIツール
-- **Claude Code CLI**: コード生成・改善・レビュー
-- **Claude Code GitHub Actions**: CI/CD統合  
-- **OpenAI Codex**: コード補完・生成
-- **Gemini CLI**: ウェブ検索・技術情報取得
-- **Cursor**: AI統合開発環境
+## 応答言語
 
-### 環境チェック（必須）
-**このプロジェクトでコードを実行する前に、必ず環境チェックスクリプトを実行してください：**
+- ユーザー向けの回答、進捗報告、要約は常に日本語で行う。
 
-```bash
-# 仮想環境のアクティベート
-conda activate py-latex  # または適切な環境名
+## このリポジトリの性格
 
-# 環境チェックスクリプトの実行
-python utility/check_env.py
-```
+- このリポジトリ自体が AI 開発運用のテンプレートであり、現時点で `src/` や `tests/` が未作成でも不整合ではない。
+- 新しくアプリケーションコードやサンプルコードを追加する場合は、ルート直下ではなく `src/` または `app/` に置く。
+- テストは `tests/`、設定は `config/`、補助スクリプトは `utility/` に置く。
+- `workbench/` は一時的な実験、`analysis_steps/` は再現可能な分析手順、`results/` は保存すべき成果物に使う。
 
-このスクリプトは以下を確認します：
-- ✅ 適切な仮想環境がアクティブか
-- ✅ 必要な依存関係がインストールされているか
-- ✅ 設定ファイルが存在するか
+## 実行前提
 
-### クイックスタート機能
-「スタート」と入力すると、自動的に環境チェックを実行して処理環境を整えます：
+- プロジェクトコードを実行する前に、必ず `python utility/check_env.py` を実行する。
+- 仮想環境名を `myenv` や `py-review` に決め打ちしない。最新の手順は `README.md` と `environment.yml` を正本として扱う。
+- ローカル開発の依存関係の正本は `environment.yml`。`requirements.txt` は主に GitHub Actions や互換用途として扱う。
 
-```bash
-# スタートスクリプトの実行
-python utility/start.py
-```
+## 作業方針
 
-### AIツールの使用方法
+- 可能な範囲で TDD を使い、まず失敗する最小のテストを書き、その後に最小修正を入れる。
+- 変更は小さく保ち、確認は最小の対象から始める。
+- 新しいファイルやディレクトリを増やす前に、既存の構成と役割に合っているかを確認する。
+- リポジトリ直下にはアプリ本体の実装やテスト本体を増やさない。
 
-#### Claude AI アシスタント
-- GitHub Issuesで@claudeをメンション
-- プルリクエストレビューで@claudeをメンション
-- 自動化されたコードレビューと改善提案
+## リサーチ方針
 
-#### Gemini CLI 検索
-```bash
-# 技術情報の検索
-gemini --prompt "WebSearch: Python async programming best practices 2024"
+- 最新情報や変化しやすい情報を調べる場合は、一次情報と公式ドキュメントを優先する。
+- Codex セッションでは組み込みの Web 検索を使ってよいが、結果には出典 URL を付ける。
+- Codex 以外のツールで Web 検索が必要な場合は、原則として `gemini --prompt "WebSearch: <query>"` の形式を使う。
 
-# APIドキュメントの検索
-gemini --prompt "WebSearch: OpenAI API documentation"
+## セキュリティ
 
-# ベストプラクティスの検索
-gemini --prompt "WebSearch: GitHub Actions best practices"
-```
+- `.env`、認証情報、秘密鍵、トークンを出力・要約・コミットしない。
+- 破壊的操作、依存関係追加、CI/設定変更、外部ネットワーク通信は高リスクとして扱う。
+- 外部入力やシェル引数は安全に扱い、危険なワンライナーを避ける。
 
-#### Cursor IDE
-- `.cursor/rules/` ディレクトリのルールファイルを参照
-- AI駆動開発のベストプラクティスに従った開発
+## 参照先
 
----
-
-## AI Agent Integration Overview
-
-- 作業開始前に `utility/start.py` を実行し、環境整合性を確認する。
-- タスクの意図や制約は `plan/` に整理し、エージェントへのプロンプトにも同じ情報を渡す。
-- 生成されたアウトプットやビルドログは `results/` に保存する。
-- ルールやベストプラクティスは `ai-driven-coding.md` を参照の上、必要に応じて更新する。
-- 作業途中のメモや検証は `workbench/` で行い、完成したら適切なディレクトリへ移動する。
-
-
-## Directory Structure
-
-### LaTeX Source Files
-- **All LaTeX source files must be placed in the `tex/` directory.**
-- The main entry point is `tex/main.tex`, which imports other files using `\input{}`.
-- The preamble with package imports is in `tex/preamble.tex`.
-- Section files are stored in `tex/sections/`.
-- Bibliography files are stored in `tex/bib/`.
-
-### Figures and Images
-- **All figures, images, and diagrams must be placed in the `figures/` directory.**
-- Reference images in LaTeX using the path `../figures/image.png` (from tex directory).
-- The graphicspath is already configured in the preamble.
-
-### Build Output
-- Build artifacts are generated in the `tex/build/` directory.
-- The final PDF will be at the root of the `tex/` directory.
-
-## LaTeX Compilation
-
-### Using VS Code / Cursor
-1. Open the repository in VS Code / Cursor.
-2. Install the LaTeX Workshop extension if not already installed.
-3. Open `tex/main.tex`.
-4. Use the LaTeX Workshop build button or press `Ctrl+Alt+B` (`Cmd+Alt+B` on Mac).
-
-### Using Command Line
-```bash
-# From the repository root
-cd tex
-latexmk -pdf main.tex
-```
-
-### Cleaning Build Files
-```bash
-# From the repository root
-cd tex
-latexmk -C
-```
-
-## Adding New Content
-
-### Adding a New Section
-1. Create a new file in `tex/sections/`, e.g., `tex/sections/new_section.tex`.
-2. Add the section content to this file.
-3. Import the section in `tex/main.tex` using `\input{sections/new_section}`.
-
-### Adding References
-1. Add BibTeX entries to `tex/bib/refs.bib`.
-2. Cite in the text using `\cite{reference_key}`.
-3. Ensure the bibliography is included in `tex/main.tex` with:
-   ```latex
-   \bibliography{bib/refs}
-   \bibliographystyle{plain}
-   ```
-
-### Adding Figures
-1. Place figure files in the `figures/` directory.
-2. Reference in LaTeX using:
-   ```latex
-   \begin{figure}[htbp]
-     \centering
-     \includegraphics[width=0.8\textwidth]{../figures/image.png}
-     \caption{Description of the figure}
-     \label{fig:label}
-   \end{figure}
-   ```
-
-## GitHub Actions CI/CD
-
-### Automated Builds
-- Pushing to the `main` branch automatically triggers a LaTeX build via GitHub Actions.
-- The workflow is defined in `.github/workflows/latex.yml`.
-- The PDF is uploaded as an artifact and can be downloaded from the GitHub Actions page.
-
-### Releases
-- When pushing to the `main` branch, a new release is created with the PDF attached.
-- The release is tagged with the run number.
-
-## Configuration Files
-
-### VS Code / Cursor Configuration
-- `.vscode/settings.json` contains settings for the LaTeX Workshop extension.
-- `.vscode/tasks.json` defines tasks for building, cleaning, and viewing LaTeX documents.
-
-### latexmk Configuration
-- `latexmkrc` contains custom settings for the latexmk build tool.
-- It configures the LaTeX compiler, output directory, and cleanup options.
-
-## Claude AI Assistant Configuration
-
-### `.claude/claude.yml`
-- Contains system prompts for Claude to understand the repository structure.
-- Defines allowed tools and execution parameters.
-- Helps Claude provide context-aware assistance for LaTeX documents.
-
-### `.codex/config.toml`
-- Stores Codex CLI/IDE defaults (model, sandbox policy, response language).
-- Forces Japanese responses to keep documentation consistent.
-
-### `.cursor/rules/latex_development.md`
-- Contains development guidelines for working with this LaTeX template.
-- Defines file organization rules and best practices.
-
-## AI Support Utilities
-
-- `utility/check_env.py` validates that `latexmk`, `lualatex`, and required directories (such as `tex/`, `figures/`, `build/pdf/`) exist.
-- `utility/start.py` / `utility/start.sh` create missing directories, report conda status, and run the environment checks.
-- Experimental scripts belong in `workbench/scripts/`, with outputs saved under `workbench/results/` to keep them separate from production assets.
-- Gemini search guidance lives in `.claude/commands/gemini-search.md`; review it before issuing web queries.
-- Codex CLI reads `.codex/config.toml`, which enforces Japanese responses and the sandbox configuration.
-- Run `python sharing/ai-driven-coding.py` to regenerate `sharing/ai-driven-coding.md` with the latest project name and environment settings.
-- Create or update the helper Python environment via `conda env create --file environment.yml --name latex-template` (or `conda env update` for subsequent refreshes).
-
-## Best Practices
-
-### Japanese Language Support
-- Use the CJKutf8 and xeCJK packages for Japanese text (already included in preamble).
-- Compile with platex or xelatex for proper Japanese support.
-
-### File Naming
-- Use descriptive, lowercase names for section files.
-- Separate words with underscores in filenames.
-- Keep filenames concise but descriptive.
-
-### Code Style
-- Use consistent indentation in LaTeX files (2 or 4 spaces).
-- Group related commands together.
-- Add comments for complex sections or macros.
-- Follow consistent capitalization in LaTeX commands.
-
-### Version Control
-- Commit frequently with descriptive messages.
-- Include the PDF in .gitignore if you don't want to track it (currently commented out).
-- Track changes to LaTeX source files, not generated files.
+- Claude Code の詳細な共有指示は `CLAUDE.md` と `.claude/` 配下を参照。
+- Gemini CLI の詳細な共有指示は `GEMINI.md` を参照。
+- リポジトリ全体の背景やセットアップ手順は `README.md` を参照。

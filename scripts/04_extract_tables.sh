@@ -17,8 +17,9 @@ if [ $# -ne 1 ]; then
 fi
 
 TEXFILE="$1"
-BASENAME=$(basename "$TEXFILE" .tex)
-TEXDIR=$(dirname "$TEXFILE")
+INPUT_TEX_FILE=$(basename "$TEXFILE")
+BASENAME=$(basename "$INPUT_TEX_FILE" .tex)
+TEXDIR="$(cd "$(dirname "$TEXFILE")" && pwd)"
 CSVOUTDIR="$(cd "$TEXDIR" && cd .. && pwd)/build/csv"
 ORIGINAL_DIR=$(pwd)
 
@@ -38,7 +39,6 @@ BEGIN{
   header_cols=super_cols=0
   split("",header_data); split("",super_data)
   row_buf=""; after_toprule=0; pval_col=0
-  Q = 39   # "'" (アポストロフィ)
 }
 
 ############ table 開始・終了 ############
@@ -230,8 +230,8 @@ function output_csv(   f,i,j,line,cell){
     line=""; for(j=1;j<=max_cols;j++){
       if(j>1) line=line","
       cell=table_data[i","j]
-      if(j==pval_col && cell~/^[0-9.]+$/) cell=sprintf("%c%.3f",Q,cell+0)
-      else if(cell~/^-?[0-9]+\.[0-9]+$/)  cell=sprintf("%c%.2f",Q,cell+0)
+      if(j==pval_col && cell~/^[0-9.]+$/) cell=sprintf("%.3f",cell+0)
+      else if(cell~/^-?[0-9]+\.[0-9]+$/)  cell=sprintf("%.2f",cell+0)
       if(cell~/[,\n\r]/){gsub(/"/,"\"\"",cell);cell="\""cell"\""}
       line=line cell
     } print line>f
@@ -292,10 +292,10 @@ AWK_SCRIPT
 echo "🔍 実行パラメータ:"
 echo "  - csv_dir: $CSVOUTDIR"
 echo "  - basename: $BASENAME"
-echo "  - 入力ファイル: $BASENAME.tex"
+echo "  - 入力ファイル: $INPUT_TEX_FILE"
 echo "  - 一時awkファイル: $TEMP_AWK"
 
-gawk -v csv_dir="$CSVOUTDIR" -v basename="$BASENAME" -f "$TEMP_AWK" "$BASENAME.tex"
+gawk -v csv_dir="$CSVOUTDIR" -v basename="$BASENAME" -f "$TEMP_AWK" "$INPUT_TEX_FILE"
 
 echo "🔍 生成されたCSVファイル:"
 ls -la "$CSVOUTDIR"/*.csv 2>/dev/null || echo "  CSVファイルが見つかりません"
@@ -315,7 +315,7 @@ if [ -d "$TEXDIR" ]; then
   find "$TEXDIR" -maxdepth 1 \( -name "*.aux" -o -name "*.log" -o -name "*.bbl" -o -name "*.blg" -o -name "*.out" -o -name "*.toc" -o -name "*.pdf" -o -name "*.fls" -o -name "*.fdb_latexmk" -o -name "*.synctex.gz" \) -delete 2>/dev/null
   echo "✅ LaTeX中間ファイルをクリーンアップ完了"
 else
-  echo "⚠️ テキストディレクトリが見つかりません: $TEXDIR"
+  echo "⚠️ TeXディレクトリが見つかりません: $TEXDIR"
 fi
 
 # 一時ファイルのクリーンアップ確認

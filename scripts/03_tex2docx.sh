@@ -15,6 +15,8 @@ BASENAME=$(basename "$TEXFILE" .tex)
 TEXDIR=$(dirname "$TEXFILE")
 OUTDIR="../build/docx"
 OUTFILE="$OUTDIR/$BASENAME.docx"
+BIBFILE=""
+TEMP_TEX=""
 
 # ---------- 準備 ----------
 cd "$TEXDIR"
@@ -175,7 +177,10 @@ echo "📋 削除対象ファイル:"
 ls -la *.aux *.log *.bbl *.blg *.out *.toc *.pdf 2>/dev/null | grep -v "No such file" || echo "  削除対象ファイルなし"
 
 # LaTeX関連の一時ファイルを削除
-rm -f "$TEMP_TEX" *.aux *.log *.bbl *.blg *.out *.toc *.pdf pandoc.log 2>/dev/null
+if [ -n "$TEMP_TEX" ]; then
+  rm -f "$TEMP_TEX" 2>/dev/null
+fi
+rm -f *.aux *.log *.bbl *.blg *.out *.toc *.pdf pandoc.log 2>/dev/null
 echo "✅ LaTeX中間ファイルをクリーンアップ完了"
 
 # ---------- 結果確認 ----------

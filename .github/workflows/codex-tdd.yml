@@ -1,30 +1,50 @@
-name: codex-tdd
+# 📖 ルールファイルについて詳しく知りたい場合は、README.mdを参照してください。
+# このプロジェクトのルールファイル構成や使用方法については、README.mdの「📋 ルールファイル構成」セクションをご確認ください。
+
+name: Codex TDD Workflow
 
 on:
+  workflow_dispatch:
   issues:
-    types: [opened, edited, reopened]
+    types: [opened, edited]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
 
 jobs:
-  codex:
-    if: contains(github.event.issue.title, '@codex')
+  codex-tdd:
     runs-on: ubuntu-latest
-    env:
-      FILE_OVERWRITE_POLICY: sequential
-      RESULTS_DIR: results
+    if: >
+      vars.ENABLE_TEMPLATE_AI_WORKFLOWS == 'true' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        (
+          github.event_name == 'issues' &&
+          (
+            github.event.issue.author_association == 'OWNER' ||
+            github.event.issue.author_association == 'MEMBER' ||
+            github.event.issue.author_association == 'COLLABORATOR'
+          ) &&
+          (
+            contains(github.event.issue.title, '@codex') ||
+            contains(github.event.issue.body, '@codex')
+          )
+        ) ||
+        (
+          github.event_name == 'issue_comment' &&
+          (
+            github.event.comment.author_association == 'OWNER' ||
+            github.event.comment.author_association == 'MEMBER' ||
+            github.event.comment.author_association == 'COLLABORATOR'
+          ) &&
+          contains(github.event.comment.body, '@codex')
+        )
+      )
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Run Codex in Full-Auto
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          SPEC: ${{ github.event.issue.body }}
-        run: |
-          npm install -g @openai/codex
-          # --approval-mode full-auto は完全自動実行モード
-          # --quiet で対話 UI を抑制（CI向け）
-          codex --approval-mode full-auto --quiet "$SPEC"
+    - name: Template Stub Notice
+      run: |
+        echo "::error::This job is a template stub. Replace it with a real Codex automation before setting ENABLE_TEMPLATE_AI_WORKFLOWS=true."
+        exit 1

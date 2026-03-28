@@ -2,11 +2,11 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build LaTeX",
+            "label": "Environment Check",
             "type": "shell",
-            "command": "cd tex && latexmk -pdf main.tex",
+            "command": "python utility/check_env.py",
             "group": {
-                "kind": "build",
+                "kind": "test",
                 "isDefault": true
             },
             "presentation": {
@@ -16,27 +16,11 @@
             "problemMatcher": []
         },
         {
-            "label": "Clean LaTeX",
+            "label": "Project Setup",
             "type": "shell",
-            "command": "cd tex && latexmk -C",
+            "command": "python utility/start.py",
             "presentation": {
                 "reveal": "always",
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "View PDF",
-            "type": "shell",
-            "command": "xdg-open tex/main.pdf",
-            "windows": {
-                "command": "start tex\\main.pdf"
-            },
-            "osx": {
-                "command": "open tex/main.pdf"
-            },
-            "presentation": {
-                "reveal": "silent",
                 "panel": "shared"
             },
             "problemMatcher": []

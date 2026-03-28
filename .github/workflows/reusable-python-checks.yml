@@ -1,0 +1,107 @@
+name: Reusable Python Checks
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: false
+        type: string
+        default: "3.11"
+      requirements-file:
+        required: false
+        type: string
+        default: "requirements.txt"
+      tests-dir:
+        required: false
+        type: string
+        default: "tests"
+      fallback-tests-dir:
+        required: false
+        type: string
+        default: "code/tests"
+      src-dir:
+        required: false
+        type: string
+        default: "src"
+      fallback-src-dir:
+        required: false
+        type: string
+        default: "code/src"
+      run-tests:
+        required: false
+        type: boolean
+        default: true
+      run-lint:
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f "${{ inputs.requirements-file }}" ]; then
+            pip install -r "${{ inputs.requirements-file }}"
+          else
+            echo "ℹ️ requirements file not found: ${{ inputs.requirements-file }}"
+          fi
+
+      - name: Resolve project directories
+        id: paths
+        shell: bash
+        run: |
+          if [ -d "${{ inputs.tests-dir }}" ]; then
+            echo "tests_dir=${{ inputs.tests-dir }}" >> "$GITHUB_OUTPUT"
+          elif [ -d "${{ inputs.fallback-tests-dir }}" ]; then
+            echo "tests_dir=${{ inputs.fallback-tests-dir }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tests_dir=" >> "$GITHUB_OUTPUT"
+          fi
+
+          if [ -d "${{ inputs.src-dir }}" ]; then
+            echo "src_dir=${{ inputs.src-dir }}" >> "$GITHUB_OUTPUT"
+          elif [ -d "${{ inputs.fallback-src-dir }}" ]; then
+            echo "src_dir=${{ inputs.fallback-src-dir }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "src_dir=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run tests
+        if: inputs.run-tests
+        shell: bash
+        run: |
+          if [ -z "${{ steps.paths.outputs.tests_dir }}" ]; then
+            echo "ℹ️ tests directory not found; skipping"
+            exit 0
+          fi
+
+          if [ -n "${{ steps.paths.outputs.src_dir }}" ]; then
+            python -m pytest "${{ steps.paths.outputs.tests_dir }}" -v --cov="${{ steps.paths.outputs.src_dir }}" --cov-report=xml
+          else
+            python -m pytest "${{ steps.paths.outputs.tests_dir }}" -v
+          fi
+
+      - name: Run lint
+        if: inputs.run-lint
+        shell: bash
+        run: |
+          if [ -z "${{ steps.paths.outputs.src_dir }}" ]; then
+            echo "ℹ️ source directory not found; skipping lint"
+            exit 0
+          fi
+
+          flake8 "${{ steps.paths.outputs.src_dir }}" --max-line-length=88 --count --select=E9,F63,F7,F82 --show-source --statistics
+          black --check "${{ steps.paths.outputs.src_dir }}" --diff

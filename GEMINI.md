@@ -1,70 +1,39 @@
 # GEMINI.md
 
-## 概要
+このファイルは Gemini CLI に渡すプロジェクト共有コンテキストです。
+Gemini CLI の `GEMINI.md` は階層的に毎回読み込まれるため、このリポジトリ固有の要点だけを書きます。
 
-このドキュメントは、LaTeX テンプレートリポジトリで Gemini CLI を活用するためのガイドです。  
-WebSearch を活用して、LaTeX のパッケージ、ドキュメント作成のベストプラクティス、CI/CD の改善点を調べる際の手順をまとめています。
+## 応答方針
 
----
+- ユーザー向けの回答、進捗報告、要約は常に日本語で行う。
+- 未確認の前提、未実行の検証、推測に基づく判断は明示する。
 
-## 事前チェック
+## このリポジトリについて
 
-1. `utility/start.sh` または `utility/start.py` を実行し、必須ディレクトリと環境を整備する  
-2. `utility/check_env.py` で `latexmk` と `lualatex` が利用可能か確認する  
-3. Gemini API キーを `export GEMINI_API_KEY=...` などの環境変数で設定する  
-4. `.gitignore` により API キーや一時ファイルがコミットされないことを確認する
+- このリポジトリは AI 開発運用テンプレート自体であり、現時点で `src/`、`tests/`、`config/` が未作成でも不整合ではない。
+- 新しくコードやサンプルを追加する場合は、アプリコードを `src/` または `app/`、テストを `tests/`、設定を `config/`、補助スクリプトを `utility/` に配置する。
+- `workbench/` は一時的な実験、`analysis_steps/` は再現可能な分析プロセス、`results/` は最終成果物に使う。
 
----
+## 実行前提
 
-## 典型的な検索パターン
+- プロジェクトコードを実行する前に `python utility/check_env.py` を実行する。
+- ローカル開発の依存関係の正本は `environment.yml`。`requirements.txt` は主に GitHub Actions / 互換用途として扱う。
+- 仮想環境名を固定値で仮定せず、`README.md` と `environment.yml` を基準に判断する。
 
-```bash
-# LuaLaTeX の設定例
-gemini --prompt "WebSearch: LuaLaTeX japanese typesetting best practices 2024"
+## 作業方針
 
-# BibLaTeX を使った参考文献管理
-gemini --prompt "WebSearch: biblatex bibliography styles overview"
+- 可能なら TDD を使い、失敗する最小のテストから始める。
+- 変更は小さく保ち、確認は最小の対象から行う。
+- 機密情報、`.env`、トークン、鍵を出力・保存・コミットしない。
 
-# latexmkrc のチューニング
-gemini --prompt "WebSearch: latexmk rc file examples for continuous integration"
+## 調査方針
 
-# GitHub Actions での LaTeX 自動ビルド
-gemini --prompt "WebSearch: github actions latexmk workflow example"
-```
+- 最新情報や変わりやすい情報を扱う場合は、Gemini CLI の Web 検索や取得機能を使い、公式ドキュメントと一次情報を優先する。
+- 回答には、可能な範囲で出典 URL を含める。
+- 他ツールから Gemini CLI を検索専用で呼び出す場合の標準形は `gemini --prompt "WebSearch: <query>"`。
 
-### 検索結果の扱い
+## 他ツールとの役割分担
 
-- 新しいパッケージや設定は `tex/preamble.tex` や `latexmkrc` に反映する前に `workbench/` で検証する  
-- 有益な記事は `plan/current-sprint.md` などにメモし、再現手順を共有する  
-- コード片を採用する場合はフォーマットとコメントスタイルを既存ファイルに合わせる
-
----
-
-## よくあるトピック
-
-| トピック | 推奨クエリ | 備考 |
-| --- | --- | --- |
-| LuaLaTeX のフォント設定 | `WebSearch: LuaLaTeX fontspec examples` | 日本語フォント利用時はフォント名まで指定する |
-| TikZ 図のテンプレート | `WebSearch: TikZ diagram gallery` | 取得したコードは `figures/` の素材と合わせて整理する |
-| TeX Live の最小構成 | `WebSearch: minimal texlive install luaLaTeX` | CI/CD でのパッケージ不足回避に役立つ |
-| latexmk のエラー解決 | `WebSearch: latexmk error explanation` | エラー文と一緒にクエリすると精度が上がる |
-
----
-
-## トラブルシューティング
-
-- **API キーエラー**: `GEMINI_API_KEY` が設定されているか、レート制限に達していないか確認する  
-- **結果が古い**: クエリに年号や「latest」を付ける  
-- **期待と違う結果**: 目的・出力形式（例: *「LaTeX longtable example」*）を明記する  
-- **ネットワーク失敗**: プロキシ設定や VPN の状態を確認する
-
----
-
-## 次のアクション
-
-1. 取得した情報を `workbench/scripts/` でスクリプト化して再現性を確保  
-2. `utility/check_env.py` を再度実行し、設定変更が整合しているか確認  
-3. 問題が解決したらドキュメント（README やセクションファイル）に反映し、チームと共有する  
-4. 共有ルールを更新する場合は `python sharing/ai-driven-coding.py` を実行し、`sharing/ai-driven-coding.md` を再生成する
-
-Gemini CLI を活用して最新情報を収集し、LaTeX ドキュメント作成の品質と速度を向上させましょう。
+- Codex 向けの共有指示は `AGENTS.md` を正本とする。
+- Claude Code 向けの共有指示は `CLAUDE.md` と `.claude/settings.json` を正本とする。
+- リポジトリ全体の背景やセットアップ手順は `README.md` を参照する。

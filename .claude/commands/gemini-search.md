@@ -1,19 +1,23 @@
 # Gemini Search Command
 
-Use this command when the issue requires additional web context that is not
-already covered by the repository documentation. Always review the results and
-summarise key findings inside the issue comment or pull request thread.
+Claude Code から Web 検索が必要なときは、原則として Gemini CLI を次の形式で使います。
 
-```
-/claude suggest
-  tool: gemini-search
-  prompt: |
-    Summarise the latest information about <topic>. Focus on details relevant to
-    LaTeX tooling and AI-driven coding workflows. Return bullet points with
-    citations.
+```bash
+gemini --prompt "WebSearch: <query>"
 ```
 
-Tips:
-- Confirm whether relevant information already exists in `ai-driven-coding.md`.
-- Prefer vendor documentation and official announcements over blogs.
-- Store any follow-up notes in `plan/` or `results/` if they are long-lived.
+## 方針
+
+- 実行前に `python utility/check_env.py` を実行する。
+- ローカル開発の依存関係の正本は `environment.yml`。`requirements.txt` は主に CI / 互換用途として扱う。
+- 変化しやすい情報は、回答直前に検索し直す。
+- 公式ドキュメントと一次情報を優先する。
+- 検索結果を回答に使うときは、可能な範囲で出典 URL を含める。
+
+## 例
+
+```bash
+gemini --prompt "WebSearch: OpenAI API documentation responses api"
+gemini --prompt "WebSearch: GitHub Actions reusable workflows docs"
+gemini --prompt "WebSearch: Cursor project rules mdc docs"
+```

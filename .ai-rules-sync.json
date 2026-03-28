@@ -1,0 +1,19 @@
+{
+  "managed_paths": [
+    ".claude",
+    ".codex",
+    ".cursor",
+    ".vscode",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".github"
+  ],
+  "source_repo": "/home/keitakiuchi/0_projects/template-vibe-coding",
+  "source_revision": "333dc9ab27b91929bd6a526925fb63a428d7ffe5",
+  "synced_at": "2026-03-28T07:16:44.053049+00:00",
+  "notes": [
+    ".github is included in managed paths because --include-github was specified.",
+    "Local/runtime files such as .claude/settings.local.json and .codex/sessions are excluded."
+  ]
+}

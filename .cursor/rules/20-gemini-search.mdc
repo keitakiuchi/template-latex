@@ -1,0 +1,11 @@
+---
+description: Use Gemini CLI for web research in Cursor sessions and include source URLs.
+alwaysApply: false
+---
+
+# Gemini Search
+
+- Cursor セッションで Web 検索が必要な場合は、原則として `gemini --prompt "WebSearch: <query>"` を使う。
+- 技術情報は公式ドキュメントと一次情報を優先する。
+- 回答や調査メモには、可能な範囲で出典 URL を含める。
+- バージョン、モデル名、料金、規約、ニュースなど変わりやすい情報は、回答直前に再確認する。

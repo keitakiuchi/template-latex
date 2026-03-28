@@ -1,0 +1,21 @@
+---
+description: Rules for editing AI tool configuration and rule files in this repository.
+globs:
+  - "AGENTS.md"
+  - "CLAUDE.md"
+  - "GEMINI.md"
+  - "README.md"
+  - ".cursor/**/*.mdc"
+  - ".claude/**/*.md"
+  - ".claude/settings.json"
+  - ".codex/**/*.toml"
+  - ".github/workflows/**/*.yml"
+alwaysApply: false
+---
+
+# AI Config Files
+
+- 共有ルールファイルは短く保ち、一般的な教科書的説明よりも、このリポジトリ固有の運用ルールを優先する。
+- 役割分担を崩さない。`AGENTS.md` は Codex/AGENTS 系、`CLAUDE.md` と `.claude/settings.json` は Claude Code、`GEMINI.md` は Gemini CLI、`.cursor/rules/*.mdc` は Cursor の正本として扱う。
+- あるツール向けのファイルを更新したら、README のファイル名や責務説明がズレていないかも確認する。
+- 公式設定と互換用/legacy ファイルは文面で明確に区別する。

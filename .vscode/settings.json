@@ -1,106 +1,43 @@
 {
-    // ---------- ビルドレシピ ----------
-    "latex-workshop.latex.recipes": [
-        {
-            "name": "latexmk (lualatex)",
-            "tools": [
-                "latexmk-lua"
-            ]
-        },
-        {
-            "name": "latexmk (lualatex) - Clean",
-            "tools": [
-                "latexmk-lua-clean"
-            ]
-        }
-    ],
-    "latex-workshop.latex.tools": [
-        {
-            "name": "latexmk-lua",
-            "command": "latexmk",
-            "args": [
-                "-lualatex",
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-gg",
-                "-outdir=temp",
-                "%DOC%"
-            ]
-        },
-        {
-            "name": "latexmk-lua-clean",
-            "command": "latexmk",
-            "args": [
-                "-lualatex",
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-gg",
-                "-outdir=temp",
-                "-C",
-                "%DOC%"
-            ]
-        }
-    ],
-    // ---------- 出力ディレクトリ ----------
-    "latex-workshop.latex.outDir": "%DIR%/temp",
-    // ---------- ビューア ----------
-    "latex-workshop.view.pdf.viewer": "tab",
-    // ---------- ビルド後の掃除 ----------
-    "latex-workshop.latex.autoClean.run": "onBuilt",
-    "latex-workshop.latex.clean.fileTypes": [
-        "*.aux",
-        "*.bbl",
-        "*.bcf",
-        "*.blg",
-        "*.idx",
-        "*.ind",
-        "*.lof",
-        "*.lot",
-        "*.out",
-        "*.toc",
-        "*.acn",
-        "*.acr",
-        "*.alg",
-        "*.glg",
-        "*.glo",
-        "*.gls",
-        "*.fls",
-        "*.log",
-        "*.fdb_latexmk",
-        "*.snm",
-        "*.nav",
-        "*.dvi",
-        "*.run.xml"
-    ],
-    // ---------- ルートファイル検出 ----------
-    "latex-workshop.latex.rootFile.useSubFile": true,
-    // ---------- エディタ設定 ----------
     "editor.formatOnSave": true,
-    "[latex]": {
-        "editor.defaultFormatter": "James-Yu.latex-workshop",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.exclude": {
+        "**/.cache": true,
+        "**/.conda": true,
+        "**/__pycache__": true,
+        "**/workbench/tmp": true
+    },
+    "search.exclude": {
+        "**/.cache": true,
+        "**/.conda": true,
+        "**/__pycache__": true,
+        "**/workbench/tmp": true
+    },
+    "files.watcherExclude": {
+        "**/.cache/**": true,
+        "**/.conda/**": true,
+        "**/__pycache__/**": true,
+        "**/workbench/tmp/**": true
+    },
+    "[yaml]": {
         "editor.wordWrap": "on"
     },
     "terminal.integrated.allowChords": true,
     "terminal.integrated.autoApproveCommands": [
         "cd",
         "ls",
+        "pwd",
         "find",
-        "./scripts/02_compile.sh",
-        "rm -rf",
-        "mkdir -p",
-        "git add",
-        "git commit"
+        "git status",
+        "git diff"
     ],
     "cursor.terminal.autoApproveCommands": [
         "cd",
         "ls",
+        "pwd",
         "find",
-        "./scripts/02_compile.sh",
-        "rm -rf",
-        "mkdir -p",
-        "git add",
-        "git commit"
+        "git status",
+        "git diff"
     ]
 }

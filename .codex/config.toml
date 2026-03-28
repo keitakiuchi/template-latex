@@ -1,33 +1,27 @@
-# Codex CLI/IDE configuration for the template-latex project.
-#  - Keeps default interactions in Japanese to match the repository docs.
-#  - Mirrors the local harness defaults (workspace-write sandbox with network access).
+# Project-scoped Codex configuration.
+# Language, coding style, and project workflow live in the repository root AGENTS.md.
 
-model = "gpt-5"
-model_reasoning_effort = "high"
-approval_policy = "on-failure"
+# Safe interactive defaults for day-to-day development.
+approval_policy = "on-request"
 sandbox_mode = "workspace-write"
+# Built-in Codex web search is separate from shell network access.
+# Keep this enabled for assistant-side web research while leaving shell
+# outbound network disabled by default.
+web_search = "live"
 
-[codex]
-response_language = "ja"
-welcome_message = "template-latex リポジトリ用 Codex セッションです。作業前に python utility/start.py を実行して環境を確認してください。"
-repo_root = "${workspace_root}"
+# Optional explicit model pinning.
+# model = "gpt-5.4"
+# model_reasoning_effort = "high"
 
 [sandbox_workspace_write]
-network_access = true
+# Keep shell outbound network access opt-in by default.
+network_access = false
 
-[profiles.web_search]
-approval_policy = "on-failure"
+[profiles.networked]
+# Use when shell commands need outbound network access.
+approval_policy = "on-request"
 sandbox_mode = "workspace-write"
+web_search = "live"
+
+[profiles.networked.sandbox_workspace_write]
 network_access = true
-
-[paths]
-plan_dir = "plan"
-results_dir = "results"
-workbench_dir = "workbench"
-figures_dir = "figures"
-tex_dir = "tex"
-
-# Example profile for temporarily locking the workspace.
-#[profiles.readonly]
-#approval_policy = "never"
-#sandbox_mode = "read-only"

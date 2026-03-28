@@ -1,0 +1,15 @@
+---
+description: Repository-wide Cursor workflow and safety rules for this template repository.
+alwaysApply: true
+---
+
+# Core Workflow
+
+- ユーザー向けの回答、進捗報告、要約は常に日本語で行う。
+- このリポジトリはテンプレート本体なので、`src/`、`tests/`、`config/` が未作成でも不整合ではない。実際のコードを追加するときだけ作成する。
+- プロジェクトコードを実行する前に `python utility/check_env.py` を実行する。
+- ローカル開発の依存関係の正本は `environment.yml`。`requirements.txt` は主に GitHub Actions / 互換用途として扱う。
+- 変更は小さく保ち、確認は最小の対象から始める。
+- アプリ本体のコードやテスト本体をリポジトリ直下に増やさない。
+- 破壊的操作、ネットワークアクセス、依存関係変更、CI/設定変更、広範な多ファイル変更の前にはユーザー確認を取る。
+- `.env`、鍵、トークン、認証情報は出力・要約・コミットしない。

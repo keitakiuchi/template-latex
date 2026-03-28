@@ -40,11 +40,13 @@
 #### ルールファイルの構成
 ```
 .cursor/rules/           # Cursor IDE用ルール
-├─ ai_driven_coding.md   # AI駆動コーディングの総合ガイド
-└─ latex_development.md  # LaTeX開発専用ルール
+├─ 00-core-workflow.mdc   # リポジトリ共通の基本ワークフロー
+├─ 10-ai-config-files.mdc # AI 設定ファイル編集時のルール
+└─ 20-gemini-search.mdc   # Gemini 検索の補助ルール
 
 .claude/commands/        # Claude AI用コマンド
-└─ gemini-search.md      # Gemini検索機能の使用方法
+├─ gemini-search.md      # Gemini検索機能の使用方法
+└─ review-changes.md     # 変更差分レビュー用コマンド
 
 ルートディレクトリのルールファイル
 ├─ AGENTS.md             # AIエージェント統合ガイド
@@ -72,24 +74,20 @@ python utility/check_env.py
 ```
 
 ### クイックスタート
-**🚀 自動スタート機能**: 「スタート」と入力すると、AIアシスタントが自動的に`python utility/start.py`を実行し
-、仮想環境の自動アクティベートと環境チェックを実行して処理環境を整えます：
+`utility/start.py` と `utility/start.sh` は、ディレクトリ初期化と `utility/check_env.py` の実行をまとめた bootstrap です。仮想環境の作成やアクティベートは自動ではないため、必要に応じて先に `conda activate latex-template` を実行してください。
 
 #### 最も簡単な方法
 ```bash
-# AIアシスタントに「スタート」と入力するだけ
-# 自動的に以下が実行されます：
-# 1. latex-template 環境の自動アクティベート
-# 2. 環境チェックの実行
+# ディレクトリ初期化と環境チェックをまとめて実行
 python utility/start.py
 ```
 
 #### 方法1: スタートスクリプトを使用（推奨）
 ```bash
-# Pythonスクリプト版（推奨）- 仮想環境自動アクティベート機能付き
+# Pythonスクリプト版（推奨）
 python utility/start.py
 
-# シェルスクリプト版 - 仮想環境自動アクティベート機能付き
+# シェルスクリプト版
 ./utility/start.sh
 ```
 
@@ -129,8 +127,9 @@ gemini --prompt "WebSearch: OpenAI API documentation"
 
 #### Cursor IDE
 - `.cursor/rules/` ディレクトリのルールファイルを参照
-  - `ai_driven_coding.md` - AI駆動コーディングのルールとベストプラクティス
-  - `latex_development.md` - LaTeX開発のルールとファイル構成
+  - `00-core-workflow.mdc` - 基本ワークフローと安全ルール
+  - `10-ai-config-files.mdc` - AI設定ファイル編集時の注意点
+  - `20-gemini-search.mdc` - Gemini検索の使い方
 - AI駆動開発のベストプラクティスに従った開発
 
 #### Claude AI アシスタント
@@ -144,19 +143,32 @@ gemini --prompt "WebSearch: OpenAI API documentation"
 template-latex/
 ├─ .claude/               ← Claude 設定
 │   ├─ claude.yml
-│   └─ commands/
-│       └─ gemini-search.md
+│   ├─ commands/
+│   │   ├─ gemini-search.md
+│   │   └─ review-changes.md
+│   ├─ agents/
+│   │   ├─ code-reviewer.md
+│   │   └─ security-auditor.md
+│   ├─ hooks/
+│   │   └─ bash-firewall.sh
+│   ├─ rules/
+│   │   ├─ claude-code-mapping.md
+│   │   ├─ development-workflow.md
+│   │   ├─ project-structure.md
+│   │   └─ security.md
+│   └─ settings.json
 ├─ .codex/                ← Codex CLI/IDE 設定
 │   └─ config.toml
 ├─ .cursor/               ← Cursor ルール
 │   └─ rules/
-│       ├─ latex_development.md
-│       └─ cursorrules.md
+│       ├─ 00-core-workflow.mdc
+│       ├─ 10-ai-config-files.mdc
+│       └─ 20-gemini-search.mdc
 ├─ .github/
 │   └─ workflows/        ← CI / AI ワークフロー
 │       ├─ claude.yml
 │       ├─ codex-tdd.yml
-│       └─ latex.yml
+│       └─ reusable-python-checks.yml
 ├─ .vscode/              ← VS Code／Cursor 設定
 │   ├─ settings.json
 │   └─ tasks.json
@@ -172,8 +184,12 @@ template-latex/
 │   ├─ ai-driven-coding.py
 │   └─ ai-driven-coding.md
 ├─ scripts/              ← ビルド / 変換スクリプト
-│   ├─ compile.sh
-│   └─ tex2docx.sh
+│   ├─ 01_install_missing_packages.sh
+│   ├─ 02_compile.sh
+│   ├─ 03_tex2docx.sh
+│   ├─ 04_extract_tables.sh
+│   ├─ 05_cleanup.sh
+│   └─ compile.sh
 ├─ tex/                  ← LaTeX ソース一式
 │   ├─ example.tex       ← メインファイル例（\input で各章を読み込む）
 │   ├─ title.tex         ← タイトルページ設定
@@ -214,9 +230,9 @@ template-latex/
 ### 初期セットアップ
 
 ```bash
-python utility/start.py --install
+python utility/start.py
 # もしくは
-INSTALL_DEPS=true ./utility/start.sh
+./utility/start.sh
 ```
 
 - `utility/check_env.py` がすべて `[OK]` を返すことを確認します。
@@ -300,6 +316,10 @@ LaTeXコンパイル時に「パッケージが見つからない」エラーが
 ./scripts/02_compile.sh example --clean --clean-temp
 ```
 
+> **補足**:
+> - `--clean-temp` は `tex/temp/` 配下のファイルとサブディレクトリを削除します。
+> - 最終成果物の `build/pdf/` と `tex/bib/` は保持されます。
+
 #### クリーンアップスクリプト
 
 ビルドファイルや一時ファイルを整理するための専用スクリプトも用意しています：
@@ -356,10 +376,15 @@ LaTeXコンパイル時に「パッケージが見つからない」エラーが
 > - 抽出されたテーブルは`build/csv/`ディレクトリにCSV形式で保存
 > - 各テーブルは`ファイル名_table_01.csv`、`ファイル名_table_02.csv`の形式で保存
 > - 日本語テキストや数式記号（`±`、`≤`、`≥`、`≠`など）を適切に処理
+> - 数値セルは Excel 向けの apostrophe プレフィックスを付けず、通常の数値文字列として出力
+
+> **互換性メモ**:
+> - 以前の CSV を Excel 前提で使っていた場合、数値列の自動解釈が変わる可能性があります。
+> - Excel で列型を固定したい場合は、インポート時に列形式を明示してください。
 
 ### カスタマイズ
 
-- `tex/sections/preamble.tex`: パッケージや設定を追加・変更
+- `tex/preamble.tex`: パッケージや設定を追加・変更
 - `tex/example.tex`: 文書のタイトル、著者名などを変更
 - `tex/title.tex`: タイトルページの設定を変更
 - `latexmkrc`: コンパイル設定を変更
@@ -606,6 +631,3 @@ fi
 ---
 
 これで **外付け有無に応じた自動切り替え** が実現できます。
-
-
-
