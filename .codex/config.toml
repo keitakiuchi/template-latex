@@ -4,9 +4,6 @@
 # Safe interactive defaults for day-to-day development.
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
-# Built-in Codex web search is separate from shell network access.
-# Keep this enabled for assistant-side web research while leaving shell
-# outbound network disabled by default.
 web_search = "live"
 
 # Optional explicit model pinning.
@@ -14,7 +11,7 @@ web_search = "live"
 # model_reasoning_effort = "high"
 
 [sandbox_workspace_write]
-# Keep shell outbound network access opt-in by default.
+# Keep shell/network access opt-in by default.
 network_access = false
 
 [profiles.networked]

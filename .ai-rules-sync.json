@@ -6,14 +6,13 @@
     ".vscode",
     "AGENTS.md",
     "CLAUDE.md",
-    "GEMINI.md",
-    ".github"
+    "GEMINI.md"
   ],
   "source_repo": "/home/keitakiuchi/0_projects/template-vibe-coding",
-  "source_revision": "333dc9ab27b91929bd6a526925fb63a428d7ffe5",
-  "synced_at": "2026-03-28T07:16:44.053049+00:00",
+  "source_revision": "c23e57dbfe69c89a8457717ff62b77f2a50925c4",
+  "synced_at": "2026-03-30T01:23:29.784779+00:00",
   "notes": [
-    ".github is included in managed paths because --include-github was specified.",
+    ".github is excluded by default and only synced when --include-github is specified.",
     "Local/runtime files such as .claude/settings.local.json and .codex/sessions are excluded."
   ]
 }
