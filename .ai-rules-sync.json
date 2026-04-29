@@ -6,13 +6,16 @@
     ".vscode",
     "AGENTS.md",
     "CLAUDE.md",
+    "DESIGN.md",
     "GEMINI.md"
   ],
   "source_repo": "/home/keitakiuchi/0_projects/template-vibe-coding",
-  "source_revision": "3e4f8738aea3322da515e6a217b8a5f8305024d4",
-  "synced_at": "2026-04-01T04:26:45.826813+00:00",
+  "source_revision": "6f64a4a5adaf2f7436a9f2f83766af784173dd83",
+  "synced_at": "2026-04-29T22:54:18.092703+00:00",
   "notes": [
     ".github is excluded by default and only synced when --include-github is specified.",
-    "Local/runtime files such as .claude/settings.local.json and .codex/sessions are excluded."
+    "Local/runtime files such as .claude/settings.local.json and .codex/sessions are excluded.",
+    "Managed root Markdown files are overwritten unless --merge-root-markdown is specified.",
+    "Managed directories are replaced unless --merge-directories is specified."
   ]
 }
