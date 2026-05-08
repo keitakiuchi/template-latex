@@ -1,12 +1,14 @@
 ---
 name: humanizer-ja
-description: "AIくさい日本語を、人間が書いた文章に変換するClaude Codeスキル。"
+description: "AIくさい日本語を、人間が書いた文章に変換するClaude Codeスキル。日本語テキスト専用。英語テキストには humanizer を使う。"
 version: "1.0.0"
 author: SuguruKun_ai
 license: MIT
 ---
 
 # Humanizer JA — AIくさい日本語を人間の文章に変える
+
+このリポジトリでは日本語テキスト専用。英語テキストは `humanizer` を使う。
 
 AI（Claude、ChatGPT、Gemini等）が生成した日本語テキストから「AIっぽさ」を除去し、人間が書いたように読める文章に書き換えるスキル。
 

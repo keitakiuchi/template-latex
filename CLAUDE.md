@@ -11,6 +11,8 @@
 - ローカル開発の依存関係の正本は `environment.yml`。`requirements.txt` は主に GitHub Actions / 互換用途として扱う。
 - Claude Code の公式な共有設定は `CLAUDE.md` と `.claude/settings.json`。`.claude/claude.yml` は既存互換ファイルとして扱う。
 - 既存の skill や command で片付く作業は、長いアドホック指示よりも `.claude/skills/` と `.claude/commands/` を優先する。
+- UI、ダッシュボード、チャート、表、図、paper-ready figure を作成・修正するときは、`DESIGN.md` を正本のデザイン規約として読む。
+- `DESIGN.md` の YAML front matter は design tokens の正確な値、Markdown 本文は適用判断と例外判断として扱う。
 
 ## モジュール化された補助ルール
 

@@ -6,7 +6,7 @@
 - Keep changes small and verify behavior with the narrowest useful test command first.
 - Do not silently skip or partially execute heavy processing. If a task is too heavy to run reasonably in-session, ask the user to run the required command or steps instead.
 - For long-running processing, prefer implementations that emit visible console progress so the user can tell the work is advancing.
-- If a required package or dependency is missing, do not switch to a substitute package or alternate implementation without user approval.
+- If a required package or dependency is missing, do not avoid using it by switching to a substitute package or alternate implementation on your own. First try to install it according to `environment.yml`, `README.md`, or the tool's standard installation path. If permissions, network access, or execution-environment constraints prevent you from installing it yourself, ask the user to install it and provide the exact package name and recommended command. Use a substitute package or alternate implementation only after explicit user approval.
 - Do not suppress warnings on your own. Ask for user approval before silencing them.
 - Do not add fallbacks on your own. Ask for user approval before introducing one.
 - In LLM-related implementations, do not add classical NLP-based rule implementations unless the user explicitly approves that design.
