@@ -1,0 +1,4 @@
+interface:
+  display_name: "Academic English Writing"
+  short_description: "Polish manuscript English for journal articles"
+  default_prompt: "Use $academic-manuscript-english-writing to polish manuscript English for a journal submission."
