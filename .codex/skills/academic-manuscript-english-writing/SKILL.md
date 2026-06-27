@@ -1,6 +1,6 @@
 ---
 name: academic-manuscript-english-writing
-description: Draft, revise, and polish academic manuscript English for journal articles, abstracts, tables, figures, cover letters, and reviewer responses. Use when Codex needs to write or edit scholarly English for clarity, concision, formal tone, medical/scientific usage, abbreviation handling, balanced comparisons, article choice, compound modifiers, collocations, or prose based on professional English-editing feedback.
+description: Draft, revise, and polish academic manuscript English for journal articles, abstracts, tables, figures, cover letters, and reviewer responses. Use when Codex needs to write or edit scholarly English for clarity, concision, formal tone, medical/scientific usage, abbreviation handling, balanced comparisons, article choice, compound modifiers, standard ethics/privacy or statistical terminology, collocations, or prose based on professional English-editing feedback.
 ---
 
 # Write Academic English
@@ -18,13 +18,14 @@ description: Draft, revise, and polish academic manuscript English for journal a
 - Prefer formal academic verbs and terms. Replace casual wording such as "give" with field-appropriate alternatives such as "administer" for dosage or interventions.
 - Remove redundant initial articles from titles and headings when they add no meaning.
 - Express ideas concisely. Replace wordy phrases with compact alternatives, and prefer direct verbs over nominalizations.
-- Hyphenate compound adjectives before nouns when the phrase jointly modifies the noun, such as "long-term effects" or "middle-aged adults."
+- Hyphenate compound adjectives before nouns when the phrase jointly modifies the noun, such as "long-term effects," "low-impact exercise program," and "middle-aged adults."
 - Define abbreviations at first use separately in the abstract, main text, and each figure/table legend when they appear there.
 - Use natural scientific collocations. If a phrase sounds unnatural, replace it with a standard pairing, such as "arrived at the same conclusion."
 - Place modifiers close to what they modify. Avoid separating adverbs or phrases from their targets in ways that create ambiguity.
-- Keep comparisons structurally balanced. Use "that for" or "those for" when comparing quantities across groups.
+- Keep comparisons structurally balanced. Repeat the relevant preposition or use "that/those" with the preposition when comparing quantities across groups, such as "higher than that for sample B."
 - Avoid contractions in academic prose. Use "do not," "cannot," and similar full forms.
 - Reduce repeated nouns or articles in series when doing so preserves clarity.
+- Use standard terminology in context: "personal information" in ethics and privacy literature and "80% power" for statistical power.
 - Use "respectively" only when two or more parallel lists have the same number of elements and the mapping is unambiguous.
 - In American English, use "that" for essential information and "which" for nonessential information.
 
