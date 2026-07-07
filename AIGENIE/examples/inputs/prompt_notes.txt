@@ -1,0 +1,7 @@
+Generate all item statements in natural Japanese.
+Items must be self-report Likert-type statements for the target respondents.
+Avoid literal translation from English.
+Avoid double-barreled items and avoid asking about two ideas in one statement.
+Use plain Japanese suitable for a web questionnaire.
+Do not include response options or numbering in the item statement.
+Keep each item specific to the type and attribute definitions supplied in the CSV files.

@@ -1,0 +1,5 @@
+generate,generation_group,type,attribute,n_candidates,generation_group_definition_en
+TRUE,resource,resource,social_support,2,Positive work conditions that help respondents accomplish work and maintain well-being
+TRUE,resource,resource,autonomy,2,Positive work conditions that help respondents accomplish work and maintain well-being
+TRUE,stressor,stressor,workload,2,Work demands or conditions that create strain or interfere with well-being
+TRUE,stressor,stressor,recovery_difficulty,2,Work demands or conditions that create strain or interfere with well-being

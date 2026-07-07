@@ -1,0 +1,5 @@
+type,attribute,type_label_ja,attribute_label_ja,type_definition_en,attribute_definition_en,recommended_candidate_count
+resource,social_support,資源,支援,Positive work conditions that help respondents accomplish work and maintain well-being,Perceived availability of support from others when needed,2
+resource,autonomy,資源,裁量,Positive work conditions that help respondents accomplish work and maintain well-being,Perceived discretion over how to organize and carry out work,2
+stressor,workload,ストレッサー,仕事量,Work demands or conditions that create strain or interfere with well-being,Perceived excessive amount pace or time pressure of work,2
+stressor,recovery_difficulty,ストレッサー,回復困難,Work demands or conditions that create strain or interfere with well-being,Difficulty mentally disengaging or recovering from work demands,2

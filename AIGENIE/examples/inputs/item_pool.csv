@@ -1,0 +1,5 @@
+ID,statement,type,attribute,origin,type_label_ja,attribute_label_ja
+SAMPLE_R1,私は仕事で必要な支援を必要なときに得られる。,resource,social_support,template_sample,資源,支援
+SAMPLE_R2,私は自分の仕事の進め方をある程度自分で決められる。,resource,autonomy,template_sample,資源,裁量
+SAMPLE_S1,仕事の量が多すぎて、時間内に終えるのが難しい。,stressor,workload,template_sample,ストレッサー,仕事量
+SAMPLE_S2,仕事のことで気持ちが休まらないことがある。,stressor,recovery_difficulty,template_sample,ストレッサー,回復困難
