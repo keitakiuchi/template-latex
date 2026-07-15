@@ -1,4 +1,4 @@
 interface:
   display_name: "Academic English Writing"
-  short_description: "Polish manuscript English for journal articles"
-  default_prompt: "Use $academic-manuscript-english-writing to polish manuscript English for a journal submission."
+  short_description: "Draft, self-proofread, and refine academic English"
+  default_prompt: "Use $academic-manuscript-english-writing to structure, draft, self-proofread, or learn reusable rules from professionally edited academic manuscripts while preserving scientific meaning and claim boundaries."
