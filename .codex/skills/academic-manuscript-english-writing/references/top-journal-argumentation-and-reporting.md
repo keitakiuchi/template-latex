@@ -7,6 +7,7 @@ Use this reference with `genre-writing-guides.md` and `editor-feedback-checklist
 - Scope and Authority
 - Establish the Writing Contract
 - Calibrate Claims to the Research-Question Type
+- Calibrate Claims in Both Directions
 - Build the Manuscript Spine
 - Write for a Broad Scholarly Audience
 - Assign One Function to Each Section
@@ -30,21 +31,25 @@ Before substantial drafting or revision, extract the following from the supplied
 
 1. Target genre, journal or audience, word limit, required structure, and English variety.
 2. Primary research question and, if present, secondary or exploratory questions.
-3. Research-question type and the corresponding ceiling on claims.
+3. Research-question type and the corresponding claim ceilings and floors.
 4. What prior work establishes and what remains unresolved.
 5. The study's theoretical, methodological, or empirical contribution.
-6. The scope beyond which the manuscript must not generalize.
+6. The population, setting, mode, time frame, and intended use to which each major claim applies.
 7. The authoritative sources for methods, statistics, terminology, citations, and declarations.
 8. The distinction among prespecified, secondary, sensitivity, and exploratory analyses.
 
-Reduce the core argument to four internal one-sentence statements:
+Reduce the core argument to three internal one-sentence statements and a
+proportionate claim map:
 
 - `Question`: What problem does the study answer?
 - `Gap`: What is known, and what remains inadequately explained or tested?
 - `Contribution`: How does this study update understanding rather than merely add a result?
-- `Boundary`: What can and cannot be concluded from the design and evidence?
+- `Claim map`: For each major claim, what exact object is supported, mixed, unsupported, or not evaluated; what are its ceiling and floor; and which limitations actually constrain it?
 
-If the supplied material does not support one of these statements, mark it as an unresolved source gap. Do not infer a stronger statement merely because it produces a smoother narrative.
+Follow `claim-calibration-and-rhetorical-risk.md` when building the claim map.
+If the supplied material does not support one of these statements or fields,
+mark it as an unresolved source gap. Do not infer a stronger or weaker statement
+merely because it produces a smoother or more cautious narrative.
 
 ## Calibrate Claims to the Research-Question Type
 
@@ -62,9 +67,28 @@ Use the study's stated objective and design, not the statistical technique alone
 
 Treat an “explanatory” label conservatively when the supplied design supports association but not causal identification. Preserve modal verbs, caveats, assumptions, and alternative explanations across the title, abstract, main text, tables, and figures.
 
+## Calibrate Claims in Both Directions
+
+- Enforce a source-supported claim ceiling and claim floor for every major
+  conclusion.
+- Treat a global downgrade as a substantive meaning change when the evidence
+  supports a more specific positive conclusion.
+- Propagate a limitation only to claims connected by a plausible, stated
+  mechanism. For example, follow-up attrition primarily constrains longitudinal
+  estimates, and measurement error primarily constrains individual change
+  interpretation.
+- Distinguish target population, source population, sampling frame, analytic
+  sample, and intended-use population before writing about generalizability.
+- Distinguish the absence of evidence for a broader use from evidence against
+  the result or use directly evaluated.
+- For studies of measurement properties, prediction, classification, or other
+  multi-property evaluations, report the status of each property or intended use
+  rather than issuing one maturity verdict for the whole study.
+
 ## Build the Manuscript Spine
 
-Use the four writing-contract statements to create one continuous logic:
+Use the three writing-contract statements and claim map to create one
+continuous logic:
 
 1. Establish an important phenomenon or problem.
 2. Synthesize what existing evidence establishes.
@@ -72,7 +96,8 @@ Use the four writing-contract statements to create one continuous logic:
 4. Explain how the present study addresses that gap.
 5. Report methods capable of answering the stated question.
 6. Present results in the order needed to answer that question.
-7. Explain how the findings update understanding within the stated boundary.
+7. Explain how the findings update understanding within the claim-specific
+   populations, contexts, and uses recorded in the claim map.
 
 Keep the central question singular or very limited in number. Identify one primary analytical line when the source materials do so, and label other analyses according to their documented status. Do not promote a secondary or exploratory result to the manuscript's main contribution merely because it is more striking.
 
@@ -84,7 +109,7 @@ Frame the contribution as an update to understanding. Specify what the findings 
 - Explain why the phenomenon or theoretical problem matters before introducing dense field-specific detail.
 - Define indispensable specialist terms and abbreviations at the required first-use locations; remove those that do not earn their cognitive cost.
 - Use informative topic sentences and explicit logical transitions when an inferential step would otherwise remain implicit.
-- Connect a local empirical result to the broader theoretical question only within the study's claim boundary.
+- Connect a local empirical result to the broader theoretical question only within the applicable claim-map boundary.
 - Keep technical detail in the main text when readers need it to judge the claim. Move it to a supplement only when the journal permits this and the main text clearly signposts it.
 
 ## Assign One Function to Each Section
@@ -152,7 +177,9 @@ Build the Discussion in the following sequence when compatible with the journal:
 2. Interpret the main pattern of findings rather than repeating each result.
 3. Explain how the findings clarify, extend, revise, or limit the theoretical account.
 4. State a small number of evidence-bounded practical or methodological implications.
-5. Explain limitations that materially constrain interpretation and identify proportionate next steps.
+5. Explain limitations that materially constrain named claims, state their
+   mechanisms, preserve unaffected findings, and identify proportionate next
+   steps.
 
 Avoid three common failures:
 
@@ -220,11 +247,20 @@ Run a cross-section alignment audit:
 | Primary outcome, exposure, intervention, or predictors | abstract, Methods, Results, tables, figures |
 | Analysis status | Methods, Results, abstract, Discussion |
 | Numerical results | abstract, Results, tables, figures, supplement |
-| Claim strength and uncertainty | title, abstract conclusion, Results, Discussion, cover letter |
+| Claim-specific strength, uncertainty, and use boundary | title, abstract conclusion, Results, Discussion, conclusion, cover letter |
 | Terminology and abbreviations | all sections, tables, figures, supplement |
 | Transparency declarations | Methods, end matter, submission materials |
 
-Check that each major method has a corresponding result, each Discussion claim traces to reported evidence, and each major limitation has a visible consequence for interpretation. Ensure that technical details moved to a supplement remain signposted in the main text.
+Check that each major method has a corresponding result and each Discussion
+claim traces to reported evidence. Give each major limitation a visible but
+proportionate consequence for the claim it can affect, and preserve the
+interpretation of unaffected findings. Ensure that technical details moved to a
+supplement remain signposted in the main text.
+
+Run the EIC Quote Test in `claim-calibration-and-rhetorical-risk.md` on the
+title, abstract conclusion, final limitations paragraph, final conclusion, and
+cover letter. Check for a scientifically accurate but cumulatively
+self-downgrading editorial packet.
 
 For reviewer responses, distinguish a substantive change from a clarification of work already performed. State the verified change and location precisely. Do not imply that an analysis was prespecified or newly completed unless the record supports that statement.
 
@@ -232,7 +268,7 @@ For reviewer responses, distinguish a substantive change from a clarification of
 
 Before returning substantial drafted or revised prose, confirm that:
 
-- The Question, Gap, Contribution, and Boundary can each be stated in one source-supported sentence.
+- The Question, Gap, and Contribution can each be stated in one source-supported sentence, and the claim map records the major claim objects, ceilings, floors, and limitation propagation targets.
 - One central logical line connects the Introduction, Methods, Results, and Discussion.
 - The title and abstract represent the actual question type and study design.
 - The Introduction explains why the gap matters, not merely that a gap exists.
@@ -240,9 +276,14 @@ Before returning substantial drafted or revised prose, confirm that:
 - Literature-review paragraphs synthesize evidence and advance the manuscript's argument.
 - Methods justify the claim's evidentiary basis without invented details.
 - Results follow the research-question hierarchy and preserve uncertainty, null findings, and analysis status.
-- The Discussion interprets rather than rehashes and stays within the claim ceiling.
+- The Discussion interprets rather than rehashes and stays between each
+  supported claim floor and ceiling.
 - Confirmatory, secondary, sensitivity, and exploratory work are not conflated.
 - Numbers, labels, terminology, citations, tables, figures, and supplement pointers remain aligned.
 - Transparency and reporting statements are supported by the supplied record.
+- No broad `findings`, `evidence`, `validity`, or `generalizability` statement
+  converts a local limitation into global invalidity.
+- Global maturity verdicts and future-research statements do not make supported
+  present findings appear unfinished.
 - Any missing source information is identified outside the proposed prose rather than silently fabricated.
 - The Final Genre Pass and the checklist's Final Pass are complete.

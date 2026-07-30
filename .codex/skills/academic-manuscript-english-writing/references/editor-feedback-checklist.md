@@ -39,6 +39,16 @@ Apply this checklist under the conditions defined in the `Checklist Policy` of `
 - Preserve modal verbs, negation, and hedging. Treat changes from "may," "could," or "would" to an unqualified assertion as substantive edits, not routine polishing.
 - Distinguish obligation, recommendation, possibility, and capability. Use "must" for a supported requirement, "should" for advice or a normative recommendation, and "may/could" or "can" only for the intended possibility or capability. Clarify vague "need to" wording when its force matters, but do not replace it mechanically with a stronger modal.
 - Preserve the object and boundary of a claim. "Additional evidence would be needed for broader claims" is not equivalent to "additional studies are required to validate these claims."
+- Preserve the supported claim floor as well as the claim ceiling. Treat
+  unsupported understatement, blanket self-downgrading, and the addition of a
+  global maturity verdict as substantive edits.
+- Attach each qualification to the exact result, measurement property,
+  estimand, population quantity, or intended use it constrains. Do not let
+  `the findings`, `the evidence`, `validity`, or `generalizability` silently
+  broaden the object of a limitation.
+- Require an explicit mechanism before propagating a limitation from one
+  analysis, time point, population, or use to another. Preserve unaffected
+  claims in the same passage or claim map.
 - Keep indirect indicators indirect. Do not rewrite flags, screening rules, potential risks, or proxy measures as confirmed events or validated outcomes.
 
 ## Articles, Number, and Construct Scope
@@ -138,11 +148,11 @@ Apply this checklist under the conditions defined in the `Checklist Policy` of `
 
 Use separate passes so that improving fluency does not conceal meaning drift:
 
-1. **Lock meaning:** record the study design, units of analysis, primary claims, direction of key results, modal boundaries, validated terms, and immutable numbers before editing.
+1. **Lock meaning:** record the study design, units of analysis, primary claims, direction of key results, claim ceilings and floors, limitation mechanisms and propagation targets, validated terms, and immutable numbers before editing.
 2. **Edit for native academic prose:** work paragraph by paragraph for purpose, information order, direct verbs, clear subjects, natural collocations, modifier placement, parallel structure, and concision.
-3. **Audit the edits contrastively:** compare each revised sentence with its source. Mark any change to modality, negation, tense function, subject, object, number, unit, comparison group, causal force, or citation scope for explicit verification.
+3. **Audit the edits contrastively:** compare each revised sentence with its source. Mark any change to modality, negation, tense function, subject, object, number, unit, comparison group, causal force, citation scope, claim floor, intended use, or limitation propagation for explicit verification.
 4. **Run manuscript-wide consistency searches:** abbreviations and their first uses; competing spellings and hyphenation; capitalization; labels; quotation marks and dashes; headings; cross-references; tables, figures, supplements, citations, and disclosures.
-5. **Read the clean revision as a new document:** check paragraph progression, antecedents, transition logic, sentence rhythm, and whether titles, abstract, sections, tables, and figures still describe the same study.
+5. **Read the clean revision as a new document:** check paragraph progression, antecedents, transition logic, sentence rhythm, and whether titles, abstract, sections, tables, and figures still describe the same study. Read the title, abstract conclusion, final limitations paragraph, final conclusion, and cover letter together to detect cumulative self-downgrading.
 6. **Complete the Final Pass below:** resolve every verify item or report it rather than silently guessing.
 
 ## Example Transformations
@@ -182,6 +192,9 @@ Use separate passes so that improving fluency does not conceal meaning drift:
 | --- | --- | --- | --- |
 | Lost modality | Edits may alter therapeutic intent. | Edits alter therapeutic intent. | Converts a possibility into a confirmed effect. |
 | Changed claim object | More evidence would be needed for broader claims. | More studies are required to validate these claims. | Recasts a boundary on future claims as doubt about the current findings. |
+| Blanket sampling downgrade | The nonprobability sample does not provide population reference values. | The findings apply only to online panel participants. | Extends a limitation on population quantities and transportability to every within-sample result. |
+| Global psychometric verdict | Structural validity and internal consistency were supported, whereas individual change interpretation was limited by measurement error. | The scale received partial psychometric support. | Replaces property-specific evidence with an ambiguous maturity judgment. |
+| Validation-stage self-downgrade | External validation is needed before extending the intended use. | This is only an initial validation rather than a completed validation. | Makes a boundary on broader use sound like the present evidence is unfinished or invalid. |
 | Logical claim changed to empirical result | Improved fluency does not entail therapeutic improvement. | Improved fluency did not lead to therapeutic improvement. | Changes a general logical distinction into an untested causal result. |
 | Aggregate measure narrowed | Client naturalness was moderate across the scripts. | The client's naturalness was moderate. | Implies one client rather than an aggregate construct. |
 | Construct renamed | Raters identified sustain talk. | Raters identified sustaining talk. | Replaces an established motivational interviewing term. |
@@ -196,17 +209,25 @@ Use separate passes so that improving fluency does not conceal meaning drift:
 Before returning drafted or edited text, or a proofed-file integration, check:
 
 - Scientific meaning is unchanged.
-- No result is overstated beyond the provided data.
+- No result is overstated beyond the provided data or understated below a
+  source-supported claim floor.
 - Abbreviations are defined in each required location.
 - Titles and headings are concise.
 - Tables and figures can stand alone.
 - References, citations, URLs/DOIs, tables, figures, and supplementary references have not been lost during format conversion.
 - Study-specific terminology, construct names, population descriptors, and claim boundaries still match the source manuscript.
+- Every major qualification names the result, measurement property, estimand,
+  population quantity, or intended use that it constrains.
+- Every limitation is propagated only through a stated mechanism, and
+  unaffected claims remain visible.
 - Tense matches the rhetorical function of each statement, and modal verbs, negation, and hedging retain their original scope.
 - Articles, singular/plural forms, and possessives preserve the intended referent and unit of analysis.
 - Every number still modifies the correct unit, group, denominator, time point, and independence status.
 - Methods and Results use the correct acting subject and describe the model, outcome scale, and estimand consistently.
 - Sentences are readable without unnecessary repetition.
+- Global verdict language and future-research statements do not accumulate
+  across the abstract, Discussion, limitations, conclusion, and cover letter
+  into an unsupported impression that the study as a whole is unfinished.
 - Comparative and alternative structures are grammatically balanced and compare like with like.
 - Independent clauses are joined with appropriate punctuation rather than a comma splice.
 - Variant spellings and hyphenation are consistent across the full manuscript.

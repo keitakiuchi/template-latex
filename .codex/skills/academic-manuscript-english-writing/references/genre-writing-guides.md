@@ -41,6 +41,11 @@ Before drafting or substantially revising a document:
 - Use past tense for completed methods and observed results; use present tense for established knowledge, the argument advanced by the manuscript, and what tables or figures show.
 - Separate results from interpretation when the target genre or journal expects that distinction.
 - Preserve calibrated claim strength. Match causal language to causal evidence and associative language to observational evidence.
+- Preserve both the supported claim ceiling and claim floor. Replace a global
+  verdict about `the findings`, `the evidence`, `validity`, or study maturity
+  with claim-specific support and limitations whenever the source permits.
+- Propagate sampling, attrition, measurement, and setting limitations only to
+  the results or uses they can affect through a stated mechanism.
 - Use transitions to clarify logical relationships, not to decorate every paragraph.
 - Maintain section-specific restraint: procedural precision in Methods, factual reporting in Results, and bounded interpretation in Discussion.
 - Preserve citation locations unless moving one is necessary for unambiguous attribution; never imply that a citation supports a different claim merely by repositioning it.
@@ -57,6 +62,10 @@ Before drafting or substantially revising a document:
 - Do not introduce a claim, citation, abbreviation, outcome, or recommendation that does not appear in the manuscript or supplied source material.
 - Define necessary abbreviations independently in the abstract. Remove nonessential abbreviations that save little space.
 - Match the conclusion to the reported results and study design; do not use the abstract to strengthen the paper's claims.
+- Lead the abstract conclusion with the strongest directly supported result,
+  then add only the qualification needed to prevent a likely misuse. Avoid a
+  global verdict such as `preliminary but promising` or `partial psychometric
+  support` when property-specific wording is available.
 - Supply only the requested language. Do not generate a second-language abstract unless the user or venue requests one.
 
 ## Tables and Figures
@@ -85,6 +94,9 @@ Before drafting or substantially revising a document:
 - Identify the manuscript title, article type, target journal, and corresponding author using supplied information.
 - Summarize the research question, main contribution, and journal fit in specific, restrained language.
 - Distinguish the study's contribution from unverified claims of novelty, priority, clinical impact, or policy impact.
+- Do not compile every manuscript limitation into the cover letter. State a use
+  boundary only when it is central to accurate positioning, and keep it attached
+  to the affected claim.
 - Include exclusivity, author approval, conflicts of interest, ethics, preprint, related-manuscript, or AI-use statements only when supported and appropriate to the venue.
 - Do not duplicate the abstract. Explain why the work matters to the journal's readership.
 - Keep the letter concise, professional, and free of pressure, flattery, or unsupported assertions.
@@ -126,4 +138,7 @@ Before returning the text:
 - Confirm that names, numbers, claims, citations, terminology, and manuscript locations match the supplied sources.
 - Confirm that no required declaration or completed change was invented.
 - Confirm that the prose remains appropriately restrained for the study design and publication stage.
+- Confirm that restraint has not become unsupported understatement and that the
+  title, abstract conclusion, final limitations paragraph, conclusion, and cover
+  letter do not accumulate redundant global downgrading.
 - Complete the Final Pass in `editor-feedback-checklist.md`.

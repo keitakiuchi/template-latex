@@ -16,12 +16,3 @@ web_search = "live"
 [sandbox_workspace_write]
 # Keep shell outbound network access opt-in by default.
 network_access = false
-
-[profiles.networked]
-# Use when shell commands need outbound network access.
-approval_policy = "on-request"
-sandbox_mode = "workspace-write"
-web_search = "live"
-
-[profiles.networked.sandbox_workspace_write]
-network_access = true

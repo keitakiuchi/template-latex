@@ -20,8 +20,11 @@ codex
 シェルでネットワークが必要な作業:
 
 ```bash
-codex --profile networked
+codex --config sandbox_workspace_write.network_access=true
 ```
+
+`--config` はその起動だけに適用されるため、プロジェクト既定の
+`network_access = false` は維持されます。
 
 ## 確認
 

@@ -1,6 +1,6 @@
 ---
 name: academic-manuscript-english-writing
-description: Draft, revise, self-proofread, and polish academic manuscript English for journal articles, abstracts, tables, figures, cover letters, and reviewer responses. Use when Codex needs to write or edit scholarly English for clarity, concision, formal tone, medical/scientific usage, abbreviation handling, balanced comparisons, article choice, compound modifiers, standard ethics/privacy or statistical terminology, collocations, genre-specific conventions, top-journal argument structure, contribution and gap framing, literature synthesis, claim calibration, section-to-section coherence, author-style calibration from prior writing samples, prose based on professional English-editing feedback, integration of proofed manuscript files, or extraction of reusable writing and self-editing rules from professionally edited DOCX tracked changes and comments while preserving scientific meaning and document structure.
+description: Draft, revise, self-proofread, and polish academic manuscript English for journal articles, abstracts, tables, figures, cover letters, and reviewer responses. Use when Codex needs to write or edit scholarly English for clarity, concision, formal tone, medical/scientific usage, abbreviation handling, balanced comparisons, article choice, compound modifiers, standard ethics/privacy or statistical terminology, collocations, genre-specific conventions, top-journal argument structure, contribution and gap framing, literature synthesis, bidirectional claim calibration, limitation propagation, prevention of overstatement or unsupported understatement, section-to-section coherence, author-style calibration from prior writing samples, prose based on professional English-editing feedback, integration of proofed manuscript files, or extraction of reusable writing and self-editing rules from professionally edited DOCX tracked changes and comments while preserving scientific meaning and document structure.
 ---
 
 # Write Academic English
@@ -23,21 +23,22 @@ For a short email or isolated sentence, apply the Manuscript Style Rules without
 
 - Read `references/genre-writing-guides.md` completely before drafting or substantially revising a title, abstract, manuscript section, table or figure legend, cover letter, or reviewer response. Apply only the sections relevant to the requested genre.
 - Read `references/top-journal-argumentation-and-reporting.md` completely when the user asks to draft or substantially revise an Introduction, theory or literature-review section, Methods, Results, Discussion, or a full empirical manuscript for a selective journal; strengthen the research gap, contribution, argument architecture, literature synthesis, claim boundaries, reporting transparency, or reviewer readiness; or perform a manuscript-wide structural English review. Do not load it for isolated sentence-level polishing unless the sentence's claim strength depends on the study design.
+- Read `references/claim-calibration-and-rhetorical-risk.md` completely before drafting or substantially revising an abstract conclusion, Discussion, limitations section, final conclusion, cover letter, or manuscript-wide argument when sampling, validation, generalizability, uncertainty, applicability, intended use, limitations, or future research affects claim strength. Also read it when repeated hedging or a global maturity label could make a supported study appear unfinished.
 - Read `references/author-style-calibration.md` completely when the user asks to match their established scholarly voice or supplies prior writing samples for style matching. Do not load it for ordinary drafting or polishing without a style-matching request.
 - Read `references/professional-feedback-learning.md` completely when the user supplies professionally edited files to improve this skill, asks to extract reusable rules from tracked changes or comments, or asks for a self-proofreading process calibrated from prior professional feedback. Use `scripts/extract_docx_editor_feedback.py` for tracked-change DOCX files.
-- When the top-journal and genre references both apply, first establish the source-supported research-question type, manuscript spine, claim ceiling, and section function; then apply the genre rules and language checklist. Derive an author-style profile last, and apply it only where it does not conflict with scientific meaning, journal requirements, disciplinary conventions, or consistency within the current manuscript.
+- When the claim-calibration, top-journal, and genre references apply, first establish the source-supported research-question type, manuscript spine, claim map, and section function; then apply the genre rules and language checklist. Derive an author-style profile last, and apply it only where it does not conflict with scientific meaning, journal requirements, disciplinary conventions, or consistency within the current manuscript.
 - Keep detailed top-journal, genre, and calibration rules in their reference files rather than duplicating them in this file.
 
 ## Core Workflow
 
 1. Identify the target genre and task depth: isolated polish, section-level revision, or manuscript-wide argument and language work.
 2. Load the references required by the Checklist Policy and Reference Routing.
-3. For section-level or manuscript-wide work, state internally the source-supported research question, gap, contribution, question type, and claim boundary. Mark missing inputs instead of inventing them.
-4. Preserve the scientific meaning, study design, variables, units, statistics, and citation claims.
+3. For section-level or manuscript-wide work, state internally the source-supported research question, gap, contribution, and question type. Build a claim map that records the object, direct evidence, status, population and context, claim ceiling, claim floor, limitation mechanism, propagation target, unaffected claims, and permissible wording for each major claim. Keep the map proportionate to the task. Mark missing inputs instead of inventing them.
+4. Preserve the scientific meaning, study design, variables, units, statistics, citation claims, supported claim ceilings, and supported claim floors. Avoid both overstatement and unsupported understatement.
 5. Draft or rewrite toward formal academic English: concise wording, direct verbs, precise collocations, balanced comparisons, clear modifier placement, and an explicit logical progression.
-6. For multi-section work, verify that the title, abstract, Introduction, Methods, Results, and Discussion describe the same study design, primary question, analysis status, result direction, and claim strength.
+6. For multi-section work, verify that the title, abstract, Introduction, Methods, Results, Discussion, conclusion, and submission materials describe the same study design, primary question, analysis status, result direction, and claim-specific strength. Align sections through the claim map rather than by repeating the same global caveat.
 7. Check local journal style if supplied. If current journal requirements or reporting-guideline versions must be established, verify them from official sources rather than relying on memory. If none is supplied, default to standard American academic English.
-8. Before returning drafted text, complete the Final Pass required by the Checklist Policy and any routed reference. For an exempt short email or isolated sentence, run a targeted check for meaning, tone, grammar, and any relevant scientific terminology.
+8. Before returning drafted text, complete the Final Pass required by the Checklist Policy and any routed reference. When claim calibration applies, run the EIC Quote Test and review any advisory output from `scripts/audit_claim_language.py` in context; never rewrite or reject text mechanically from word counts. For an exempt short email or isolated sentence, run a targeted check for meaning, tone, grammar, and any relevant scientific terminology.
 9. Provide the polished version first, then a short note on substantive changes or unresolved source gaps when useful.
 
 ## Boundary with Research Workflows
@@ -91,6 +92,8 @@ When professionally edited manuscripts are supplied to improve this skill:
 - Keep correlative, negative, and causal alternatives parallel. Preserve repeated prepositions or subordinators when omitting them would blur scope, and prefer explicit frames such as "does not reflect X but rather Y" and "interpreted as X and not as Y."
 - Match tense to rhetorical function: use past tense for completed procedures and observed results, present tense for general principles and what an article, table, or figure shows, and the appropriate planned or conditional tense for future work. Do not normalize tense across these functions mechanically.
 - Preserve modal verbs, negation, hedging, and the object of a claim. Do not turn "may alter," "could indicate," or "would be needed for broader claims" into an unqualified assertion or a claim that the present findings require validation.
+- Preserve the supported claim floor as well as the claim ceiling. Do not add `preliminary`, `partial`, `weak`, `promising`, or equivalent global verdict language when the source supports a more specific positive and negative conclusion.
+- Attach qualifications to an exact result, measurement property, estimand, population quantity, or intended use. Do not let broad subjects such as `the findings`, `the evidence`, or `validity` propagate a local limitation to unrelated claims.
 - Choose `must`, `should`, `need to`, `may/could`, and `can` according to the intended requirement, recommendation, necessity, possibility, or capability; never strengthen them mechanically for tone.
 - Choose articles, number, and possession according to referential scope. Do not turn an aggregate construct into a single entity's possession, pluralize a study-specific system, or add "the" to a generic plural merely because the proofed sentence sounds smoother.
 - Give pronouns and demonstratives an unambiguous antecedent, and keep coordinated lists parallel in both grammar and semantic role.
@@ -111,7 +114,7 @@ When professionally edited manuscripts are supplied to improve this skill:
 
 Apply these priorities while drafting each passage and again during the checklist's Final Pass:
 
-1. Meaning and accuracy: preserve claims and avoid overstatement.
+1. Meaning and accuracy: preserve claim objects, ceilings, and floors; avoid both overstatement and unsupported understatement.
 2. Sentence structure: fix ambiguity, misplaced modifiers, and unbalanced comparisons.
 3. Academic tone: replace casual wording, contractions, and conversational phrasing.
 4. Concision: remove redundancy and nominalizations.
@@ -146,7 +149,7 @@ Argument spine:
 - Research question: [source-supported statement]
 - Gap: [source-supported statement]
 - Contribution: [source-supported statement]
-- Claim boundary: [what the design and evidence permit]
+- Claim map: [major claim objects, evidence status, ceiling, floor, and affected limitations]
 
 Priority revisions:
 - [section and issue]
