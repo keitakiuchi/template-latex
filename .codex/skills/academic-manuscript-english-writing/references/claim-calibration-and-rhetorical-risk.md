@@ -137,6 +137,9 @@ conclusion, and cover letter as one short editorial packet. Then check:
 4. Does the conclusion enumerate supported and unsupported claims instead of
    issuing a global maturity verdict?
 5. Would removing repeated hedging preserve every material scientific boundary?
+6. Do major source-supported results and contributions remain explicit in the
+   editorial packet, or have repeated qualifications and future-work statements
+   displaced them?
 
 Use `scripts/audit_claim_language.py` as an advisory scan when plain-text or
 Markdown manuscript text is available. Review every finding in context. Never

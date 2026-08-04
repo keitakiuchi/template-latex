@@ -120,6 +120,7 @@ Recommended order:
 - Keep the tone professional and non-defensive. Remove gratitude formulas when repeated use makes the response mechanical, but retain an appropriate acknowledgment of the reviewer effort.
 - Quote revised text only when the quoted wording matches the current manuscript exactly; otherwise summarize the change and give its location.
 - Maintain a one-to-one mapping between comments and responses. Split compound comments into labeled subparts when necessary.
+- The one-to-one mapping applies to response-letter units, not to manuscript paragraphs. Several comments may be resolved by one localized manuscript revision, and a well-supported response may require no manuscript change. Do not create a separate manuscript passage merely to mirror each response unit.
 - Preserve uncertainty and limitations. Do not promise future work as though it has already been completed.
 - Leave substantive response strategy, new analyses, and evidence decisions to the user or the designated research workflow.
 

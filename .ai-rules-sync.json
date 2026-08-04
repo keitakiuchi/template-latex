@@ -10,8 +10,8 @@
     "GEMINI.md"
   ],
   "source_repo": "/home/keitakiuchi/0_projects/template-vibe-coding",
-  "source_revision": "aaa1a14424220ce09ba5a2045f751baae864004d",
-  "synced_at": "2026-07-30T07:56:40.836709+00:00",
+  "source_revision": "d38efb175bd4201f7e3e62b3ce88afb376352f2c",
+  "synced_at": "2026-08-04T03:04:18.204119+00:00",
   "notes": [
     ".github is excluded by default and only synced when --include-github is specified.",
     "Local/runtime files such as .claude/settings.local.json and .codex/sessions are excluded.",

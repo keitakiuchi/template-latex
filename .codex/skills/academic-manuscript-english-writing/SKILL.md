@@ -1,6 +1,6 @@
 ---
 name: academic-manuscript-english-writing
-description: Draft, revise, self-proofread, and polish academic manuscript English for journal articles, abstracts, tables, figures, cover letters, and reviewer responses. Use when Codex needs to write or edit scholarly English for clarity, concision, formal tone, medical/scientific usage, abbreviation handling, balanced comparisons, article choice, compound modifiers, standard ethics/privacy or statistical terminology, collocations, genre-specific conventions, top-journal argument structure, contribution and gap framing, literature synthesis, bidirectional claim calibration, limitation propagation, prevention of overstatement or unsupported understatement, section-to-section coherence, author-style calibration from prior writing samples, prose based on professional English-editing feedback, integration of proofed manuscript files, or extraction of reusable writing and self-editing rules from professionally edited DOCX tracked changes and comments while preserving scientific meaning and document structure.
+description: Draft, revise, self-proofread, and polish academic manuscript English for journal articles, abstracts, tables, figures, cover letters, and reviewer responses. Use for scholarly English clarity, concision, formal tone, medical/scientific usage, abbreviation handling, balanced comparisons, article choice, compound modifiers, standard ethics/privacy or statistical terminology, collocations, genre-specific conventions, reviewer-comment incorporation and reader-facing placement, top-journal argument structure, contribution and gap framing, literature synthesis, bidirectional claim calibration, limitation propagation, prevention of overstatement or unsupported understatement, section-to-section coherence, author-style calibration from prior writing samples, prose based on professional English-editing feedback, integration of proofed manuscript files, or extraction of reusable writing and self-editing rules from DOCX tracked changes and comments while preserving scientific meaning and document structure.
 ---
 
 # Write Academic English
@@ -22,12 +22,13 @@ For a short email or isolated sentence, apply the Manuscript Style Rules without
 ## Reference Routing
 
 - Read `references/genre-writing-guides.md` completely before drafting or substantially revising a title, abstract, manuscript section, table or figure legend, cover letter, or reviewer response. Apply only the sections relevant to the requested genre.
+- Read `references/reviewer-comment-integration.md` completely when reviewer comments will drive changes to a manuscript or supplement, when deciding whether and where a supplied clarification belongs, or when auditing reviewer-driven repetition across sections. Do not load it for isolated response-letter polishing when the manuscript placement is already fixed.
 - Read `references/top-journal-argumentation-and-reporting.md` completely when the user asks to draft or substantially revise an Introduction, theory or literature-review section, Methods, Results, Discussion, or a full empirical manuscript for a selective journal; strengthen the research gap, contribution, argument architecture, literature synthesis, claim boundaries, reporting transparency, or reviewer readiness; or perform a manuscript-wide structural English review. Do not load it for isolated sentence-level polishing unless the sentence's claim strength depends on the study design.
 - Read `references/claim-calibration-and-rhetorical-risk.md` completely before drafting or substantially revising an abstract conclusion, Discussion, limitations section, final conclusion, cover letter, or manuscript-wide argument when sampling, validation, generalizability, uncertainty, applicability, intended use, limitations, or future research affects claim strength. Also read it when repeated hedging or a global maturity label could make a supported study appear unfinished.
 - Read `references/author-style-calibration.md` completely when the user asks to match their established scholarly voice or supplies prior writing samples for style matching. Do not load it for ordinary drafting or polishing without a style-matching request.
 - Read `references/professional-feedback-learning.md` completely when the user supplies professionally edited files to improve this skill, asks to extract reusable rules from tracked changes or comments, or asks for a self-proofreading process calibrated from prior professional feedback. Use `scripts/extract_docx_editor_feedback.py` for tracked-change DOCX files.
 - When the claim-calibration, top-journal, and genre references apply, first establish the source-supported research-question type, manuscript spine, claim map, and section function; then apply the genre rules and language checklist. Derive an author-style profile last, and apply it only where it does not conflict with scientific meaning, journal requirements, disciplinary conventions, or consistency within the current manuscript.
-- Keep detailed top-journal, genre, and calibration rules in their reference files rather than duplicating them in this file.
+- Keep detailed top-journal, genre, reviewer-integration, and calibration rules in their reference files rather than duplicating them in this file.
 
 ## Core Workflow
 
@@ -38,14 +39,29 @@ For a short email or isolated sentence, apply the Manuscript Style Rules without
 5. Draft or rewrite toward formal academic English: concise wording, direct verbs, precise collocations, balanced comparisons, clear modifier placement, and an explicit logical progression.
 6. For multi-section work, verify that the title, abstract, Introduction, Methods, Results, Discussion, conclusion, and submission materials describe the same study design, primary question, analysis status, result direction, and claim-specific strength. Align sections through the claim map rather than by repeating the same global caveat.
 7. Check local journal style if supplied. If current journal requirements or reporting-guideline versions must be established, verify them from official sources rather than relying on memory. If none is supplied, default to standard American academic English.
-8. Before returning drafted text, complete the Final Pass required by the Checklist Policy and any routed reference. When claim calibration applies, run the EIC Quote Test and review any advisory output from `scripts/audit_claim_language.py` in context; never rewrite or reject text mechanically from word counts. For an exempt short email or isolated sentence, run a targeted check for meaning, tone, grammar, and any relevant scientific terminology.
-9. Provide the polished version first, then a short note on substantive changes or unresolved source gaps when useful.
+8. For section-level and manuscript-wide reviews, run a Redundancy and Contribution-Preservation Pass. Flag content repeated without a new section function while retaining necessary standalone repetition and section-essential echoes. Verify that every major source-supported result and contribution remains visible and that cumulative qualifications, limitations, and future-work statements do not imply that the study established nothing or remains unfinished unless the evidence supports that conclusion.
+9. Before returning drafted text, complete the Final Pass required by the Checklist Policy and any routed reference. When claim calibration applies, run the EIC Quote Test and review any advisory output from `scripts/audit_claim_language.py` in context; never rewrite or reject text mechanically from word counts. For an exempt short email or isolated sentence, run a targeted check for meaning, tone, grammar, and any relevant scientific terminology.
+10. Provide the polished version first, then a short note on substantive changes or unresolved source gaps when useful.
+
+## Reviewer-Comment Incorporation Gate
+
+When reviewer comments drive changes to a manuscript or supplement:
+
+1. Treat each comment as a signal of a possible scientific, reporting, or reader-facing problem, not as an instruction to reproduce the review exchange or create a manuscript change.
+2. Identify the underlying problem and separate any distinct information units within the comment.
+3. Confirm the supplied author position and evidence. If resolution requires new evidence, analysis, methodology, manuscript architecture, claim strength, or response position, obtain the substantive decision from the user or a designated research workflow before incorporating it.
+4. Decide whether each information unit requires a change in the manuscript, supplement, both, or neither. Account for every comment in the response letter, including positive comments. Use a response-letter-only explanation when no reader-facing change is needed.
+5. Assign each information unit one primary residence and add a section-essential echo elsewhere only when that section cannot perform its function without it.
+6. Make the minimum sufficient incorporation: use the smallest set of reader-facing changes that fully resolves the underlying problem. Do not interpret this standard as the shortest possible edit or as permission to omit a material concern.
+7. Remove reviewer-facing rationale, revision chronology, forensic process history, and defensive explanation that readers do not need to understand, evaluate, reproduce, or interpret the study.
 
 ## Boundary with Research Workflows
 
 Use this skill as the default for English drafting, language-level revision, proofreading, genre-specific prose, author-voice calibration, and proofed-file integration. Keep research question development, literature retrieval, systematic review, citation existence verification, methodological redesign, simulated peer review, substantive reviewer-response strategy, and end-to-end research pipelines outside this skill.
 
 This skill may diagnose a missing link in the manuscript's argument or reporting when that gap affects the requested prose. It must not silently choose a new estimand, analysis, hypothesis, theoretical position, reporting declaration, or evidentiary claim to fill that gap. Label the missing input and route the substantive decision to the user or an appropriate research workflow.
+
+After the author position and evidence are established, this skill may make conventional reader-facing placement choices under the Reviewer-Comment Incorporation Gate. Treat any choice that would alter the study claim, evidentiary commitment, analysis, methodology, or manuscript architecture as a substantive decision rather than a language edit.
 
 When `academic-research-suite` or an equivalent research workflow supplies an outline, evidence map, revision plan, citation audit, or response strategy, treat that artifact as content guidance. Apply the requested English drafting or polishing without silently extending, weakening, or contradicting it. Return to the research workflow for a new evidence check or substantive decision when a language edit would require changing the study claim, analysis, citation support, manuscript architecture, or response position.
 
@@ -135,6 +151,10 @@ Notes:
 For a manuscript-wide review:
 
 ```text
+Review checks:
+- Redundancy: [none, or locations and the repeated function]
+- Contribution preservation: [pass, or locations where supported results or contributions are obscured]
+
 Priority issues:
 - [issue type]: [example or location]
 

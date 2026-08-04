@@ -225,9 +225,13 @@ Before returning drafted or edited text, or a proofed-file integration, check:
 - Every number still modifies the correct unit, group, denominator, time point, and independence status.
 - Methods and Results use the correct acting subject and describe the model, outcome scale, and estimand consistently.
 - Sentences are readable without unnecessary repetition.
-- Global verdict language and future-research statements do not accumulate
-  across the abstract, Discussion, limitations, conclusion, and cover letter
-  into an unsupported impression that the study as a whole is unfinished.
+- No claim, rationale, limitation, or future-work point is repeated across
+  sections without performing a new section-specific function; necessary
+  standalone repetition and section-essential echoes are retained.
+- Every major source-supported result and contribution remains visible. Global
+  verdict language, qualifications, limitations, and future-research statements
+  do not accumulate into an unsupported impression that the study established
+  nothing or remains unfinished.
 - Comparative and alternative structures are grammatically balanced and compare like with like.
 - Independent clauses are joined with appropriate punctuation rather than a comma splice.
 - Variant spellings and hyphenation are consistent across the full manuscript.
